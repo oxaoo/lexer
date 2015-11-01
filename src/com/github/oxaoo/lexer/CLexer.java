@@ -74,16 +74,26 @@ public class CLexer
 
             if (st == status.ERROR)
             {
-                System.out.println("Can not recognize the lexeme.");
-                break;
+                //System.err.println("Can not recognize the lexeme: [" + m_buffer + "]");
+                if (m_text[m_index++] == ' ')
+                    continue;
+                else
+                    break;
             }
         }
         while(st != status.END);
 
+        System.out.println("*** Result scan ***");
+        int i = 1;
+        for (String let : m_letters)
+            System.out.println("#" + (i++) + ": " + let);
     }
 
     private status stateStart()
     {
+        if (m_index >= m_text.length)
+            return status.END;
+
         if (m_CNum.contains(m_text[m_index]))
             return stateNorf();
 
@@ -148,6 +158,9 @@ public class CLexer
         if (m_CNum.contains(m_text[m_index])
                 || m_CChar.contains(m_text[m_index]))
             return stateVar();
+
+        if (m_text[m_index] == '.')
+            return stateDot();
 
         return status.GOOD;
     }
@@ -343,7 +356,13 @@ public class CLexer
      */
     private void removeExcess(char[] text)
     {
-        //TODO: временная заглушка.
-        m_text = text;
+        String str = String.valueOf(text);
+        //System.out.println("Size str before=" + str.length());
+        str = str.replaceAll("/\\*(.|[\\r\\n])*?\\*/", ""); /* ... */
+        str = str.replaceAll("//.*\\r\\n", ""); // ...
+        str = str.replaceAll("\\s+", " "); // \r\n, ...
+        //System.out.println("Size str after=" + str.length());
+        m_text = str.toCharArray();
+        //System.out.println("Reading text: " + String.valueOf(m_text));
     }
 }

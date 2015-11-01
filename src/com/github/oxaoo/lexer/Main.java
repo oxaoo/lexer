@@ -13,7 +13,10 @@ public class Main
     public static void main(String[] args)
     {
         System.out.println("Start");
-        CLexer lexer = new CLexer("temp".toCharArray());
-        //lexer.toScan();
+        CIOFile iof = new CIOFile();
+        char[] code = iof.readFile("code2.java");
+
+        CLexer lexer = new CLexer(code);
+        lexer.toScan();
     }
 }
