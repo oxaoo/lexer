@@ -6,3 +6,4 @@ TYPE;4;int
 TYPE;5;long
 TYPE;6;float
 TYPE;7;double
+TYPE;8;matrix

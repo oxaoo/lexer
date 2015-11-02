@@ -6,3 +6,7 @@ IMPORT;import
 ENUM;enum
 DO;do
 WHILE;while
+NEW;new
+HEIGHT;height
+WEIGHT;weight
+TRANSPOSE;transpose
