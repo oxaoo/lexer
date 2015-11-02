@@ -13,10 +13,12 @@ public class Main
     public static void main(String[] args)
     {
         System.out.println("Start");
-        CIOFile iof = new CIOFile();
-        char[] code = iof.readFile("code2.java");
+        String filename = "res/code2.java";
+        char[] code = CIO.readFile(filename);
 
         CLexer lexer = new CLexer(code);
         lexer.toScan();
+        lexer.toEstimate();
+        lexer.result(filename.split("\\.")[0]);
     }
 }

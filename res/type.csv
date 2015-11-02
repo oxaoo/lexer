@@ -1,0 +1,8 @@
+TYPE;0;void
+TYPE;1;boolean
+TYPE;2;byte
+TYPE;3;short
+TYPE;4;int
+TYPE;5;long
+TYPE;6;float
+TYPE;7;double

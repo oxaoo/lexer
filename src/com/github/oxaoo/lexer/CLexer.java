@@ -1,5 +1,8 @@
 package com.github.oxaoo.lexer;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 /**
@@ -21,6 +24,10 @@ public class CLexer
 
     private List<String> m_letters = new ArrayList<String>(100);
     private StringBuilder m_buffer = new StringBuilder();
+
+    private List<String> m_tokens = new ArrayList<String>(100);
+    private List<CId> m_tabId = new ArrayList<CId>(20);
+    private List<CConst> m_tabConst = new ArrayList<CConst>(20);
 
     public CLexer(char[] text)
     {
@@ -342,12 +349,126 @@ public class CLexer
 
     public void toEstimate()
     {
+        /*
+        Map<String, String> keyword = CIO.readTable(CIO.table.KEYWORD);
+        Map<String, String> modifier = CIO.readTable(CIO.table.MODIFIER);
+        Map<String, String> type = CIO.readTable(CIO.table.TYPE);
+        Map<String, String> unary = CIO.readTable(CIO.table.UNARY);
+        Map<String, String> addit = CIO.readTable(CIO.table.ADDIT);
+        Map<String, String> mult = CIO.readTable(CIO.table.MULT);
+        Map<String, String> compare = CIO.readTable(CIO.table.COMPARE);
+        Map<String, String> assign = CIO.readTable(CIO.table.ASSIGN);
+        Map<String, String> logic = CIO.readTable(CIO.table.LOGIC);
+        Map<String, String> other = CIO.readTable(CIO.table.OTHER);
+        Map<String, String> delim = CIO.readTable(CIO.table.DELIM);
+        */
+
+        Map<String, String>[] tables = new Map[11];
+        int i = 0;
+
+        //загрузка таблиц лексем.
+        for (CIO.table t : CIO.table.values())
+            tables[i++] = CIO.readTable(t);
+
+        for (String letter: m_letters)
+        {
+            String token = null;
+
+            for (int t = 0; t < tables.length; t++)
+            {
+                if (tables[t].containsKey(letter))
+                {
+                    token = tables[t].get(letter);
+                    m_tokens.add(token);
+                    break;
+                }
+            }
+
+            if (token == null)
+            {
+                if (CConst.isType(letter) != null)
+                {
+                    //константа.
+                    CConst con;
+                    int index = m_tabConst.indexOf(new CConst(letter, false));
+                    if (index < 0)
+                    {
+                        con = new CConst(letter);
+                        m_tabConst.add(con);
+                    }
+                    else
+                        con = m_tabConst.get(index);
+
+                    m_tokens.add(con.getToken());
+                }
+                else
+                {
+                    //идентефикатор.
+                    CId id;// = new CId(letter);
+                    int index = m_tabId.indexOf(new CId(letter, false));
+                    if (index < 0)
+                    {
+                        id = new CId(letter);
+                        m_tabId.add(id);
+                    }
+                    else
+                        id = m_tabId.get(index);
+
+                    m_tokens.add(id.getToken());
+                }
+            }
+        }
 
     }
 
-    public void result()
+    public void result(String filename)
     {
+        PrintWriter conTab;
+        PrintWriter idTab;
+        PrintWriter tk;
+        try
+        {
+            conTab = new PrintWriter(filename + "_conTab.csv", "UTF-8");
+            idTab = new PrintWriter(filename + "_idTab.csv", "UTF-8");
+            tk = new PrintWriter(filename + ".t", "UTF-8");
+        }
+        catch (FileNotFoundException e)
+        {
+            System.err.println("Exception. File not found: [" + e.toString() + "]");
+            return;
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            System.err.println("Exception while write to file: [" + e.toString() + "]");
+            return;
+        }
 
+
+        System.out.println("\n*** Table of constant ***");
+        conTab.println("Token;Value");
+        for (CConst con : m_tabConst)
+        {
+            System.out.println(con.getToken() + "[" + con.getValue() + "]");
+            conTab.println(con.getToken() + ";" + con.getValue());
+        }
+        conTab.close();
+
+        System.out.println("\n *** Table of id ***");
+        idTab.println("Token;Value");
+        for (CId id : m_tabId)
+        {
+            System.out.println(id.getToken() + "[" + id.getValue() + "]");
+            idTab.println(id.getToken() + ";" + id.getValue());
+        }
+        idTab.close();
+
+        System.out.println("\nTokens:");
+        for (String token : m_tokens)
+        {
+            System.out.println(token);
+            tk.println(token);
+        }
+        tk.close();
     }
 
     /*
