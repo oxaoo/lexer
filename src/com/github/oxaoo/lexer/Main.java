@@ -12,8 +12,11 @@ public class Main
 {
     public static void main(String[] args)
     {
-        System.out.println("Start");
-        String filename = "res/code2.java";
+        System.out.println("*** Start lexer ***");
+        String filename = "res/code3.java";
+        if (args.length > 0)
+            filename = args[0];
+
         char[] code = CIO.readFile(filename);
 
         CLexer lexer = new CLexer(code);

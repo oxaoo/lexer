@@ -41,7 +41,7 @@ public class CLexer
         }
 
         //заполнение лексем класса "Цифра".
-        for (int n = 48; n < 57; n++)
+        for (int n = 48; n < 58; n++)
         {
             m_CNum.add((char) n);
         }
@@ -73,19 +73,33 @@ public class CLexer
         do
         {
             st = stateStart();
+
             if (st == status.GOOD)
             {
                 m_letters.add(m_buffer.toString());
                 m_buffer.setLength(0);
+                continue;
             }
 
             if (st == status.ERROR)
             {
+                if (m_buffer.length() > 0)
+                {
+                    System.err.println("Lexical error code: [" + m_buffer.toString() + "]");
+                    m_buffer.setLength(0);
+                    continue;
+                }
                 //System.err.println("Can not recognize the lexeme: [" + m_buffer + "]");
                 if (m_text[m_index++] == ' ')
                     continue;
                 else
+                {
+                    System.err.println("The lexical analyzer does not recognize the code: ");
+                    for (int i = -1; i + m_index < m_text.length && i < 10; i++)
+                        System.err.print(m_text[i + m_index]);
+                    System.err.print("...\n");
                     break;
+                }
             }
         }
         while(st != status.END);
@@ -183,14 +197,6 @@ public class CLexer
         if (temp == '?' || temp == ':')
             return status.GOOD;
 
-        /*
-        if (m_text[m_index] == '&' && temp == '&')
-            return stateAnd2();
-
-        if (m_text[m_index] == '|' && temp == '|')
-            return stateOr2();
-        */
-
         if (m_text[m_index] == '&' && temp == '&'
                 || m_text[m_index] == '|' && temp == '|')
             return state2();
@@ -208,27 +214,6 @@ public class CLexer
         return status.GOOD;
     }
 
-    /*
-    private status stateOr2()
-    {
-        if (m_index >= m_text.length)
-            return status.END;
-
-        m_buffer.append(m_text[m_index++]);
-
-        return status.GOOD;
-    }
-
-    private status stateAnd2()
-    {
-        if (m_index >= m_text.length)
-            return status.END;
-
-        m_buffer.append(m_text[m_index++]);
-
-        return status.GOOD;
-    }
-    */
 
     private status stateSep()
     {
@@ -349,19 +334,6 @@ public class CLexer
 
     public void toEstimate()
     {
-        /*
-        Map<String, String> keyword = CIO.readTable(CIO.table.KEYWORD);
-        Map<String, String> modifier = CIO.readTable(CIO.table.MODIFIER);
-        Map<String, String> type = CIO.readTable(CIO.table.TYPE);
-        Map<String, String> unary = CIO.readTable(CIO.table.UNARY);
-        Map<String, String> addit = CIO.readTable(CIO.table.ADDIT);
-        Map<String, String> mult = CIO.readTable(CIO.table.MULT);
-        Map<String, String> compare = CIO.readTable(CIO.table.COMPARE);
-        Map<String, String> assign = CIO.readTable(CIO.table.ASSIGN);
-        Map<String, String> logic = CIO.readTable(CIO.table.LOGIC);
-        Map<String, String> other = CIO.readTable(CIO.table.OTHER);
-        Map<String, String> delim = CIO.readTable(CIO.table.DELIM);
-        */
 
         Map<String, String>[] tables = new Map[11];
         int i = 0;
