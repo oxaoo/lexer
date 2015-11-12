@@ -1,0 +1,12 @@
+INIT -> assign expression
+INIT -> assign MATREXP
+VALUE -> int
+VALUE -> bool
+VALUE -> real
+MATREXP -> new type8 obt int cbt obt int cbt
+MATREXP -> new type8 obt int cbt
+MATREXP -> ob MATREXPBODY cb
+MATREXPBODY -> ob MATREXPELEM cb comma ob MATREXPELEM cb
+MATREXPELEM -> VALUE
+MATREXPELEM -> VALUE comma MATREXPELEM
+VALUE -> id

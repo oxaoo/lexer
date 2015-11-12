@@ -1,4 +1,8 @@
 package com.github.oxaoo.lexer.syntax;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -177,9 +181,12 @@ class Transfer {
  * Created by dydus on 11/11/2015.
  */
 public class Grammar {
-    public final Symbol emptySymbol = new Symbol("$");
+    public final Symbol emptyExpessionSymbol = new Symbol("$");
     public final Symbol anySymbol = new Symbol("C");
+    public final Symbol emptyStackSymbol = new Symbol("#");
+
     public String name;
+    public NotTerminal S;
     public List<Terminal> terminals = new ArrayList<Terminal>();
     public List<NotTerminal> notTerminals = new ArrayList<NotTerminal>();
     public List<Rule> rules = new ArrayList<Rule>();

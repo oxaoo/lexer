@@ -1,0 +1,12 @@
+TYPE -> PRIMTYPE
+TYPE -> REFTYPE
+PRIMTYPE -> type0
+PRIMTYPE -> type1
+PRIMTYPE -> type2
+PRIMTYPE -> type3
+PRIMTYPE -> type4
+PRIMTYPE -> type5
+PRIMTYPE -> type6
+PRIMTYPE -> type7
+REFTYPE -> type8
+REFTYPE -> id
