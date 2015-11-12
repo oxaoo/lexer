@@ -3,9 +3,9 @@ TERMINALS:     [id, package, scolon, translatedec]
 START SYMBOL:  TRANSLATED
      RULES:
 (0) TRANSLATED -> package id scolon translatedec
-(1) TRANSLATED -> package id scolonГрамматика операторного предшествования
-Таблица переноса и свертки
-                                      |       €      
+(1) TRANSLATED -> package id scolon
+
+                                      |       пїЅ      
 --------------------------------------+---------------
 # [package, id, scolon, translatedec] | 0, TRANSLATED
 --------------------------------------+---------------
@@ -25,8 +25,8 @@ START SYMBOL:  TRANSLATED
 ------------------+----+---------+--------+--------------+---
  [#, TRANSLATED]  |    |    S    |        |              | A
 
-Отношения предшествования
-             |  id  | package | scolon | translatedec |  $  
+
+             |  id  | package | scolon | translatedec |  $
 -------------+------+---------+--------+--------------+------
      id      |      |         |  [=.]  |              |     
 -------------+------+---------+--------+--------------+------

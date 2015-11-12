@@ -7,9 +7,9 @@ START SYMBOL:  TRANSLATEDDEC
 (2) TRANSLATEDDEC -> modifier class id ob classbody  cb
 (3) TRANSLATEDDEC -> modifier class id ob cb
 (4) IMPORT  -> import id scolon IMPORT 
-(5) IMPORT  -> import id scolonГрамматика операторного предшествования
-Таблица переноса и свертки
-                                                           |        €        
+(5) IMPORT  -> import id scolon
+
+                                                           |        пїЅ        
 -----------------------------------------------------------+------------------
 # [TRANSLATEDDEC, modifier, class, id, ob, classbody , cb] | 0, TRANSLATEDDEC
 -----------------------------------------------------------+------------------
@@ -49,8 +49,8 @@ START SYMBOL:  TRANSLATEDDEC
 -------------------+----+-------+------------+----+--------+----------+----+--------+---
 [#, TRANSLATEDDEC] |    |       |            |    |   S    |    S     |    |        | A
 
-Отношения предшествования
-           |  cb  | class | classbody  |  id  | import | modifier |  ob  | scolon |  $  
+
+           |  cb  | class | classbody  |  id  | import | modifier |  ob  | scolon |  $
 -----------+------+-------+------------+------+--------+----------+------+--------+------
     cb     |      |       |            |      |        |          |      |        | [.>]
 -----------+------+-------+------------+------+--------+----------+------+--------+------

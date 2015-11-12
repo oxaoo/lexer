@@ -16,9 +16,8 @@ START SYMBOL:  METHODBODY
 (11) OPERATOR -> expression scolon OPERATOR
 (12) OPERATOR -> WHILE scolon OPERATOR
 (13) WHILE -> do ob METHODBODY cb while op expression cp
-(14) WHILE -> do ob cb while op expression cpГрамматика операторного предшествования
-Таблица переноса и свертки
-                                                           |       €       
+(14) WHILE -> do ob cb while op expression cp
+                                                           |       пїЅ       
 -----------------------------------------------------------+----------------
              ob [METHODBODY, return, scolon]               | 1, METHODBODY 
 -----------------------------------------------------------+----------------
@@ -92,6 +91,7 @@ scolon [do, ob, METHODBODY, cb, while, op, expression, cp] | 13, METHODBODY
 -----------------------------------------------------------+----------------
         # [do, ob, cb, while, op, expression, cp]          | 14, METHODBODY
 
+
                 | cb | cp | do | expression | id | init | midifer | ob | op | return | scolon | type | while | $
 ----------------+----+----+----+------------+----+------+---------+----+----+--------+--------+------+-------+---
     [cb, C]     |    |    |    |            |    |      |         |    |    |        |        |      |   S   |  
@@ -124,8 +124,8 @@ scolon [do, ob, METHODBODY, cb, while, op, expression, cp] | 13, METHODBODY
 ----------------+----+----+----+------------+----+------+---------+----+----+--------+--------+------+-------+---
 [#, METHODBODY] |    |    | S  |     S      |    |      |    S    |    |    |   S    |   S    |  S   |       | A
 
-Отношения предшествования
-           |  cb  |  cp  |  do  | expression |  id  | init | midifer |  ob  |  op  | return | scolon | type | while |  $  
+
+           |  cb  |  cp  |  do  | expression |  id  | init | midifer |  ob  |  op  | return | scolon | type | while |  $
 -----------+------+------+------+------------+------+------+---------+------+------+--------+--------+------+-------+------
     cb     |      |      |      |            |      |      |         |      |      |        |        |      | [=.]  |     
 -----------+------+------+------+------------+------+------+---------+------+------+--------+--------+------+-------+------

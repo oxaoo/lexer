@@ -23,9 +23,9 @@ START SYMBOL:  CLASSBODY
 (18) CLASSBODY -> modifer type id init scolon CLASSBODY
 (19) METHODPARAM -> type id
 (20) NEXTPARAM -> comma METHODPARAM
-(21) METHODPARAM -> type id NEXTPARAMГрамматика операторного предшествования
-Таблица переноса и свертки
-                                                                             |       €      
+(21) METHODPARAM -> type id NEXTPARAM
+
+                                                                             |       пїЅ      
 -----------------------------------------------------------------------------+---------------
                       cb [enm, id, ob, CLASSBODY, cb]                        | 0, CLASSBODY 
 -----------------------------------------------------------------------------+---------------
@@ -141,6 +141,7 @@ scolon [modifer, type, id, op, CLASSBODY, cp, ob, methodbody, cb, CLASSBODY] | 1
 -----------------------------------------------------------------------------+---------------
                           op [type, id, CLASSBODY]                           | 21, CLASSBODY
 
+
                 | cb | comma | cp | enm | id | init | methodbody | modifer | ob | op | scolon | type | $
 ----------------+----+-------+----+-----+----+------+------------+---------+----+----+--------+------+---
     [cb, C]     |    |       |    |  S  |    |      |            |    S    |    |    |        |      | R
@@ -171,8 +172,8 @@ scolon [modifer, type, id, op, CLASSBODY, cp, ob, methodbody, cb, CLASSBODY] | 1
 ----------------+----+-------+----+-----+----+------+------------+---------+----+----+--------+------+---
 [#, CLASSBODY]  |    |       |    |  S  |    |      |            |    S    |    |    |        |      | A
 
-Отношения предшествования
-           |  cb  | comma |  cp  | enm  |  id  | init | methodbody | modifer |  ob  |  op  | scolon | type |  $  
+
+           |  cb  | comma |  cp  | enm  |  id  | init | methodbody | modifer |  ob  |  op  | scolon | type |  $
 -----------+------+-------+------+------+------+------+------------+---------+------+------+--------+------+------
     cb     |      |       |      | [<.] |      |      |            |  [<.]   |      |      |        |      | [.>]
 -----------+------+-------+------+------+------+------+------------+---------+------+------+--------+------+------
