@@ -1,12 +1,5 @@
 package com.github.oxaoo.lexer.syntax;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 class Symbol {
     public final String id;
@@ -137,7 +130,19 @@ class Convolution {
 
 
 enum TransferType {
-    TRANSFER, CONVOLUTION, ERROR, ACCESS
+    TRANSFER, CONVOLUTION, ERROR, ACCESS;
+
+    public static TransferType parse(String type) {
+        if (type == "R") {
+            return TransferType.TRANSFER;
+        } else if (type == "S") {
+            return TransferType.CONVOLUTION;
+        } else if (type == "S") {
+            return TransferType.ACCESS;
+        }
+
+        return TransferType.ERROR;
+    }
 }
 
 class Transfer {
@@ -181,9 +186,9 @@ class Transfer {
  * Created by dydus on 11/11/2015.
  */
 public class Grammar {
-    public final Symbol emptyExpessionSymbol = new Symbol("$");
-    public final Symbol anySymbol = new Symbol("C");
-    public final Symbol emptyStackSymbol = new Symbol("#");
+    public static final Symbol emptyExpessionSymbol = new Symbol("$");
+    public static final Symbol anySymbol = new Symbol("C");
+    public static final Symbol emptyStackSymbol = new Symbol("#");
 
     public String name;
     public NotTerminal S;
