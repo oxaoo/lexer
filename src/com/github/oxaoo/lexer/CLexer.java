@@ -10,7 +10,10 @@ import java.util.*;
  */
 public class CLexer
 {
-    private enum status{GOOD, ERROR, END};
+    private enum status
+    {
+        GOOD, ERROR, END
+    }
 
     private char[] m_text = null;
     private int m_index = 0;
@@ -70,6 +73,8 @@ public class CLexer
 
         status st = status.END;
 
+        //char lastLetter = '~';
+
         do
         {
             st = stateStart();
@@ -78,6 +83,26 @@ public class CLexer
             {
                 m_letters.add(m_buffer.toString());
                 m_buffer.setLength(0);
+
+                char lastLetter = m_text[m_index - 1];
+                char curLetter = m_text[m_index];
+
+                //gr1, gr2, gr3, gr4.
+                if ((m_CNum.contains(lastLetter) || m_CChar.contains(lastLetter)) && (m_CNum.contains(curLetter) || m_CChar.contains(curLetter)))
+                {
+                    System.err.println("Inadequate letter: '" + curLetter + "'");
+                    m_index++;
+                    continue;
+                }
+
+                //gr6.
+                if (m_CLog.contains(lastLetter) && m_CLog.contains(curLetter))
+                {
+                    System.err.println("Inadequate letter: '" + curLetter + "'");
+                    m_index++;
+                    continue;
+                }
+
                 continue;
             }
 
