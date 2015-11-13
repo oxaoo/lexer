@@ -47,13 +47,13 @@ class NotTerminal extends Symbol {
 
 class Rule {
     public NotTerminal left;
-    public List<Symbol> right;
+    public List<Symbol> right = new ArrayList<Symbol>();
 
     @Override
     public String toString() {
         StringBuilder rightSide = new StringBuilder();
         for (Symbol symbol : this.right) {
-            rightSide.append(symbol);
+            rightSide.append(" " + symbol);
         }
         return left + " ->" + rightSide.toString();
     }
@@ -84,13 +84,13 @@ class Rule {
 
 class Convolution {
     public Symbol prefix;
-    public List<Symbol> convolution;
+    public List<Symbol> convolution = new ArrayList<Symbol>();
 
     @Override
     public String toString() {
         StringBuilder rightSide = new StringBuilder();
         for (Symbol symbol : convolution) {
-            rightSide.append(symbol);
+            rightSide.append(" " + symbol);
         }
         return prefix + " [" + rightSide.toString() + " ]";
     }
@@ -133,11 +133,11 @@ enum TransferType {
     TRANSFER, CONVOLUTION, ERROR, ACCESS;
 
     public static TransferType parse(String type) {
-        if (type == "R") {
+        if (type.equals("R")) {
             return TransferType.TRANSFER;
-        } else if (type == "S") {
+        } else if (type.equals("S")) {
             return TransferType.CONVOLUTION;
-        } else if (type == "S") {
+        } else if (type.equals("S")) {
             return TransferType.ACCESS;
         }
 
@@ -180,6 +180,15 @@ class Transfer {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder rightSide = new StringBuilder();
+        for (Symbol symbol : row) {
+            rightSide.append(" " + symbol);
+        }
+        return column + " [" + rightSide.toString() + " ]";
+    }
 }
 
 /**
@@ -197,5 +206,43 @@ public class Grammar {
     public List<Rule> rules = new ArrayList<Rule>();
 
     public Map<Convolution, Integer> convolutionTable = new HashMap<Convolution, Integer>();
+    public List<Convolution> sortedConvolution = new ArrayList<Convolution>();
+
     public Map<Transfer, TransferType> transferTable = new HashMap<Transfer, TransferType>();
+    public List<Transfer> sortedTransfer = new ArrayList<Transfer>();
+    
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        result.append("Terminals = [");
+        for (Terminal t : terminals) {
+            result.append(" " + t);
+        }
+        result.append(" ]");
+
+        result.append("\r\nNotterminals = [");
+        for (NotTerminal t : notTerminals) {
+            result.append(" " + t);
+        }
+        result.append(" ]");
+
+        result.append("\n\rS = " + S);
+
+        result.append("\r\nRules\r\n");
+        for (Rule r : rules) {
+            result.append(r.toString() + "\r\n");
+        }
+
+        result.append("\r\nConvolution\r\n");
+        for (Convolution r : sortedConvolution) {
+            result.append(r + " : " + convolutionTable.get(r) + "\r\n");
+        }
+
+        result.append("\r\nTransfer\r\n");
+        for (Transfer r : sortedTransfer) {
+            result.append(r + " : " + transferTable.get(r) + "\r\n");
+        }
+
+        return result.toString();
+    }
 }

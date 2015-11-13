@@ -6,8 +6,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 /**
  * Created by dydus on 13/11/2015.
@@ -31,7 +30,7 @@ class GrammarParser {
             br = new BufferedReader(new FileReader(path + TER_PATH));
             String[] terms = br.readLine().split(",");
             for (String t : terms) {
-                result.terminals.add(new Terminal(t));
+                result.terminals.add(new Terminal(t.trim()));
             }
             br.close();
 
@@ -40,9 +39,9 @@ class GrammarParser {
             br = new BufferedReader(new FileReader(path + NOTTER_PATH));
             String[] notTerms = br.readLine().split(",");
             for (String t : notTerms) {
-                result.notTerminals.add(new NotTerminal(t));
+                result.notTerminals.add(new NotTerminal(t.trim()));
             }
-            result.S = new NotTerminal(br.readLine());
+            result.S = new NotTerminal(br.readLine().trim());
             br.close();
 
 
@@ -61,41 +60,50 @@ class GrammarParser {
                 }
                 result.rules.add(rule);
             }
-
+            br.close();
 
             // Convolution
             br = new BufferedReader(new FileReader(path + CONV_PATH));
             while ((line = br.readLine()) != null) {
-                String[] partsOfConv = line.split("|");
-                if (partsOfConv.length != 2) {
+                String[] partsOfConv = line.split("\\|");
+                if (partsOfConv.length < 2) {
                     continue;
                 }
 
                 Convolution key = new Convolution();
-                int value = 0;
+                String left = partsOfConv[0].trim();
+
+                String prefix = left.split("")[0];
+                key.prefix = new Symbol(prefix.trim());
+
+                String[] strRows = left.replaceFirst(prefix, "").replaceAll("\\[", "").replaceAll("\\]", "").trim().split(",");
+                for (String strRow : strRows) {
+                    key.convolution.add(new Symbol(strRow));
+                }
+
+                int value = Integer.parseInt(partsOfConv[1].split(",")[0].trim());
+                result.sortedConvolution.add(key);
                 result.convolutionTable.put(key, value);
             }
-
+            br.close();
 
             // Transfer
-            br = new BufferedReader(new FileReader(path + CONV_PATH));
-            List<String> column = new ArrayList<String>(Arrays.asList(br.readLine().split("|")));
+            br = new BufferedReader(new FileReader(path + TRANS_PATH));
+            List<String> column = new ArrayList<String>(Arrays.asList(br.readLine().split("\\|")));
             column.remove(0);
             for (int i = 0; i < column.size(); i++) {
-                column.add(i, column.get(i).trim());
+                column.set(i, column.get(i).trim());
             }
 
             while ((line = br.readLine()) != null) {
-                String[] partsOfTrans = line.split("|");
+                String[] partsOfTrans = line.split("\\|");
                 if (partsOfTrans.length <= 2) {
                     continue;
                 }
 
                 List<Symbol> symbols = new ArrayList<Symbol>();
-                List<String> row = new ArrayList<String>(Arrays.asList(br.readLine().split("|")));
-                Pattern pattern = Pattern.compile("[(.*?)]");
-                Matcher matcher = pattern.matcher(row.get(0).trim());
-                String[] strRows = matcher.group(1).split(",");
+                List<String> row = new ArrayList<String>(Arrays.asList(partsOfTrans));
+                String[] strRows = row.get(0).replaceAll("\\[", "").replaceAll("\\]", "").trim().split(",");
                 row.remove(0);
                 for (String strRow : strRows) {
                     symbols.add(new Symbol(strRow));
@@ -103,16 +111,19 @@ class GrammarParser {
 
                 for (int i = 0; i < column.size(); i++) {
                     Transfer key = new Transfer();
-                    TransferType value = TransferType.parse(row.get(i));
+                    TransferType value = TransferType.parse(row.get(i).trim());
 
                     key.row = symbols;
                     key.column = new Terminal(column.get(i));
-
+                    result.sortedTransfer.add(key);
                     result.transferTable.put(key, value);
                 }
             }
-        } catch(FileNotFoundException e){}
-        catch (Exception e){
+            br.close();
+        } catch(FileNotFoundException e){
+            System.err.println("Exception while reading file: [" + e.toString() + "]");
+        } catch (Exception e){
+            e.printStackTrace();
             System.err.println("Exception while reading file: [" + e.toString() + "]");
         }
 
