@@ -1,23 +1,23 @@
 -----------------------------------------------------------+----------------
-             ob [METHODBODY, return, scolon]               | 1, METHODBODY 
+             ob [OPERATOR, return, scolon]               | 1, METHODBODY
 -----------------------------------------------------------+----------------
-              # [METHODBODY, return, scolon]               | 1, METHODBODY 
+              # [OPERATOR, return, scolon]               | 1, METHODBODY
 -----------------------------------------------------------+----------------
        ob [METHODBODY, return, expression, scolon]         | 2, METHODBODY 
 -----------------------------------------------------------+----------------
         # [METHODBODY, return, expression, scolon]         | 2, METHODBODY 
 -----------------------------------------------------------+----------------
-             ob [midifer, METHODBODY, scolon]              | 3, METHODBODY 
+             ob [midifer, VARDECBODY, scolon]              | 3, METHODBODY
 -----------------------------------------------------------+----------------
-           scolon [midifer, METHODBODY, scolon]            | 3, METHODBODY 
+           scolon [midifer, VARDECBODY, scolon]            | 3, METHODBODY
 -----------------------------------------------------------+----------------
-             # [midifer, METHODBODY, scolon]               | 3, METHODBODY 
+             # [midifer, VARDECBODY, scolon]               | 3, METHODBODY
 -----------------------------------------------------------+----------------
-                 ob [METHODBODY, scolon]                   | 4, METHODBODY 
+                 ob [VARDECBODY, scolon]                   | 4, METHODBODY
 -----------------------------------------------------------+----------------
-               scolon [METHODBODY, scolon]                 | 4, METHODBODY 
+               scolon [VARDECBODY, scolon]                 | 4, METHODBODY
 -----------------------------------------------------------+----------------
-                  # [METHODBODY, scolon]                   | 4, METHODBODY 
+                  # [VARDECBODY, scolon]                   | 4, METHODBODY
 -----------------------------------------------------------+----------------
                  ob [expression, scolon]                   | 5, METHODBODY 
 -----------------------------------------------------------+----------------
@@ -41,23 +41,23 @@
 -----------------------------------------------------------+----------------
                        # [type, id]                        | 8, METHODBODY 
 -----------------------------------------------------------+----------------
-       ob [midifer, METHODBODY, scolon, METHODBODY]        | 9, METHODBODY 
+       ob [midifer, VARDECBODY, scolon, OPERATOR]        | 9, METHODBODY
 -----------------------------------------------------------+----------------
-     scolon [midifer, METHODBODY, scolon, METHODBODY]      | 9, METHODBODY 
+     scolon [midifer, VARDECBODY, scolon, OPERATOR]      | 9, METHODBODY
 -----------------------------------------------------------+----------------
-       # [midifer, METHODBODY, scolon, METHODBODY]         | 9, METHODBODY 
+       # [midifer, VARDECBODY, scolon, OPERATOR]         | 9, METHODBODY
 -----------------------------------------------------------+----------------
-           ob [METHODBODY, scolon, METHODBODY]             | 10, METHODBODY
+           ob [VARDECBODY, scolon, OPERATOR]             | 10, METHODBODY
 -----------------------------------------------------------+----------------
-         scolon [METHODBODY, scolon, METHODBODY]           | 10, METHODBODY
+         scolon [VARDECBODY, scolon, OPERATOR]           | 10, METHODBODY
 -----------------------------------------------------------+----------------
-            # [METHODBODY, scolon, METHODBODY]             | 10, METHODBODY
+            # [VARDECBODY, scolon, OPERATOR]             | 10, METHODBODY
 -----------------------------------------------------------+----------------
-           ob [expression, scolon, METHODBODY]             | 11, METHODBODY
+           ob [expression, scolon, OPERATOR]             | 11, METHODBODY
 -----------------------------------------------------------+----------------
-         scolon [expression, scolon, METHODBODY]           | 11, METHODBODY
+         scolon [expression, scolon, OPERATOR]           | 11, METHODBODY
 -----------------------------------------------------------+----------------
-            # [expression, scolon, METHODBODY]             | 11, METHODBODY
+            # [expression, scolon, OPERATOR]             | 11, METHODBODY
 -----------------------------------------------------------+----------------
   ob [do, ob, METHODBODY, cb, while, op, expression, cp]   | 13, METHODBODY
 -----------------------------------------------------------+----------------

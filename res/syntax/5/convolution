@@ -1,39 +1,39 @@
 --------------------------------------------------+----------------
-      cto [EXPRESSION, compare, EXPRESSION]       | 0, EXPRESSION 
+      cto [ADDEXPRES, compare, ADDEXPRES]       | 0, EXPRESSION
 --------------------------------------------------+----------------
-     logic [EXPRESSION, compare, EXPRESSION]      | 0, EXPRESSION 
+     logic [ADDEXPRES, compare, ADDEXPRES]      | 0, EXPRESSION
 --------------------------------------------------+----------------
-      op [EXPRESSION, compare, EXPRESSION]        | 0, EXPRESSION 
+      op [ADDEXPRES, compare, ADDEXPRES]        | 0, EXPRESSION
 --------------------------------------------------+----------------
-      qto [EXPRESSION, compare, EXPRESSION]       | 0, EXPRESSION 
+      qto [ADDEXPRES, compare, ADDEXPRES]       | 0, EXPRESSION
 --------------------------------------------------+----------------
-       # [EXPRESSION, compare, EXPRESSION]        | 0, EXPRESSION 
+       # [ADDEXPRES, compare, ADDEXPRES]        | 0, EXPRESSION
 --------------------------------------------------+----------------
-     compare [EXPRESSION, addit, EXPRESSION]      | 1, EXPRESSION 
+     compare [MULTEXP, addit, MULTEXP]      | 1, EXPRESSION
 --------------------------------------------------+----------------
-       cto [EXPRESSION, addit, EXPRESSION]        | 1, EXPRESSION 
+       cto [MULTEXP, addit, MULTEXP]        | 1, EXPRESSION
 --------------------------------------------------+----------------
-      logic [EXPRESSION, addit, EXPRESSION]       | 1, EXPRESSION 
+      logic [MULTEXP, addit, MULTEXP]       | 1, EXPRESSION
 --------------------------------------------------+----------------
-       op [EXPRESSION, addit, EXPRESSION]         | 1, EXPRESSION 
+       op [MULTEXP, addit, MULTEXP]         | 1, EXPRESSION
 --------------------------------------------------+----------------
-       qto [EXPRESSION, addit, EXPRESSION]        | 1, EXPRESSION 
+       qto [MULTEXP, addit, MULTEXP]        | 1, EXPRESSION
 --------------------------------------------------+----------------
-        # [EXPRESSION, addit, EXPRESSION]         | 1, EXPRESSION 
+        # [MULTEXP, addit, MULTEXP]         | 1, EXPRESSION
 --------------------------------------------------+----------------
-      addit [EXPRESSION, mult, EXPRESSION]        | 2, EXPRESSION 
+      addit [PRIMARY, mult, PRIMARY]        | 2, EXPRESSION
 --------------------------------------------------+----------------
-     compare [EXPRESSION, mult, EXPRESSION]       | 2, EXPRESSION 
+     compare [PRIMARY, mult, PRIMARY]       | 2, EXPRESSION
 --------------------------------------------------+----------------
-       cto [EXPRESSION, mult, EXPRESSION]         | 2, EXPRESSION 
+       cto [PRIMARY, mult, PRIMARY]         | 2, EXPRESSION
 --------------------------------------------------+----------------
-      logic [EXPRESSION, mult, EXPRESSION]        | 2, EXPRESSION 
+      logic [PRIMARY, mult, PRIMARY]        | 2, EXPRESSION
 --------------------------------------------------+----------------
-        op [EXPRESSION, mult, EXPRESSION]         | 2, EXPRESSION 
+        op [PRIMARY, mult, PRIMARY]         | 2, EXPRESSION
 --------------------------------------------------+----------------
-       qto [EXPRESSION, mult, EXPRESSION]         | 2, EXPRESSION 
+       qto [PRIMARY, mult, PRIMARY]         | 2, EXPRESSION
 --------------------------------------------------+----------------
-        # [EXPRESSION, mult, EXPRESSION]          | 2, EXPRESSION 
+        # [PRIMARY, mult, PRIMARY]          | 2, EXPRESSION
 --------------------------------------------------+----------------
            addit [op, EXPRESSION, cp]             | 3, EXPRESSION 
 --------------------------------------------------+----------------
@@ -115,62 +115,62 @@
 --------------------------------------------------+----------------
                      # [id]                       | 9, EXPRESSION 
 --------------------------------------------------+----------------
-       cto [EXPRESSION, logic, EXPRESSION]        | 10, EXPRESSION
+       cto [EQUEXP, logic, EQUEXP]        | 10, EXPRESSION
 --------------------------------------------------+----------------
-       op [EXPRESSION, logic, EXPRESSION]         | 10, EXPRESSION
+       op [EQUEXP, logic, EQUEXP]         | 10, EXPRESSION
 --------------------------------------------------+----------------
-       qto [EXPRESSION, logic, EXPRESSION]        | 10, EXPRESSION
+       qto [EQUEXP, logic, EQUEXP]        | 10, EXPRESSION
 --------------------------------------------------+----------------
-        # [EXPRESSION, logic, EXPRESSION]         | 10, EXPRESSION
+        # [EQUEXP, logic, EQUEXP]         | 10, EXPRESSION
 --------------------------------------------------+----------------
-       addit [height, op, EXPRESSION, cp]         | 12, EXPRESSION
+       addit [height, op, VAR, cp]         | 12, EXPRESSION
 --------------------------------------------------+----------------
-      compare [height, op, EXPRESSION, cp]        | 12, EXPRESSION
+      compare [height, op, VAR, cp]        | 12, EXPRESSION
 --------------------------------------------------+----------------
-        cto [height, op, EXPRESSION, cp]          | 12, EXPRESSION
+        cto [height, op, VAR, cp]          | 12, EXPRESSION
 --------------------------------------------------+----------------
-       logic [height, op, EXPRESSION, cp]         | 12, EXPRESSION
+       logic [height, op, VAR, cp]         | 12, EXPRESSION
 --------------------------------------------------+----------------
-        mult [height, op, EXPRESSION, cp]         | 12, EXPRESSION
+        mult [height, op, VAR, cp]         | 12, EXPRESSION
 --------------------------------------------------+----------------
-         op [height, op, EXPRESSION, cp]          | 12, EXPRESSION
+         op [height, op, VAR, cp]          | 12, EXPRESSION
 --------------------------------------------------+----------------
-        qto [height, op, EXPRESSION, cp]          | 12, EXPRESSION
+        qto [height, op, VAR, cp]          | 12, EXPRESSION
 --------------------------------------------------+----------------
-         # [height, op, EXPRESSION, cp]           | 12, EXPRESSION
+         # [height, op, VAR, cp]           | 12, EXPRESSION
 --------------------------------------------------+----------------
-       addit [weight, op, EXPRESSION, cp]         | 13, EXPRESSION
+       addit [weight, op, VAR, cp]         | 13, EXPRESSION
 --------------------------------------------------+----------------
-      compare [weight, op, EXPRESSION, cp]        | 13, EXPRESSION
+      compare [weight, op, VAR, cp]        | 13, EXPRESSION
 --------------------------------------------------+----------------
-        cto [weight, op, EXPRESSION, cp]          | 13, EXPRESSION
+        cto [weight, op, VAR, cp]          | 13, EXPRESSION
 --------------------------------------------------+----------------
-       logic [weight, op, EXPRESSION, cp]         | 13, EXPRESSION
+       logic [weight, op, VAR, cp]         | 13, EXPRESSION
 --------------------------------------------------+----------------
-        mult [weight, op, EXPRESSION, cp]         | 13, EXPRESSION
+        mult [weight, op, VAR, cp]         | 13, EXPRESSION
 --------------------------------------------------+----------------
-         op [weight, op, EXPRESSION, cp]          | 13, EXPRESSION
+         op [weight, op, VAR, cp]          | 13, EXPRESSION
 --------------------------------------------------+----------------
-        qto [weight, op, EXPRESSION, cp]          | 13, EXPRESSION
+        qto [weight, op, VAR, cp]          | 13, EXPRESSION
 --------------------------------------------------+----------------
-         # [weight, op, EXPRESSION, cp]           | 13, EXPRESSION
+         # [weight, op, VAR, cp]           | 13, EXPRESSION
 --------------------------------------------------+----------------
-      addit [transpose, op, EXPRESSION, cp]       | 14, EXPRESSION
+      addit [transpose, op, VAR, cp]       | 14, EXPRESSION
 --------------------------------------------------+----------------
-     compare [transpose, op, EXPRESSION, cp]      | 14, EXPRESSION
+     compare [transpose, op, VAR, cp]      | 14, EXPRESSION
 --------------------------------------------------+----------------
-       cto [transpose, op, EXPRESSION, cp]        | 14, EXPRESSION
+       cto [transpose, op, VAR, cp]        | 14, EXPRESSION
 --------------------------------------------------+----------------
-      logic [transpose, op, EXPRESSION, cp]       | 14, EXPRESSION
+      logic [transpose, op, VAR, cp]       | 14, EXPRESSION
 --------------------------------------------------+----------------
-      mult [transpose, op, EXPRESSION, cp]        | 14, EXPRESSION
+      mult [transpose, op, VAR, cp]        | 14, EXPRESSION
 --------------------------------------------------+----------------
-       op [transpose, op, EXPRESSION, cp]         | 14, EXPRESSION
+       op [transpose, op, VAR, cp]         | 14, EXPRESSION
 --------------------------------------------------+----------------
-       qto [transpose, op, EXPRESSION, cp]        | 14, EXPRESSION
+       qto [transpose, op, VAR, cp]        | 14, EXPRESSION
 --------------------------------------------------+----------------
-        # [transpose, op, EXPRESSION, cp]         | 14, EXPRESSION
+        # [transpose, op, VAR, cp]         | 14, EXPRESSION
 --------------------------------------------------+----------------
-op [EXPRESSION, qto, EXPRESSION, cto, EXPRESSION] | 16, EXPRESSION
+op [LOGICEXP, qto, LOGICEXP, cto, LOGICEXP] | 16, EXPRESSION
 --------------------------------------------------+----------------
-# [EXPRESSION, qto, EXPRESSION, cto, EXPRESSION]  | 16, EXPRESSION
+# [LOGICEXP, qto, LOGICEXP, cto, LOGICEXP]  | 16, EXPRESSION

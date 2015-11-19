@@ -1,7 +1,7 @@
 --------------------------------------------------+----------
              # [assign, expression]               | 0, INIT 
 --------------------------------------------------+----------
-                # [assign, INIT]                  | 1, INIT 
+                # [assign, MATREXP]                  | 1, INIT
 --------------------------------------------------+----------
                    comma [int]                    | 2, INIT 
 --------------------------------------------------+----------
@@ -19,17 +19,17 @@ assign [new, type8, obt, int, cbt, obt, int, cbt] | 5, INIT
 --------------------------------------------------+----------
        assign [new, type8, obt, int, cbt]         | 6, INIT 
 --------------------------------------------------+----------
-              assign [ob, INIT, cb]               | 7, INIT 
+              assign [ob, MATREXPBODY, cb]               | 7, INIT
 --------------------------------------------------+----------
-                ob [ob, INIT, cb]                 | 7, INIT 
+                ob [ob, MATREXPBODY, cb]                 | 7, INIT
 --------------------------------------------------+----------
-   assign [ob, INIT, cb, comma, ob, INIT, cb]     | 8, INIT 
+   assign [ob, MATREXPELEM, cb, comma, ob, MATREXPELEM, cb]     | 8, INIT
 --------------------------------------------------+----------
-     ob [ob, INIT, cb, comma, ob, INIT, cb]       | 8, INIT 
+     ob [ob, MATREXPELEM, cb, comma, ob, MATREXPELEM, cb]       | 8, INIT
 --------------------------------------------------+----------
-            comma [INIT, comma, INIT]             | 10, INIT
+            comma [VALUE, comma, MATREXPELEM]             | 10, INIT
 --------------------------------------------------+----------
-             ob [INIT, comma, INIT]               | 10, INIT
+             ob [VALUE, comma, MATREXPELEM]               | 10, INIT
 --------------------------------------------------+----------
                    comma [id]                     | 11, INIT
 --------------------------------------------------+----------
