@@ -17,6 +17,9 @@ public class TempClass {
             counter++;
             do {
                 counter++;
+                do {
+                    counter++;
+                } while(counter != 10);
             } while(counter != 10);
         } while(counter != 10);
         double a = 19.0;

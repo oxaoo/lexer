@@ -27,15 +27,9 @@ class Symbol {
         }
         if (obj.getClass() == this.getClass()) {
             Symbol tr = (Symbol) obj;
-            return tr.id == this.id;
+            return tr.id.equals(this.id);
         }
         return false;
-    }
-}
-
-class Terminal extends Symbol {
-    Terminal(String id) {
-        super(id);
     }
 }
 
@@ -81,63 +75,15 @@ class Rule {
     }
 }
 
-
-class Convolution {
-    public Symbol prefix;
-    public List<Symbol> convolution = new ArrayList<Symbol>();
-
-    @Override
-    public String toString() {
-        StringBuilder rightSide = new StringBuilder();
-        for (Symbol symbol : convolution) {
-            rightSide.append(" " + symbol);
-        }
-        return prefix + " [" + rightSide.toString() + " ]";
-    }
-
-    @Override
-    public int hashCode() {
-        int result = prefix.hashCode();
-        for (Symbol symbol : this.convolution) {
-            result += symbol.hashCode();
-        }
-
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null)
-            return false;
-        if (this == obj) {
-            return true;
-        }
-        if (obj.getClass() == this.getClass()) {
-            Convolution tr = (Convolution) obj;
-            if (tr.prefix != this.prefix && tr.convolution.size() != this.convolution.size()) {
-                return false;
-            }
-            for (int i = 0; i < tr.convolution.size(); i++) {
-                if (tr.convolution.get(i) != this.convolution.get(i)) {
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
-    }
-}
-
-
 enum TransferType {
     TRANSFER, CONVOLUTION, ERROR, ACCESS;
 
     public static TransferType parse(String type) {
-        if (type.equals("R")) {
+        if (type.equals("S")) {
             return TransferType.TRANSFER;
-        } else if (type.equals("S")) {
+        } else if (type.equals("R")) {
             return TransferType.CONVOLUTION;
-        } else if (type.equals("S")) {
+        } else if (type.equals("A")) {
             return TransferType.ACCESS;
         }
 
@@ -195,36 +141,31 @@ class Transfer {
  * Created by dydus on 11/11/2015.
  */
 public class Grammar {
-    public static final Symbol emptyExpessionSymbol = new Symbol("$");
+    public static List<String> reservedTypes = Arrays.asList("id", "type", "int", "real", "bool");
+    public static final Terminal emptyExpessionSymbol = new Terminal("$");
     public static final Symbol anySymbol = new Symbol("C");
     public static final Symbol emptyStackSymbol = new Symbol("#");
 
-    public String name;
+    public String name = "";
     public NotTerminal S;
-    public List<Terminal> terminals = new ArrayList<Terminal>();
-    public List<NotTerminal> notTerminals = new ArrayList<NotTerminal>();
-    public List<Rule> rules = new ArrayList<Rule>();
+    public List<Terminal> terminals = new ArrayList<>();
+    public List<NotTerminal> notTerminals = new ArrayList<>();
+    public List<Rule> rules = new ArrayList<>();
 
-    public Map<Convolution, Integer> convolutionTable = new HashMap<Convolution, Integer>();
-    public List<Convolution> sortedConvolution = new ArrayList<Convolution>();
+    public Map<Convolution, Integer> convolutionTable = new HashMap<>();
+    public List<Convolution> sortedConvolution = new ArrayList<>();
 
-    public Map<Transfer, TransferType> transferTable = new HashMap<Transfer, TransferType>();
-    public List<Transfer> sortedTransfer = new ArrayList<Transfer>();
-    
+    public Map<Transfer, TransferType> transferTable = new HashMap<>();
+    public List<Transfer> sortedTransfer = new ArrayList<>();
+
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        result.append("Terminals = [");
-        for (Terminal t : terminals) {
-            result.append(" " + t);
-        }
-        result.append(" ]");
+        result.append("Terminals = ");
+        result.append(terminals.toString());
 
-        result.append("\r\nNotterminals = [");
-        for (NotTerminal t : notTerminals) {
-            result.append(" " + t);
-        }
-        result.append(" ]");
+        result.append("\r\nNotterminals = ");
+        result.append(notTerminals.toString());
 
         result.append("\n\rS = " + S);
 
