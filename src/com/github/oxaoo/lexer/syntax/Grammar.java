@@ -15,6 +15,11 @@ class Symbol {
 
     @Override
     public int hashCode() {
+        for (String type: Grammar.reservedTypes) {
+            if (id.startsWith(type)) {
+                return type.hashCode();
+            }
+        }
         return id.hashCode();
     }
 
@@ -25,8 +30,13 @@ class Symbol {
         if (this == obj) {
             return true;
         }
-        if (obj.getClass() == this.getClass()) {
-            Symbol tr = (Symbol) obj;
+        Symbol tr = (Symbol) obj;
+        if (tr != null) {
+            for (String type: Grammar.reservedTypes) {
+                if (id.startsWith(type) && tr.id.startsWith(type)) {
+                    return true;
+                }
+            }
             return tr.id.equals(this.id);
         }
         return false;
@@ -61,11 +71,11 @@ class Rule {
         }
         if (obj.getClass() == this.getClass()) {
             Rule tr = (Rule) obj;
-            if (tr.left != this.left && tr.right.size() != this.right.size()) {
+            if (!tr.left.equals(this.left) || tr.right.size() != this.right.size()) {
                 return false;
             }
             for (int i = 0; i < tr.right.size(); i++) {
-                if (tr.right.get(i) != this.right.get(i)) {
+                if (!tr.right.get(i).equals(this.right.get(i))) {
                     return false;
                 }
             }
@@ -97,9 +107,9 @@ class Transfer {
 
     @Override
     public int hashCode() {
-        int result = column.hashCode();
+        int result = column.hashCode() >> 1;
         for (Symbol symbol : this.row) {
-            result += symbol.hashCode();
+            result += symbol.hashCode() << 1;
         }
 
         return result;
@@ -114,11 +124,12 @@ class Transfer {
         }
         if (obj.getClass() == this.getClass()) {
             Transfer tr = (Transfer) obj;
-            if (tr.column != this.column && tr.row.size() != this.row.size()) {
+            if (!tr.column.equals(this.column) || tr.row.size() != this.row.size()) {
                 return false;
             }
+
             for (int i = 0; i < tr.row.size(); i++) {
-                if (tr.row.get(i) != this.row.get(i)) {
+                if (!tr.row.get(i).equals(this.row.get(i))) {
                     return false;
                 }
             }
@@ -146,7 +157,7 @@ public class Grammar {
     public static final Symbol anySymbol = new Symbol("C");
     public static final Symbol emptyStackSymbol = new Symbol("#");
 
-    public String name = "";
+    public Integer name = 0;
     public NotTerminal S;
     public List<Terminal> terminals = new ArrayList<>();
     public List<NotTerminal> notTerminals = new ArrayList<>();

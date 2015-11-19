@@ -73,7 +73,7 @@ class GrammarParser {
                 Convolution key = new Convolution();
                 String left = partsOfConv[0].trim();
 
-                String prefix = left.split("")[0];
+                String prefix = left.split(" ")[0];
                 key.prefix = new Symbol(prefix.trim());
 
                 String[] strRows = left.replaceFirst(prefix, "").replaceAll("\\[", "").replaceAll("\\]", "").trim().split(",");
@@ -106,7 +106,9 @@ class GrammarParser {
                 String[] strRows = row.get(0).replaceAll("\\[", "").replaceAll("\\]", "").trim().split(",");
                 row.remove(0);
                 for (String strRow : strRows) {
-                    symbols.add(new Symbol(strRow));
+                    strRow = strRow.trim();
+                    if (!strRow.equals("C"))
+                        symbols.add(new Symbol(strRow));
                 }
 
                 for (int i = 0; i < column.size(); i++) {

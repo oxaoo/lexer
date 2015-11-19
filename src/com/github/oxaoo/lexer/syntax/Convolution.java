@@ -21,9 +21,9 @@ public class Convolution {
 
     @Override
     public int hashCode() {
-        int result = prefix.hashCode();
+        int result = prefix.hashCode() >> 1;
         for (Symbol symbol : this.convolution) {
-            result += symbol.hashCode();
+            result += symbol.hashCode() << 1;
         }
 
         return result;
@@ -38,11 +38,11 @@ public class Convolution {
         }
         if (obj.getClass() == this.getClass()) {
             Convolution tr = (Convolution) obj;
-            if (tr.prefix != this.prefix && tr.convolution.size() != this.convolution.size()) {
+            if (!tr.prefix.equals(this.prefix) || tr.convolution.size() != this.convolution.size()) {
                 return false;
             }
             for (int i = 0; i < tr.convolution.size(); i++) {
-                if (tr.convolution.get(i) != this.convolution.get(i)) {
+                if (!tr.convolution.get(i).equals(this.convolution.get(i))) {
                     return false;
                 }
             }

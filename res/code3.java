@@ -14,13 +14,7 @@ public class TempClass {
     public int main(String[] args) {
         int counter = 3;
         do {
-            counter++;
-            do {
-                counter++;
-                do {
-                    counter++;
-                } while(counter != 10);
-            } while(counter != 10);
+            counter = 2;
         } while(counter != 10);
         double a = 19.0;
         short as = 1;
