@@ -152,7 +152,7 @@ class Transfer {
  * Created by dydus on 11/11/2015.
  */
 public class Grammar {
-    public static List<String> reservedTypes = Arrays.asList("id", "type", "int", "real", "bool");
+    public static List<String> reservedTypes = Arrays.asList("id", "type", "int", "real", "bool", "modifier", "assign");
     public static final Terminal emptyExpessionSymbol = new Terminal("$");
     public static final Symbol anySymbol = new Symbol("C");
     public static final Symbol emptyStackSymbol = new Symbol("#");
@@ -168,6 +168,27 @@ public class Grammar {
 
     public Map<Transfer, TransferType> transferTable = new HashMap<>();
     public List<Transfer> sortedTransfer = new ArrayList<>();
+
+
+    public List<Symbol> mp = new ArrayList<>();
+
+    Grammar() {
+        this.mp.add(Grammar.emptyStackSymbol);
+    }
+
+    Grammar(Grammar g) {
+        name = g.name;
+        S = g.S;
+        terminals = g.terminals;
+        notTerminals = g.notTerminals;
+        rules = g.rules;
+        convolutionTable = g.convolutionTable;
+        sortedConvolution = g.sortedConvolution;
+        transferTable = g.transferTable;
+        sortedTransfer = g.sortedTransfer;
+        mp = new Stack<>();
+        mp.add(Grammar.emptyStackSymbol);
+    }
 
     @Override
     public String toString() {

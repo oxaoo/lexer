@@ -1,6 +1,6 @@
 CLASSBODY -> enm id ob ENUMBODY cb
 CLASSBODY -> enm id ob cb
-CLASSBODY -> modifer type id
+CLASSBODY -> modifier type id
 CLASSBODY -> modifer type id op METHODPARAM cp ob methodbody cb
 CLASSBODY -> modifer type id op cp ob methodbody cb
 CLASSBODY -> modifer type id op METHODPARAM cp ob cb

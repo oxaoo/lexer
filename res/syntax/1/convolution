@@ -7,9 +7,9 @@
 -----------------------------------------------------------+------------------
              # [modifier, class, id, ob, cb]               | 3, TRANSLATEDDEC
 -----------------------------------------------------------+------------------
-        scolon [import, id, scolon, TRANSLATEDDEC]         | 4, TRANSLATEDDEC
+        scolon [import, id, scolon, IMPORT]         | 4, TRANSLATEDDEC
 -----------------------------------------------------------+------------------
-          # [import, id, scolon, TRANSLATEDDEC]            | 4, TRANSLATEDDEC
+          # [import, id, scolon, IMPORT]            | 4, TRANSLATEDDEC
 -----------------------------------------------------------+------------------
                scolon [import, id, scolon]                 | 5, IMPORT
 -----------------------------------------------------------+------------------

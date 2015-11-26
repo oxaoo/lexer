@@ -7,11 +7,11 @@
 -----------------------------------------------------------+----------------
         # [METHODBODY, return, expression, scolon]         | 2, METHODBODY 
 -----------------------------------------------------------+----------------
-             ob [midifer, VARDECBODY, scolon]              | 3, METHODBODY
+             ob [modifier, VARDECBODY, scolon]              | 3, METHODBODY
 -----------------------------------------------------------+----------------
-           scolon [midifer, VARDECBODY, scolon]            | 3, METHODBODY
+           scolon [modifier, VARDECBODY, scolon]            | 3, METHODBODY
 -----------------------------------------------------------+----------------
-             # [midifer, VARDECBODY, scolon]               | 3, METHODBODY
+             # [modifier, VARDECBODY, scolon]               | 3, METHODBODY
 -----------------------------------------------------------+----------------
                  ob [VARDECBODY, scolon]                   | 4, METHODBODY
 -----------------------------------------------------------+----------------
@@ -25,7 +25,7 @@
 -----------------------------------------------------------+----------------
                   # [expression, scolon]                   | 5, METHODBODY 
 -----------------------------------------------------------+----------------
-                 midifer [type, id, init]                  | 7, METHODBODY 
+                 modifier [type, id, init]                  | 7, METHODBODY
 -----------------------------------------------------------+----------------
                    ob [type, id, init]                     | 7, METHODBODY 
 -----------------------------------------------------------+----------------
@@ -33,7 +33,7 @@
 -----------------------------------------------------------+----------------
                     # [type, id, init]                     | 7, METHODBODY 
 -----------------------------------------------------------+----------------
-                    midifer [type, id]                     | 8, METHODBODY 
+                    modifier [type, id]                     | 8, METHODBODY
 -----------------------------------------------------------+----------------
                       ob [type, id]                        | 8, METHODBODY 
 -----------------------------------------------------------+----------------
@@ -41,11 +41,11 @@
 -----------------------------------------------------------+----------------
                        # [type, id]                        | 8, METHODBODY 
 -----------------------------------------------------------+----------------
-       ob [midifer, VARDECBODY, scolon, OPERATOR]        | 9, METHODBODY
+       ob [modifier, VARDECBODY, scolon, OPERATOR]        | 9, METHODBODY
 -----------------------------------------------------------+----------------
-     scolon [midifer, VARDECBODY, scolon, OPERATOR]      | 9, METHODBODY
+     scolon [modifier, VARDECBODY, scolon, OPERATOR]      | 9, METHODBODY
 -----------------------------------------------------------+----------------
-       # [midifer, VARDECBODY, scolon, OPERATOR]         | 9, METHODBODY
+       # [modifier, VARDECBODY, scolon, OPERATOR]         | 9, METHODBODY
 -----------------------------------------------------------+----------------
            ob [VARDECBODY, scolon, OPERATOR]             | 10, METHODBODY
 -----------------------------------------------------------+----------------

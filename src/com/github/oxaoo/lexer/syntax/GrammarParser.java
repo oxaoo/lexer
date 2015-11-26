@@ -78,7 +78,7 @@ class GrammarParser {
 
                 String[] strRows = left.replaceFirst(prefix, "").replaceAll("\\[", "").replaceAll("\\]", "").trim().split(",");
                 for (String strRow : strRows) {
-                    key.convolution.add(new Symbol(strRow));
+                    key.convolution.add(new Symbol(strRow.trim()));
                 }
 
                 int value = Integer.parseInt(partsOfConv[1].split(",")[0].trim());
