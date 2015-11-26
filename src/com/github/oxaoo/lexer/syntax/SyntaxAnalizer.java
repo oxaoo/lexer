@@ -39,10 +39,15 @@ public class SyntaxAnalizer {
             Terminal t = tokens.get(0);
             TransferType type = typeOfTransfer(t);
             if (type == TransferType.ERROR) {
+
+                // TODO: NEXT GRAMMAR
+
                 if (currentGrammar.mp.size() > 0 && currentGrammar.mp.get(0).getClass() == NotTerminal.class) {
                     tokens.remove(0);
                     transfer(t);
                 } else  {
+
+
                     System.out.println("NEXT GRAMMAR. Tokens: " + tokens);
                     Grammar g = findNextGrammar(t);
                     if (g == null) {
@@ -61,6 +66,7 @@ public class SyntaxAnalizer {
                         currentGrammar = g;
                     }
                 }
+                //
             } else if (type == TransferType.ACCESS) {
                 gr.add(currentGrammar);
                 Grammar g = currentGrammar;
@@ -136,22 +142,6 @@ public class SyntaxAnalizer {
                 return;
             }
         }
-    }
-
-    public Boolean isCurrentGrammarValid(Terminal t) {
-        if (!currentGrammar.terminals.contains(t)) {
-            return false;
-        }
-
-        for (Symbol s : currentGrammar.mp) {
-            if (!currentGrammar.terminals.contains(s) ||
-                    !currentGrammar.notTerminals.contains(s) ||
-                    !Grammar.emptyStackSymbol.equals(s)) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     private List<Symbol> reverse(List<Symbol> list) {
