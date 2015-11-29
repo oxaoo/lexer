@@ -86,8 +86,9 @@ class Rule {
 }
 
 enum TransferType {
-    TRANSFER, CONVOLUTION, ERROR, ACCESS;
+    TRANSFER, CONVOLUTION, ERROR, ACCESS, MOVING;
 
+    public int nextGrammar = -1;
     public static TransferType parse(String type) {
         if (type.equals("S")) {
             return TransferType.TRANSFER;
@@ -96,6 +97,14 @@ enum TransferType {
         } else if (type.equals("A")) {
             return TransferType.ACCESS;
         }
+//        else {
+//            try {
+//                int next = Integer.parseInt(type);
+//                TransferType result = TransferType.MOVING;
+//                result.nextGrammar = next;
+//                return result;
+//            } catch (Exception e) {}
+//        }
 
         return TransferType.ERROR;
     }
@@ -169,7 +178,7 @@ public class Grammar {
     public Map<Transfer, TransferType> transferTable = new HashMap<>();
     public List<Transfer> sortedTransfer = new ArrayList<>();
 
-
+    public Map<Symbol, Integer> nextGrammars = new HashMap<>();
     public List<Symbol> mp = new ArrayList<>();
 
     Grammar() {
@@ -186,6 +195,7 @@ public class Grammar {
         sortedConvolution = g.sortedConvolution;
         transferTable = g.transferTable;
         sortedTransfer = g.sortedTransfer;
+        nextGrammars = g.nextGrammars;
         mp = new Stack<>();
         mp.add(Grammar.emptyStackSymbol);
     }

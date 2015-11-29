@@ -29,10 +29,10 @@ public class Main
 
         char[] code = CIO.readFile(filename);
 
-        CLexer lexer = new CLexer(code);
-        lexer.toScan();
-        lexer.toEstimate();
-        lexer.result(filename.split("\\.")[0]);
+//        CLexer lexer = new CLexer(code);
+//        lexer.toScan();
+//        lexer.toEstimate();
+//        lexer.result(filename.split("\\.")[0]);
 
         try {
             BufferedReader br = new BufferedReader(new FileReader("res/code3.t"));

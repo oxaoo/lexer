@@ -1,1 +1,5 @@
-cb, comma, cp, enm, id, init, methodbody, modifier, ob, op, scolon, type
+cb, comma, cp, enm, id, INIT, METHODBODY, modifier, ob, op, scolon, TYPE
+id, 4
+modifier, 3
+ob, 6
+#, 3

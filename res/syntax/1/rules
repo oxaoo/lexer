@@ -1,6 +1,6 @@
-TRANSLATEDDEC -> IMPORT  modifier class id ob classbody  cb
+TRANSLATEDDEC -> IMPORT  modifier class id ob CLASSBODY  cb
 TRANSLATEDDEC -> IMPORT  modifier class id ob cb
-TRANSLATEDDEC -> modifier class id ob classbody  cb
+TRANSLATEDDEC -> modifier class id ob CLASSBODY  cb
 TRANSLATEDDEC -> modifier class id ob cb
 IMPORT  -> import id scolon IMPORT 
 IMPORT  -> import id scolon

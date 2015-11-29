@@ -1,7 +1,5 @@
 package com.github.oxaoo.lexer.syntax;
 
-import com.sun.xml.internal.xsom.impl.Ref;
-
 import java.util.*;
 
 /**
@@ -32,54 +30,39 @@ public class SyntaxAnalizer {
 //        this.mp.add(Grammar.emptyStackSymbol);
         System.out.println(tokens.toString());
 
+        stack.push(currentGrammar);
         currentGrammar = this.gr.get(0);
 
         System.out.println("START PARSING");
         while (tokens.size() > 1) {
             Terminal t = tokens.get(0);
             TransferType type = typeOfTransfer(t);
-            if (type == TransferType.ERROR) {
-
-                // TODO: NEXT GRAMMAR
-
-                if (currentGrammar.mp.size() > 0 && currentGrammar.mp.get(0).getClass() == NotTerminal.class) {
-                    tokens.remove(0);
-                    transfer(t);
-                } else  {
-
-
-                    System.out.println("NEXT GRAMMAR. Tokens: " + tokens);
-                    Grammar g = findNextGrammar(t);
-                    if (g == null) {
-                        System.out.println("NEXT GRAMMAR is NULL");
-                        if (currentGrammar.mp.size() > 0 && currentGrammar.mp.get(0).getClass() == NotTerminal.class) {
-                            tokens.remove(0);
-                            transfer(t);
-                        } else {
-                            return;
-                        }
-//                        if (gr.size() == 0) {
-                            return;
-//                        }
-                    } else {
-                        stack.push(currentGrammar);
-                        currentGrammar = g;
-                    }
-                }
-                //
+            if (type == TransferType.MOVING) {
+                Grammar nextGrammar = new Grammar(gr.get(type.nextGrammar));
+                stack.push(nextGrammar);
+                currentGrammar = nextGrammar;
+                System.out.println("NEXT GRAMMAR. NEXT: " + type.nextGrammar);
+            } else if (type == TransferType.ERROR) {
+                System.err.println("Error. Next Token: " + t + "\nMP: " + currentGrammar.mp);
+                return;
             } else if (type == TransferType.ACCESS) {
-                gr.add(currentGrammar);
                 Grammar g = currentGrammar;
                 currentGrammar = stack.pop();
-                currentGrammar.mp.add(g.mp.get(0));
-                System.out.println("ACCESS. Tokens: " + tokens);
+                if (currentGrammar != null) {
+                    currentGrammar.mp.add(g.mp.get(1));
+                }
+                System.out.println("ACCESS. Token: " + t);
             } else if (type == TransferType.TRANSFER) {
                 tokens.remove(0);
                 transfer(t);
-                System.out.println("TRANSFER. mp: " + tokens);
+                System.out.println("TRANSFER. Token: " + t);
             } else if (type == TransferType.CONVOLUTION) {
                 System.out.println("START CONVOLUTION mp: " + currentGrammar.mp);
                 convolution();
+
+                tokens.remove(0);
+                transfer(t);
+                System.out.println("TRANSFER. Token: " + t);
             }
         }
         System.out.println("STOP PARSING");
@@ -111,8 +94,17 @@ public class SyntaxAnalizer {
         for (Transfer tr : currentGrammar.sortedTransfer) {
             if (availableTransfers.contains(tr)) {
                 TransferType result = currentGrammar.transferTable.get(tr);
-                return result;
+                if (result != TransferType.ERROR) {
+                    return result;
+                }
             }
+        }
+
+        Integer next = currentGrammar.nextGrammars.get(currentGrammar.mp.get(0));
+        if (next != null) {
+            TransferType result = TransferType.MOVING;
+            result.nextGrammar = next;
+            return result;
         }
 
         return TransferType.ERROR;
@@ -152,3 +144,31 @@ public class SyntaxAnalizer {
         return result;
     }
 }
+
+
+//// TODO: NEXT GRAMMAR
+//
+//if (currentGrammar.mp.size() > 0 && currentGrammar.mp.get(0).getClass() == NotTerminal.class) {
+//        tokens.remove(0);
+//        transfer(t);
+//        } else  {
+//
+//
+//        System.out.println("NEXT GRAMMAR. Tokens: " + tokens);
+//        Grammar g = findNextGrammar(t);
+//        if (g == null) {
+//        System.out.println("NEXT GRAMMAR is NULL");
+//        if (currentGrammar.mp.size() > 0 && currentGrammar.mp.get(0).getClass() == NotTerminal.class) {
+//        tokens.remove(0);
+//        transfer(t);
+//        } else {
+//        return;
+//        }
+////                        if (gr.size() == 0) {
+//        return;
+////                        }
+//        } else {
+//        stack.push(currentGrammar);
+//        currentGrammar = g;
+//        }
+//        }

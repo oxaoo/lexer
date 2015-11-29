@@ -1,1 +1,3 @@
-cb, cp, do, expression, id, init, modifier, ob, op, return, scolon, type, while
+cb, cp, do, EXPRESSION, id, init, modifier, ob, op, return, scolon, TYPE, while
+op, 5
+return, 5

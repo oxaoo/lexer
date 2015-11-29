@@ -1,15 +1,15 @@
 METHODBODY -> OPERATOR
 METHODBODY -> OPERATOR return scolon
-METHODBODY -> OPERATOR return expression scolon
+METHODBODY -> OPERATOR return EXPRESSION scolon
 OPERATOR -> midifer VARDECBODY scolon
 OPERATOR -> VARDECBODY scolon
-OPERATOR -> expression scolon
+OPERATOR -> EXPRESSION scolon
 OPERATOR -> WHILE scolon
-VARDECBODY -> type id init
-VARDECBODY -> type id
+VARDECBODY -> TYPE id init
+VARDECBODY -> TYPE id
 OPERATOR -> midifer VARDECBODY scolon OPERATOR
 OPERATOR -> VARDECBODY scolon OPERATOR
-OPERATOR -> expression scolon OPERATOR
+OPERATOR -> EXPRESSION scolon OPERATOR
 OPERATOR -> WHILE scolon OPERATOR
-WHILE -> do ob METHODBODY cb while op expression cp
-WHILE -> do ob cb while op expression cp
+WHILE -> do ob METHODBODY cb while op EXPRESSION cp
+WHILE -> do ob cb while op EXPRESSION cp

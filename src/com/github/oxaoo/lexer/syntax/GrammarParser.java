@@ -32,6 +32,14 @@ class GrammarParser {
             for (String t : terms) {
                 result.terminals.add(new Terminal(t.trim()));
             }
+            while ((line = br.readLine()) != null) {
+                String[] nextGrammar = line.split(",");
+                try {
+                    result.nextGrammars.put(new Symbol(nextGrammar[0].trim()), Integer.parseInt(nextGrammar[1].trim()));
+                } catch (Exception e) {
+                    System.err.print("Error during grammar parsing");
+                }
+            }
             br.close();
 
 

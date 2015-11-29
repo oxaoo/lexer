@@ -10,5 +10,7 @@ public class TempClass {
         do {
             ++counter;
         } while (true);
+
+        return 12;
     }
 }

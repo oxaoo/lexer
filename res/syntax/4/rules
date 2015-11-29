@@ -1,4 +1,4 @@
-INIT -> assign expression
+INIT -> assign EXPRESSION
 INIT -> assign MATREXP
 VALUE -> int
 VALUE -> bool

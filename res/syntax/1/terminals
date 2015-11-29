@@ -1,1 +1,3 @@
-cb, class, classbody , id, import, modifier, ob, scolon
+cb, class, CLASSBODY , id, import, modifier, ob, scolon
+cb, 2
+ob, 2
