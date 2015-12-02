@@ -108,7 +108,7 @@ class GrammarParser {
                 if (partsOfTrans.length <= 2) {
                     continue;
                 }
-
+                boolean isSkipNonterm = false;
                 List<Symbol> symbols = new ArrayList<Symbol>();
                 List<String> row = new ArrayList<String>(Arrays.asList(partsOfTrans));
                 String[] strRows = row.get(0).replaceAll("\\[", "").replaceAll("\\]", "").trim().split(",");
@@ -117,12 +117,16 @@ class GrammarParser {
                     strRow = strRow.trim();
                     if (!strRow.equals("C"))
                         symbols.add(new Symbol(strRow));
+                    else {
+                        isSkipNonterm |= true;
+                    }
                 }
 
                 for (int i = 0; i < column.size(); i++) {
                     Transfer key = new Transfer();
                     TransferType value = TransferType.parse(row.get(i).trim());
 
+                    key.isSkipNonterm = isSkipNonterm;
                     key.row = symbols;
                     key.column = new Terminal(column.get(i));
                     result.sortedTransfer.add(key);

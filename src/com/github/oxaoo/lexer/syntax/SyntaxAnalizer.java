@@ -43,7 +43,7 @@ public class SyntaxAnalizer {
                 currentGrammar = nextGrammar;
                 System.out.println("NEXT GRAMMAR. NEXT: " + type.nextGrammar);
             } else if (type == TransferType.ERROR) {
-                System.err.println("Error. Next Token: " + t + "\nMP: " + currentGrammar.mp);
+                System.err.println("Error. Next Token: " + t + " MP: " + currentGrammar.mp);
                 return;
             } else if (type == TransferType.ACCESS) {
                 Grammar g = currentGrammar;
@@ -83,10 +83,21 @@ public class SyntaxAnalizer {
 
     public TransferType typeOfTransfer(Terminal t) {
         List<Transfer> availableTransfers = new ArrayList<>();
-        for (int i = currentGrammar.mp.size(); i > 0 ; i--) {
+        List<Symbol> mpCopy = new ArrayList<>(currentGrammar.mp);
+        Iterator<Symbol> iter = mpCopy.iterator();
+//        while (iter.hasNext()) {
+//            Symbol s = iter.next();
+//            if (s.getClass() == NotTerminal.class) {
+//                iter.remove();
+//            } else {
+//                break;
+//            }
+//        }
+
+        for (int i = mpCopy.size(); i > 0 ; i--) {
             Transfer transfer = new Transfer();
             transfer.column = t;
-            transfer.row = currentGrammar.mp.subList(0, i);
+            transfer.row = mpCopy.subList(0, i);
 
             availableTransfers.add(transfer);
         }
@@ -105,6 +116,10 @@ public class SyntaxAnalizer {
             TransferType result = TransferType.MOVING;
             result.nextGrammar = next;
             return result;
+        }
+
+        if (!currentGrammar.terminals.contains(t)) {
+            return TransferType.CONVOLUTION;
         }
 
         return TransferType.ERROR;

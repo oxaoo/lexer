@@ -113,7 +113,7 @@ enum TransferType {
 class Transfer {
     public List<Symbol> row = new ArrayList<Symbol>();
     public Terminal column;
-
+    public boolean isSkipNonterm = true;
     @Override
     public int hashCode() {
         int result = column.hashCode() >> 1;
@@ -133,12 +133,24 @@ class Transfer {
         }
         if (obj.getClass() == this.getClass()) {
             Transfer tr = (Transfer) obj;
-            if (!tr.column.equals(this.column) || tr.row.size() != this.row.size()) {
+            List<Symbol> right = new ArrayList<>(tr.row);
+//            if (this.isSkipNonterm) {
+//                for (ListIterator iterator = right.listIterator(right.size()); iterator.hasPrevious();) {
+//                    Symbol s = (Symbol) iterator.previous();
+//                    if (s.getClass() == NotTerminal.class) {
+//                        iterator.remove();
+//                    } else {
+//                        break;
+//                    }
+//                }
+//            }
+
+            if (!tr.column.equals(this.column) || right.size() != this.row.size()) {
                 return false;
             }
 
             for (int i = 0; i < tr.row.size(); i++) {
-                if (!tr.row.get(i).equals(this.row.get(i))) {
+                if (!right.get(i).equals(this.row.get(i))) {
                     return false;
                 }
             }
