@@ -1,16 +1,16 @@
 -----------------------------------------------------------+------------------
-# [IMPORT, modifier, class, id, ob, classbody , cb] | 0, TRANSLATEDDEC
+# [TRANSLATEDDEC, modifier, class, id, ob, CLASSBODY , cb] | 0, TRANSLATEDDEC
 -----------------------------------------------------------+------------------
-      # [IMPORT, modifier, class, id, ob, cb]       | 1, TRANSLATEDDEC
+      # [TRANSLATEDDEC, modifier, class, id, ob, cb]       | 1, TRANSLATEDDEC
 -----------------------------------------------------------+------------------
-       # [modifier, class, id, ob, classbody , cb]         | 2, TRANSLATEDDEC
+       # [modifier, class, id, ob, CLASSBODY , cb]         | 2, TRANSLATEDDEC
 -----------------------------------------------------------+------------------
              # [modifier, class, id, ob, cb]               | 3, TRANSLATEDDEC
 -----------------------------------------------------------+------------------
-        scolon [import, id, scolon, IMPORT]         | 4, TRANSLATEDDEC
+        scolon [import, id, scolon, TRANSLATEDDEC]         | 4, TRANSLATEDDEC
 -----------------------------------------------------------+------------------
-          # [import, id, scolon, IMPORT]            | 4, TRANSLATEDDEC
+          # [import, id, scolon, TRANSLATEDDEC]            | 4, TRANSLATEDDEC
 -----------------------------------------------------------+------------------
-               scolon [import, id, scolon]                 | 5, IMPORT
+               scolon [import, id, scolon]                 | 5, TRANSLATEDDEC
 -----------------------------------------------------------+------------------
-                  # [import, id, scolon]                   | 5, IMPORT
+                  # [import, id, scolon]                   | 5, TRANSLATEDDEC

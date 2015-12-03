@@ -1,4 +1,4 @@
 --------------------------------------+---------------
-# [package, id, scolon, translatedec] | 0, TRANSLATED
+# [package, id, scolon, TRANSLATEDDEC] | 0, TRANSLATED
 --------------------------------------+---------------
        # [package, id, scolon]        | 1, TRANSLATED

@@ -91,7 +91,7 @@ class GrammarParser {
 
                 int value = Integer.parseInt(partsOfConv[1].split(",")[0].trim());
                 result.sortedConvolution.add(key);
-                result.convolutionTable.put(key, value);
+                result.convolutionValue.add(value);
             }
             br.close();
 
@@ -130,7 +130,7 @@ class GrammarParser {
                     key.row = symbols;
                     key.column = new Terminal(column.get(i));
                     result.sortedTransfer.add(key);
-                    result.transferTable.put(key, value);
+                    result.transferValue.add(value);
                 }
             }
             br.close();

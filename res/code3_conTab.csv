@@ -1,4 +1,5 @@
 Token;Value
 REAL0;-2.7
-BOOL1;true
-INT2;12
+INT1;100
+BOOL2;true
+INT3;12

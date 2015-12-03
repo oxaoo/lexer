@@ -8,7 +8,7 @@ public class TempClass {
         double counter = -2.7;
 
         do {
-            ++counter;
+            double c = 100;
         } while (true);
 
         return 12;

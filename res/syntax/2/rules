@@ -1,22 +1,22 @@
 CLASSBODY -> enm id ob ENUMBODY cb
 CLASSBODY -> enm id ob cb
 CLASSBODY -> modifier TYPE id
-CLASSBODY -> modifer TYPE id op METHODPARAM cp ob METHODBODY cb
-CLASSBODY -> modifer TYPE id op cp ob METHODBODY cb
-CLASSBODY -> modifer TYPE id op METHODPARAM cp ob cb
-CLASSBODY -> modifer TYPE id op cp ob cb
+CLASSBODY -> modifier TYPE id op METHODPARAM cp ob METHODBODY cb
+CLASSBODY -> modifier TYPE id op cp ob METHODBODY cb
+CLASSBODY -> modifier TYPE id op METHODPARAM cp ob cb
+CLASSBODY -> modifier TYPE id op cp ob cb
 CLASSBODY -> enm id ob ENUMBODY cb CLASSBODY
 CLASSBODY -> enm id ob cb CLASSBODY
-CLASSBODY -> modifer TYPE id scolon CLASSBODY
-CLASSBODY -> modifer TYPE id op METHODPARAM cp ob METHODBODY cb CLASSBODY
-CLASSBODY -> modifer TYPE id op cp ob METHODBODY cb CLASSBODY
-CLASSBODY -> modifer TYPE id op METHODPARAM cp ob cb CLASSBODY
-CLASSBODY -> modifer TYPE id op cp ob cb CLASSBODY
+CLASSBODY -> modifier TYPE id scolon CLASSBODY
+CLASSBODY -> modifier TYPE id op METHODPARAM cp ob METHODBODY cb CLASSBODY
+CLASSBODY -> modifier TYPE id op cp ob methodbody cb CLASSBODY
+CLASSBODY -> modifier TYPE id op METHODPARAM cp ob cb CLASSBODY
+CLASSBODY -> modifier TYPE id op cp ob cb CLASSBODY
 ENUMBODY -> id ENUMELEMS
 ENUMBODY -> id
 ENUMELEMS -> comma ENUMBODY
-CLASSBODY -> modifer TYPE id INIT scolon
-CLASSBODY -> modifer TYPE id INIT scolon CLASSBODY
+CLASSBODY -> modifier TYPE id INIT scolon
+CLASSBODY -> modifier TYPE id INIT scolon CLASSBODY
 METHODPARAM -> TYPE id
 NEXTPARAM -> comma METHODPARAM
 METHODPARAM -> TYPE id NEXTPARAM

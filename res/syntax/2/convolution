@@ -1,9 +1,9 @@
 -----------------------------------------------------------------------------+---------------
-                      cb [enm, id, ob, ENUMBODY, cb]                        | 0, CLASSBODY
+                      cb [enm, id, ob, CLASSBODY, cb]                        | 0, CLASSBODY 
 -----------------------------------------------------------------------------+---------------
-                    scolon [enm, id, ob, ENUMBODY, cb]                      | 0, CLASSBODY
+                    scolon [enm, id, ob, CLASSBODY, cb]                      | 0, CLASSBODY 
 -----------------------------------------------------------------------------+---------------
-                       # [enm, id, ob, ENUMBODY, cb]                        | 0, CLASSBODY
+                       # [enm, id, ob, CLASSBODY, cb]                        | 0, CLASSBODY 
 -----------------------------------------------------------------------------+---------------
                             cb [enm, id, ob, cb]                             | 1, CLASSBODY 
 -----------------------------------------------------------------------------+---------------
@@ -11,41 +11,41 @@
 -----------------------------------------------------------------------------+---------------
                             # [enm, id, ob, cb]                              | 1, CLASSBODY 
 -----------------------------------------------------------------------------+---------------
-                           cb [modifier, type, id]                            | 2, CLASSBODY
+                           cb [modifier, TYPE, id]                            | 2, CLASSBODY 
 -----------------------------------------------------------------------------+---------------
-                         scolon [modifier, type, id]                          | 2, CLASSBODY
+                         scolon [modifier, TYPE, id]                          | 2, CLASSBODY 
 -----------------------------------------------------------------------------+---------------
-                           # [modifier, type, id]                             | 2, CLASSBODY
+                           # [modifier, TYPE, id]                             | 2, CLASSBODY 
 -----------------------------------------------------------------------------+---------------
-       cb [modifier, type, id, op, METHODPARAM, cp, ob, methodbody, cb]         | 3, CLASSBODY
+       cb [modifier, TYPE, id, op, CLASSBODY, cp, ob, METHODBODY, cb]         | 3, CLASSBODY 
 -----------------------------------------------------------------------------+---------------
-     scolon [modifier, type, id, op, METHODPARAM, cp, ob, methodbody, cb]       | 3, CLASSBODY
+     scolon [modifier, TYPE, id, op, CLASSBODY, cp, ob, METHODBODY, cb]       | 3, CLASSBODY 
 -----------------------------------------------------------------------------+---------------
-        # [modifier, type, id, op, METHODPARAM, cp, ob, methodbody, cb]         | 3, CLASSBODY
+        # [modifier, TYPE, id, op, CLASSBODY, cp, ob, METHODBODY, cb]         | 3, CLASSBODY 
 -----------------------------------------------------------------------------+---------------
-             cb [modifier, type, id, op, cp, ob, methodbody, cb]              | 4, CLASSBODY
+             cb [modifier, TYPE, id, op, cp, ob, METHODBODY, cb]              | 4, CLASSBODY 
 -----------------------------------------------------------------------------+---------------
-           scolon [modifier, type, id, op, cp, ob, methodbody, cb]            | 4, CLASSBODY
+           scolon [modifier, TYPE, id, op, cp, ob, METHODBODY, cb]            | 4, CLASSBODY 
 -----------------------------------------------------------------------------+---------------
-             # [modifier, type, id, op, cp, ob, methodbody, cb]               | 4, CLASSBODY
+             # [modifier, TYPE, id, op, cp, ob, METHODBODY, cb]               | 4, CLASSBODY 
 -----------------------------------------------------------------------------+---------------
-             cb [modifier, type, id, op, METHODPARAM, cp, ob, cb]               | 5, CLASSBODY
+             cb [modifier, TYPE, id, op, CLASSBODY, cp, ob, cb]               | 5, CLASSBODY 
 -----------------------------------------------------------------------------+---------------
-           scolon [modifier, type, id, op, METHODPARAM, cp, ob, cb]             | 5, CLASSBODY
+           scolon [modifier, TYPE, id, op, CLASSBODY, cp, ob, cb]             | 5, CLASSBODY 
 -----------------------------------------------------------------------------+---------------
-              # [modifier, type, id, op, METHODPARAM, cp, ob, cb]               | 5, CLASSBODY
+              # [modifier, TYPE, id, op, CLASSBODY, cp, ob, cb]               | 5, CLASSBODY 
 -----------------------------------------------------------------------------+---------------
-                   cb [modifier, type, id, op, cp, ob, cb]                    | 6, CLASSBODY
+                   cb [modifier, TYPE, id, op, cp, ob, cb]                    | 6, CLASSBODY 
 -----------------------------------------------------------------------------+---------------
-                 scolon [modifier, type, id, op, cp, ob, cb]                  | 6, CLASSBODY
+                 scolon [modifier, TYPE, id, op, cp, ob, cb]                  | 6, CLASSBODY 
 -----------------------------------------------------------------------------+---------------
-                   # [modifier, type, id, op, cp, ob, cb]                     | 6, CLASSBODY
+                   # [modifier, TYPE, id, op, cp, ob, cb]                     | 6, CLASSBODY 
 -----------------------------------------------------------------------------+---------------
-                 cb [enm, id, ob, ENUMBODY, cb, CLASSBODY]                  | 7, CLASSBODY
+                 cb [enm, id, ob, CLASSBODY, cb, CLASSBODY]                  | 7, CLASSBODY 
 -----------------------------------------------------------------------------+---------------
-               scolon [enm, id, ob, ENUMBODY, cb, CLASSBODY]                | 7, CLASSBODY
+               scolon [enm, id, ob, CLASSBODY, cb, CLASSBODY]                | 7, CLASSBODY 
 -----------------------------------------------------------------------------+---------------
-                 # [enm, id, ob, ENUMBODY, cb, CLASSBODY]                   | 7, CLASSBODY
+                 # [enm, id, ob, CLASSBODY, cb, CLASSBODY]                   | 7, CLASSBODY 
 -----------------------------------------------------------------------------+---------------
                       cb [enm, id, ob, cb, CLASSBODY]                        | 8, CLASSBODY 
 -----------------------------------------------------------------------------+---------------
@@ -53,62 +53,62 @@
 -----------------------------------------------------------------------------+---------------
                        # [enm, id, ob, cb, CLASSBODY]                        | 8, CLASSBODY 
 -----------------------------------------------------------------------------+---------------
-                 cb [modifier, type, id, scolon, CLASSBODY]                   | 9, CLASSBODY
+                 cb [modifier, TYPE, id, scolon, CLASSBODY]                   | 9, CLASSBODY 
 -----------------------------------------------------------------------------+---------------
-               scolon [modifier, type, id, scolon, CLASSBODY]                 | 9, CLASSBODY
+               scolon [modifier, TYPE, id, scolon, CLASSBODY]                 | 9, CLASSBODY 
 -----------------------------------------------------------------------------+---------------
-                  # [modifier, type, id, scolon, CLASSBODY]                   | 9, CLASSBODY
+                  # [modifier, TYPE, id, scolon, CLASSBODY]                   | 9, CLASSBODY 
 -----------------------------------------------------------------------------+---------------
-  cb [modifier, type, id, op, CLASSBODY, cp, ob, methodbody, cb, CLASSBODY]   | 10, CLASSBODY
+  cb [modifier, TYPE, id, op, CLASSBODY, cp, ob, METHODBODY, cb, CLASSBODY]   | 10, CLASSBODY
 -----------------------------------------------------------------------------+---------------
-scolon [modifier, type, id, op, CLASSBODY, cp, ob, methodbody, cb, CLASSBODY] | 10, CLASSBODY
+scolon [modifier, TYPE, id, op, CLASSBODY, cp, ob, METHODBODY, cb, CLASSBODY] | 10, CLASSBODY
 -----------------------------------------------------------------------------+---------------
-  # [modifier, type, id, op, CLASSBODY, cp, ob, methodbody, cb, CLASSBODY]    | 10, CLASSBODY
+  # [modifier, TYPE, id, op, CLASSBODY, cp, ob, METHODBODY, cb, CLASSBODY]    | 10, CLASSBODY
 -----------------------------------------------------------------------------+---------------
-       cb [modifier, type, id, op, cp, ob, methodbody, cb, CLASSBODY]         | 11, CLASSBODY
+       cb [modifier, TYPE, id, op, cp, ob, METHODBODY, cb, CLASSBODY]         | 11, CLASSBODY
 -----------------------------------------------------------------------------+---------------
-     scolon [modifier, type, id, op, cp, ob, methodbody, cb, CLASSBODY]       | 11, CLASSBODY
+     scolon [modifier, TYPE, id, op, cp, ob, METHODBODY, cb, CLASSBODY]       | 11, CLASSBODY
 -----------------------------------------------------------------------------+---------------
-        # [modifier, type, id, op, cp, ob, methodbody, cb, CLASSBODY]         | 11, CLASSBODY
+        # [modifier, TYPE, id, op, cp, ob, METHODBODY, cb, CLASSBODY]         | 11, CLASSBODY
 -----------------------------------------------------------------------------+---------------
-        cb [modifier, type, id, op, METHODPARAM, cp, ob, cb, CLASSBODY]         | 12, CLASSBODY
+        cb [modifier, TYPE, id, op, CLASSBODY, cp, ob, cb, CLASSBODY]         | 12, CLASSBODY
 -----------------------------------------------------------------------------+---------------
-      scolon [modifier, type, id, op, METHODPARAM, cp, ob, cb, CLASSBODY]       | 12, CLASSBODY
+      scolon [modifier, TYPE, id, op, CLASSBODY, cp, ob, cb, CLASSBODY]       | 12, CLASSBODY
 -----------------------------------------------------------------------------+---------------
-        # [modifier, type, id, op, METHODPARAM, cp, ob, cb, CLASSBODY]          | 12, CLASSBODY
+        # [modifier, TYPE, id, op, CLASSBODY, cp, ob, cb, CLASSBODY]          | 12, CLASSBODY
 -----------------------------------------------------------------------------+---------------
-             cb [modifier, type, id, op, cp, ob, cb, CLASSBODY]               | 13, CLASSBODY
+             cb [modifier, TYPE, id, op, cp, ob, cb, CLASSBODY]               | 13, CLASSBODY
 -----------------------------------------------------------------------------+---------------
-           scolon [modifier, type, id, op, cp, ob, cb, CLASSBODY]             | 13, CLASSBODY
+           scolon [modifier, TYPE, id, op, cp, ob, cb, CLASSBODY]             | 13, CLASSBODY
 -----------------------------------------------------------------------------+---------------
-              # [modifier, type, id, op, cp, ob, cb, CLASSBODY]               | 13, CLASSBODY
+              # [modifier, TYPE, id, op, cp, ob, cb, CLASSBODY]               | 13, CLASSBODY
 -----------------------------------------------------------------------------+---------------
-                           comma [id, ENUMELEMS]                             | 14, CLASSBODY
+                           comma [id, CLASSBODY]                             | 14, CLASSBODY
 -----------------------------------------------------------------------------+---------------
-                             ob [id, ENUMELEMS]                              | 14, CLASSBODY
+                             ob [id, CLASSBODY]                              | 14, CLASSBODY
 -----------------------------------------------------------------------------+---------------
                                  comma [id]                                  | 15, CLASSBODY
 -----------------------------------------------------------------------------+---------------
                                   ob [id]                                    | 15, CLASSBODY
 -----------------------------------------------------------------------------+---------------
-                           id [comma, ENUMBODY]                             | 16, CLASSBODY
+                           id [comma, CLASSBODY]                             | 16, CLASSBODY
 -----------------------------------------------------------------------------+---------------
-                    cb [modifier, type, id, init, scolon]                     | 17, CLASSBODY
+                    cb [modifier, TYPE, id, INIT, scolon]                     | 17, CLASSBODY
 -----------------------------------------------------------------------------+---------------
-                  scolon [modifier, type, id, init, scolon]                   | 17, CLASSBODY
+                  scolon [modifier, TYPE, id, INIT, scolon]                   | 17, CLASSBODY
 -----------------------------------------------------------------------------+---------------
-                    # [modifier, type, id, init, scolon]                      | 17, CLASSBODY
+                    # [modifier, TYPE, id, INIT, scolon]                      | 17, CLASSBODY
 -----------------------------------------------------------------------------+---------------
-              cb [modifier, type, id, init, scolon, CLASSBODY]                | 18, CLASSBODY
+              cb [modifier, TYPE, id, INIT, scolon, CLASSBODY]                | 18, CLASSBODY
 -----------------------------------------------------------------------------+---------------
-            scolon [modifier, type, id, init, scolon, CLASSBODY]              | 18, CLASSBODY
+            scolon [modifier, TYPE, id, INIT, scolon, CLASSBODY]              | 18, CLASSBODY
 -----------------------------------------------------------------------------+---------------
-               # [modifier, type, id, init, scolon, CLASSBODY]                | 18, CLASSBODY
+               # [modifier, TYPE, id, INIT, scolon, CLASSBODY]                | 18, CLASSBODY
 -----------------------------------------------------------------------------+---------------
-                              comma [type, id]                               | 19, CLASSBODY
+                              comma [TYPE, id]                               | 19, CLASSBODY
 -----------------------------------------------------------------------------+---------------
-                               op [type, id]                                 | 19, CLASSBODY
+                               op [TYPE, id]                                 | 19, CLASSBODY
 -----------------------------------------------------------------------------+---------------
-                        comma [type, id, METHODPARAM]                          | 21, CLASSBODY
+                        comma [TYPE, id, CLASSBODY]                          | 21, CLASSBODY
 -----------------------------------------------------------------------------+---------------
-                          op [type, id, NEXTPARAM]                           | 21, CLASSBODY
+                          op [TYPE, id, CLASSBODY]                           | 21, CLASSBODY

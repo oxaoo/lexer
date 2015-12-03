@@ -134,23 +134,23 @@ class Transfer {
         if (obj.getClass() == this.getClass()) {
             Transfer tr = (Transfer) obj;
             List<Symbol> right = new ArrayList<>(tr.row);
-//            if (this.isSkipNonterm) {
-//                for (ListIterator iterator = right.listIterator(right.size()); iterator.hasPrevious();) {
-//                    Symbol s = (Symbol) iterator.previous();
-//                    if (s.getClass() == NotTerminal.class) {
-//                        iterator.remove();
-//                    } else {
-//                        break;
-//                    }
-//                }
-//            }
+            if (this.isSkipNonterm) {
+                for (ListIterator iterator = right.listIterator(right.size()); iterator.hasPrevious();) {
+                    Symbol s = (Symbol) iterator.previous();
+                    if (s instanceof NotTerminal) {
+                        iterator.remove();
+                    } else {
+                        break;
+                    }
+                }
+            }
 
             if (!tr.column.equals(this.column) || right.size() != this.row.size()) {
                 return false;
             }
 
-            for (int i = 0; i < tr.row.size(); i++) {
-                if (!right.get(i).equals(this.row.get(i))) {
+            for (int i = 0; i < right.size(); i++) {
+                if (!this.row.get(i).equals(right.get(i))) {
                     return false;
                 }
             }
@@ -184,11 +184,11 @@ public class Grammar {
     public List<NotTerminal> notTerminals = new ArrayList<>();
     public List<Rule> rules = new ArrayList<>();
 
-    public Map<Convolution, Integer> convolutionTable = new HashMap<>();
     public List<Convolution> sortedConvolution = new ArrayList<>();
+    public List<Integer> convolutionValue = new ArrayList<>();
 
-    public Map<Transfer, TransferType> transferTable = new HashMap<>();
     public List<Transfer> sortedTransfer = new ArrayList<>();
+    public List<TransferType> transferValue = new ArrayList<>();
 
     public Map<Symbol, Integer> nextGrammars = new HashMap<>();
     public List<Symbol> mp = new ArrayList<>();
@@ -203,9 +203,9 @@ public class Grammar {
         terminals = g.terminals;
         notTerminals = g.notTerminals;
         rules = g.rules;
-        convolutionTable = g.convolutionTable;
+        transferValue = g.transferValue;
         sortedConvolution = g.sortedConvolution;
-        transferTable = g.transferTable;
+        convolutionValue = g.convolutionValue;
         sortedTransfer = g.sortedTransfer;
         nextGrammars = g.nextGrammars;
         mp = new Stack<>();
@@ -229,14 +229,12 @@ public class Grammar {
         }
 
         result.append("\r\nConvolution\r\n");
-        for (Convolution r : sortedConvolution) {
-            result.append(r + " : " + convolutionTable.get(r) + "\r\n");
-        }
+        result.append(sortedConvolution + "\n");
+        result.append(convolutionValue + "\n");
 
         result.append("\r\nTransfer\r\n");
-        for (Transfer r : sortedTransfer) {
-            result.append(r + " : " + transferTable.get(r) + "\r\n");
-        }
+        result.append(sortedTransfer + "\n");
+        result.append(transferValue + "\n");
 
         return result.toString();
     }

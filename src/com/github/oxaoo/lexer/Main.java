@@ -27,8 +27,8 @@ public class Main
         if (args.length > 0)
             filename = args[0];
 
-        char[] code = CIO.readFile(filename);
-
+//        char[] code = CIO.readFile(filename);
+//
 //        CLexer lexer = new CLexer(code);
 //        lexer.toScan();
 //        lexer.toEstimate();
