@@ -128,6 +128,11 @@ public class SyntaxAnalizer {
             }
         }
 
+        if (indexOfConvolution() != null) {
+            convolution();
+            return TransferType.ACCESS;
+        }
+
         return TransferType.ERROR;
     }
 
@@ -144,7 +149,7 @@ public class SyntaxAnalizer {
             }
             Convolution newConv = new Convolution();
             newConv.prefix = currentGrammar.mp.get(c.convolution.size());
-            newConv.convolution = reverse( currentGrammar.mp.subList(0, c.convolution.size()) );
+            newConv.convolution = reverse(currentGrammar.mp.subList(0, c.convolution.size()));
 
             if (c.equals(newConv)) {
                 Integer indexOfRule = currentGrammar.convolutionValue.get(i);
@@ -156,6 +161,43 @@ public class SyntaxAnalizer {
                 return;
             }
         }
+    }
+
+    public void convolution(Convolution newConv) {
+        for (int i = 0; i < currentGrammar.sortedConvolution.size(); i++) {
+            Convolution c = currentGrammar.sortedConvolution.get(i);
+            if (currentGrammar.mp.size() <= c.convolution.size()) {
+                continue;
+            }
+
+            if (c.equals(newConv)) {
+                Integer indexOfRule = currentGrammar.convolutionValue.get(i);
+                currentGrammar.mp = currentGrammar.mp.subList(c.convolution.size(), currentGrammar.mp.size());
+                currentGrammar.mp.add(0, currentGrammar.S);
+                output.add(indexOfRule);
+                System.out.println("CONVOLUTION. mp: " + currentGrammar.mp);
+                return;
+            }
+        }
+    }
+
+    public Integer indexOfConvolution() {
+        for (int i = 0; i < currentGrammar.sortedConvolution.size(); i++) {
+            Convolution c = currentGrammar.sortedConvolution.get(i);
+            if (currentGrammar.mp.size() <= c.convolution.size()) {
+                continue;
+            }
+            Convolution newConv = new Convolution();
+            newConv.prefix = currentGrammar.mp.get(c.convolution.size());
+            newConv.convolution = reverse( currentGrammar.mp.subList(0, c.convolution.size()) );
+
+            if (c.equals(newConv)) {
+                Integer indexOfRule = currentGrammar.convolutionValue.get(i);
+                return indexOfRule;
+            }
+        }
+
+        return null;
     }
 
     private List<Symbol> reverse(List<Symbol> list) {
