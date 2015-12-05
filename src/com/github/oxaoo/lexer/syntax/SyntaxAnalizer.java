@@ -142,7 +142,7 @@ public class SyntaxAnalizer {
 
     public void transfer(Terminal t) {
         currentGrammar.mp.add(0, t);
-        currentGrammar.nodes.add(0, new CSyntaxTreeNode(t.id));
+        currentGrammar.nodes.add(0, new CSyntaxTreeNode(t));
         gr = new ArrayList<>(fullGrammars);
     }
 
@@ -161,7 +161,7 @@ public class SyntaxAnalizer {
                 currentGrammar.mp = currentGrammar.mp.subList(c.convolution.size(), currentGrammar.mp.size());
                 currentGrammar.mp.add(0, currentGrammar.S);
 
-                CSyntaxTreeNode newNode = new CSyntaxTreeNode(currentGrammar.S.id);
+                CSyntaxTreeNode newNode = new CSyntaxTreeNode(currentGrammar.S);
                 newNode.setChildren(currentGrammar.nodes.subList(0, c.convolution.size()));
                 currentGrammar.nodes = currentGrammar.nodes.subList(c.convolution.size(), currentGrammar.nodes.size());
                 currentGrammar.nodes.add(0, newNode);

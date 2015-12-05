@@ -1,5 +1,7 @@
 package com.github.oxaoo.parser;
 
+import com.github.oxaoo.lexer.syntax.Symbol;
+
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.util.*;
 
@@ -11,12 +13,23 @@ public class CSyntaxTreeNode extends DefaultMutableTreeNode
     private static int counter = 0;
     private final int id;
     private static List<CSyntaxTreeNode> nodes = new LinkedList<>();
-
+    public Symbol s;
 
     public CSyntaxTreeNode()
     {
         super();
         id = counter++;
+    }
+
+    public CSyntaxTreeNode(Symbol s) {
+        this(s.id);
+        this.s = s;
+    }
+
+    public CSyntaxTreeNode(Symbol s, CSyntaxTreeNode parent)
+    {
+        this(s.id, parent);
+        this.s = s;
     }
 
     public CSyntaxTreeNode(String name)
