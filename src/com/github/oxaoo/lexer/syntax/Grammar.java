@@ -1,4 +1,6 @@
 package com.github.oxaoo.lexer.syntax;
+import com.github.oxaoo.parser.CSyntaxTreeNode;
+
 import java.util.*;
 
 class Symbol {
@@ -173,7 +175,7 @@ class Transfer {
  * Created by dydus on 11/11/2015.
  */
 public class Grammar {
-    public static List<String> reservedTypes = Arrays.asList("id", "type", "int", "real", "bool", "modifier", "assign");
+    public static List<String> reservedTypes = Arrays.asList("id", "type", "int", "real", "bool", "modifier", "assign", "addit", "logic", "mult", "compare");
     public static final Terminal emptyExpessionSymbol = new Terminal("$");
     public static final Symbol anySymbol = new Symbol("C");
     public static final Symbol emptyStackSymbol = new Symbol("#");
@@ -192,6 +194,7 @@ public class Grammar {
 
     public Map<Symbol, Integer> nextGrammars = new HashMap<>();
     public List<Symbol> mp = new ArrayList<>();
+    public List<CSyntaxTreeNode> nodes = new ArrayList<>();
 
     Grammar() {
         this.mp.add(Grammar.emptyStackSymbol);
@@ -208,6 +211,7 @@ public class Grammar {
         convolutionValue = g.convolutionValue;
         sortedTransfer = g.sortedTransfer;
         nextGrammars = g.nextGrammars;
+        nodes = new ArrayList<>();
         mp = new Stack<>();
         mp.add(Grammar.emptyStackSymbol);
     }

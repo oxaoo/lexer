@@ -6,10 +6,16 @@ public class TempClass {
 
     public int main() {
         double counter = -2.7;
-
+        boolean flag = false;
         do {
-            double c = 100;
-        } while (true);
+            int variable += 10;
+            do {
+                int variable += 10;
+                do {
+                    int variable += 10;
+                } while ((flag == true) && (counter != 2));
+            } while ((flag == true) && (counter != 2));
+        } while ((flag == true) && (counter != 2));
 
         return 12;
     }

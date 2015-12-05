@@ -28,7 +28,7 @@ public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
         startLexer(args);
-        exampleSyntaxTree();
+//        exampleSyntaxTree();
     }
 
     private static void exampleSyntaxTree() {
@@ -69,12 +69,12 @@ public class Main {
         if (args.length > 0)
             filename = args[0];
 
-//        char[] code = CIO.readFile(filename);
-//
-//        CLexer lexer = new CLexer(code);
-//        lexer.toScan();
-//        lexer.toEstimate();
-//        lexer.result(filename.split("\\.")[0]);
+        char[] code = CIO.readFile(filename);
+
+        CLexer lexer = new CLexer(code);
+        lexer.toScan();
+        lexer.toEstimate();
+        lexer.result(filename.split("\\.")[0]);
 
         try {
             BufferedReader br = new BufferedReader(new FileReader("res/code3.t"));

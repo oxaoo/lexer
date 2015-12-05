@@ -1,5 +1,9 @@
 package com.github.oxaoo.lexer.syntax;
 
+import com.github.oxaoo.parser.CSyntaxTree;
+import com.github.oxaoo.parser.CSyntaxTreeNode;
+
+import javax.swing.*;
 import java.util.*;
 
 /**
@@ -20,7 +24,7 @@ public class SyntaxAnalizer {
             Grammar g = parser.parse(path + i + "/");
             g.name = i;
             gr.add(g);
-            System.out.println(g.toString());
+            //System.out.println(g.toString());
         }
 
         fullGrammars = new ArrayList<>(gr);
@@ -29,12 +33,11 @@ public class SyntaxAnalizer {
     public void parseTokens( List<Terminal> tokens) {
 //        this.mp.add(Grammar.emptyStackSymbol);
         System.out.println(tokens.toString());
-
-        stack.add(currentGrammar);
         currentGrammar = this.gr.get(0);
-
+        Grammar root = currentGrammar;
         System.out.println("START PARSING");
-        while (tokens.size() > 1) {
+
+        while (tokens.size() > 0) {
             Terminal t = tokens.get(0);
             TransferType type = typeOfTransfer(t);
             if (type == TransferType.MOVING) {
@@ -46,11 +49,16 @@ public class SyntaxAnalizer {
                 System.err.println("Error. Next Token: " + t + " MP: " + currentGrammar.mp);
                 return;
             } else if (type == TransferType.ACCESS) {
-                Grammar g = stack.remove(0);
-                if (g != null) {
+
+                if (stack.size()!=0) {
+                    Grammar g = stack.remove(0);
                     g.mp.add(0, new Terminal(currentGrammar.S.id));
+                    g.nodes.add(0, currentGrammar.nodes.get(0));
+                    currentGrammar = g;
+                } else {
+                    break;
                 }
-                currentGrammar = g;
+
                 System.out.println("ACCESS. Token: " + t);
             } else if (type == TransferType.TRANSFER) {
                 tokens.remove(0);
@@ -62,6 +70,13 @@ public class SyntaxAnalizer {
             }
         }
         System.out.println("STOP PARSING");
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new CSyntaxTree(root.nodes.get(0));
+            }
+        });
     }
 
     public TransferType typeOfTransfer(Terminal t) {
@@ -95,17 +110,6 @@ public class SyntaxAnalizer {
             }
         }
 
-//
-//        for (int i = 0; i < currentGrammar.sortedTransfer.size(); i++) {
-//            Transfer tr = currentGrammar.sortedTransfer.get(i);
-//            if (availableTransfers.contains(tr)) {
-//                TransferType result = currentGrammar.transferValue.get(i);
-//                if (result != TransferType.ERROR) {
-//                    return result;
-//                }
-//            }
-//        }
-
         Integer next = currentGrammar.nextGrammars.get(currentGrammar.mp.get(0));
         if (next != null) {
             TransferType result = TransferType.MOVING;
@@ -138,6 +142,7 @@ public class SyntaxAnalizer {
 
     public void transfer(Terminal t) {
         currentGrammar.mp.add(0, t);
+        currentGrammar.nodes.add(0, new CSyntaxTreeNode(t.id));
         gr = new ArrayList<>(fullGrammars);
     }
 
@@ -155,27 +160,15 @@ public class SyntaxAnalizer {
                 Integer indexOfRule = currentGrammar.convolutionValue.get(i);
                 currentGrammar.mp = currentGrammar.mp.subList(c.convolution.size(), currentGrammar.mp.size());
                 currentGrammar.mp.add(0, currentGrammar.S);
+
+                CSyntaxTreeNode newNode = new CSyntaxTreeNode(currentGrammar.S.id);
+                newNode.setChildren(currentGrammar.nodes.subList(0, c.convolution.size()));
+                currentGrammar.nodes = currentGrammar.nodes.subList(c.convolution.size(), currentGrammar.nodes.size());
+                currentGrammar.nodes.add(0, newNode);
+
                 output.add(indexOfRule);
                 System.out.println("CONVOLUTION. mp: " + currentGrammar.mp);
 //                convolution();
-                return;
-            }
-        }
-    }
-
-    public void convolution(Convolution newConv) {
-        for (int i = 0; i < currentGrammar.sortedConvolution.size(); i++) {
-            Convolution c = currentGrammar.sortedConvolution.get(i);
-            if (currentGrammar.mp.size() <= c.convolution.size()) {
-                continue;
-            }
-
-            if (c.equals(newConv)) {
-                Integer indexOfRule = currentGrammar.convolutionValue.get(i);
-                currentGrammar.mp = currentGrammar.mp.subList(c.convolution.size(), currentGrammar.mp.size());
-                currentGrammar.mp.add(0, currentGrammar.S);
-                output.add(indexOfRule);
-                System.out.println("CONVOLUTION. mp: " + currentGrammar.mp);
                 return;
             }
         }
@@ -208,31 +201,3 @@ public class SyntaxAnalizer {
         return result;
     }
 }
-
-
-//// TODO: NEXT GRAMMAR
-//
-//if (currentGrammar.mp.size() > 0 && currentGrammar.mp.get(0).getClass() == NotTerminal.class) {
-//        tokens.remove(0);
-//        transfer(t);
-//        } else  {
-//
-//
-//        System.out.println("NEXT GRAMMAR. Tokens: " + tokens);
-//        Grammar g = findNextGrammar(t);
-//        if (g == null) {
-//        System.out.println("NEXT GRAMMAR is NULL");
-//        if (currentGrammar.mp.size() > 0 && currentGrammar.mp.get(0).getClass() == NotTerminal.class) {
-//        tokens.remove(0);
-//        transfer(t);
-//        } else {
-//        return;
-//        }
-////                        if (gr.size() == 0) {
-//        return;
-////                        }
-//        } else {
-//        stack.push(currentGrammar);
-//        currentGrammar = g;
-//        }
-//        }
