@@ -16,13 +16,6 @@ import com.github.oxaoo.parser.CSyntaxTreeNode;
 import javax.swing.*;
 import java.util.ArrayList;
 
-/**
- * Created by Alexander on 01.11.2015.
- *
- * ���������: ����������� ����������
- * ��������: ���������� �������� ���������
- * �������: 9
- */
 
 public class Main {
 
