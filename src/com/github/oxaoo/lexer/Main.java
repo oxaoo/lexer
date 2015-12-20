@@ -58,7 +58,7 @@ public class Main {
     public static void startLexer(String[] args)
     {
         System.out.println("*** Start lexer ***");
-        String filename = "res/code3.java";
+        String filename = "res/code4.java";
         if (args.length > 0)
             filename = args[0];
 
@@ -70,7 +70,7 @@ public class Main {
         lexer.result(filename.split("\\.")[0]);
 
         try {
-            BufferedReader br = new BufferedReader(new FileReader("res/code3.t"));
+            BufferedReader br = new BufferedReader(new FileReader("res/code4.t"));
             String line;
             List<Terminal> tokens = new ArrayList<>();
             while ((line = br.readLine()) != null) {
