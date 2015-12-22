@@ -30,6 +30,11 @@ public class SyntaxAnalizer {
         fullGrammars = new ArrayList<>(gr);
     }
 
+    private CSyntaxTreeNode root;
+    public CSyntaxTreeNode gerRoot() {
+        return root;
+    }
+
     public void parseTokens( List<Terminal> tokens) {
 //        this.mp.add(Grammar.emptyStackSymbol);
         System.out.println(tokens.toString());
@@ -70,6 +75,8 @@ public class SyntaxAnalizer {
             }
         }
         System.out.println("STOP PARSING");
+
+        this.root = root.nodes.get(0);
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override

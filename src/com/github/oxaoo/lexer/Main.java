@@ -1,5 +1,6 @@
 package com.github.oxaoo.lexer;
 
+import com.github.oxaoo.codegen.CCodeGen;
 import com.github.oxaoo.lexer.syntax.Grammar;
 import com.github.oxaoo.lexer.syntax.SyntaxAnalizer;
 import com.github.oxaoo.lexer.syntax.Terminal;
@@ -10,6 +11,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.github.oxaoo.parser.CSyntaxTree;
 import com.github.oxaoo.parser.CSyntaxTreeNode;
 
@@ -21,7 +23,45 @@ public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
         startLexer(args);
-//        exampleSyntaxTree();
+        CSyntaxTreeNode root = startParser();
+        startCodeGen(root);
+    }
+
+    private static void startCodeGen(CSyntaxTreeNode root) {
+        System.out.println("*** Start codegen ***");
+        CCodeGen cg = new CCodeGen();
+        cg.convert(root);
+    }
+
+    private static CSyntaxTreeNode startParser() {
+        System.out.println("*** Start parser ***");
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader("res/code4.t"));
+
+            String line;
+            List<Terminal> tokens = new ArrayList<>();
+            while ((line = br.readLine()) != null) {
+                tokens.add(new Terminal(line.toLowerCase()));
+            }
+            tokens.add(Grammar.emptyExpessionSymbol);
+
+            SyntaxAnalizer sa = new SyntaxAnalizer();
+            sa.parseGrammars();
+            sa.parseTokens(tokens);
+            return sa.gerRoot();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (br != null)
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+        }
     }
 
     private static void exampleSyntaxTree() {
@@ -45,18 +85,15 @@ public class Main {
         node1.add(node6);
 
 
-        SwingUtilities.invokeLater(new Runnable()
-        {
+        SwingUtilities.invokeLater(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 new CSyntaxTree(node1);
             }
         });
     }
 
-    public static void startLexer(String[] args)
-    {
+    public static void startLexer(String[] args) {
         System.out.println("*** Start lexer ***");
         String filename = "res/code4.java";
         if (args.length > 0)
@@ -68,20 +105,5 @@ public class Main {
         lexer.toScan();
         lexer.toEstimate();
         lexer.result(filename.split("\\.")[0]);
-
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("res/code4.t"));
-            String line;
-            List<Terminal> tokens = new ArrayList<>();
-            while ((line = br.readLine()) != null) {
-                tokens.add(new Terminal(line.toLowerCase()));
-            }
-            tokens.add(Grammar.emptyExpessionSymbol);
-
-            SyntaxAnalizer sa = new SyntaxAnalizer();
-            sa.parseGrammars();
-            sa.parseTokens(tokens);
-            br.close();
-        } catch(IOException e){}
     }
 }

@@ -12,10 +12,12 @@ public class CSyntaxTree extends JFrame
 {
     private JTree syntaxTree;
     private JLabel selectedNodeLabel;
+    private CSyntaxTreeNode root;
 
     public CSyntaxTree(CSyntaxTreeNode root)
     {
-        syntaxTree = new JTree(root);
+        this.root = root;
+        syntaxTree = new JTree(this.root);
         ImageIcon nodeIcon = new ImageIcon("res/node32.png");
         DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
         renderer.setLeafIcon(nodeIcon);
@@ -44,4 +46,9 @@ public class CSyntaxTree extends JFrame
         this.setVisible(true);
 
     }
+/*
+    public CSyntaxTreeNode getRoot() {
+        return root;
+    }
+*/
 }
