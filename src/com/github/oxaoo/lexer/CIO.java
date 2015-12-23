@@ -4,17 +4,15 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Alexander on 01.11.2015.
  */
 public class CIO
 {
-    public static enum table {KEYWORD, MODIFIER, TYPE, UNARY, ADDIT, MULT, COMPARE, ASSIGN, LOGIC, OTHER, DELIM};
+    public enum table {KEYWORD, MODIFIER, TYPE, UNARY, ADDIT, MULT, COMPARE, ASSIGN, LOGIC, OTHER, DELIM}
+
     public static char[] readFile(String path)
     {
         StringBuilder sb = new StringBuilder();
@@ -144,6 +142,48 @@ public class CIO
         }
 
         return table;
+    }
+
+
+    public static Set<String> readGrammar(String path)
+    {
+        Set<String> elems = new TreeSet<String>();
+        BufferedReader br = null;
+        String line;
+
+        try
+        {
+            br = new BufferedReader(new FileReader(path));
+
+            int iter = 0;
+            while ((line = br.readLine()) != null && iter < 1)
+            {
+                line.replaceAll(" ", "");
+                elems.addAll(Arrays.asList(line.split(",")));
+                iter++;
+            }
+        }
+        catch (FileNotFoundException e)
+        {
+            System.err.println("Exception while open the file: [" + e.toString() + "]");
+        }
+        catch (IOException e)
+        {
+            System.err.println("Exception while reading file: [" + e.toString() + "]");
+        }
+        finally
+        {
+            if (br != null) try
+            {
+                br.close();
+            }
+            catch (IOException e)
+            {
+                System.err.println("Exception while closing the file: [" + e.toString() + "]");
+            }
+        }
+
+        return elems;
     }
 }
 
