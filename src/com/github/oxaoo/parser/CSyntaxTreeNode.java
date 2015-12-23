@@ -13,6 +13,8 @@ public class CSyntaxTreeNode extends DefaultMutableTreeNode
     private static int counter = 0;
     private final int id;
     private static List<CSyntaxTreeNode> nodes = new LinkedList<>();
+    public Integer indexOfGrammar = -1;
+    public Integer indexOfRule = -1;
     public Symbol s;
 
     public CSyntaxTreeNode()
