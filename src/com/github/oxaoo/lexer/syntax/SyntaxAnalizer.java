@@ -149,7 +149,9 @@ public class SyntaxAnalizer {
 
     public void transfer(Terminal t) {
         currentGrammar.mp.add(0, t);
-        currentGrammar.nodes.add(0, new CSyntaxTreeNode(t));
+        CSyntaxTreeNode newNode = new CSyntaxTreeNode(t);
+        newNode.indexOfGrammar = currentGrammar.name;
+        currentGrammar.nodes.add(0, newNode);
         gr = new ArrayList<>(fullGrammars);
     }
 
