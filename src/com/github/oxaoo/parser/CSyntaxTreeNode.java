@@ -1,5 +1,6 @@
 package com.github.oxaoo.parser;
 
+import com.github.oxaoo.codegen.CTetrad;
 import com.github.oxaoo.lexer.syntax.Symbol;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -16,6 +17,7 @@ public class CSyntaxTreeNode extends DefaultMutableTreeNode
     public Integer indexOfGrammar = -1;
     public Integer indexOfRule = -1;
     public Symbol s;
+    private CTetrad tetrad = null;
 
     public CSyntaxTreeNode()
     {
@@ -55,6 +57,14 @@ public class CSyntaxTreeNode extends DefaultMutableTreeNode
     {
         for (CSyntaxTreeNode node: nodes)
             this.add(node);
+    }
+
+    public void setTetrad(CTetrad tetrad){
+        this.tetrad = tetrad;
+    }
+
+    public CTetrad getTetrad() {
+        return tetrad;
     }
 
 
