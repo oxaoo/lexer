@@ -207,11 +207,33 @@ public class CCodeGen
                 tetrad = makeTetradGr6R13(node);
                 node.setTetrad(tetrad);
                 break;
+            /*case 14:
+                tetrad = makeTetradGr6R13(node);
+                node.setTetrad(tetrad);
+                break;*/
+            case 15:
+                tetrad = makeTetradGr6R15(node);
+                node.setTetrad(tetrad);
+                break;
         }
 
         if (tetrad != null) node.setTetrad(tetrad);
         else
             System.err.println("Tetrad for GR6 is null");
+    }
+
+    private CTetrad makeTetradGr6R15(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 2) {
+            System.err.println("Not appropriate number of arguments for the rule #6.15");
+            return null;
+        }
+
+        //CTetrad id = new CTetrad(subnodes.get(1).s.id);
+        CTetrad tetrad = new CTetrad(EOpcode.MOV, subnodes.get(1).getTetrad(), subnodes.get(0).s.id);
+
+        return tetrad;
     }
 
     /*
