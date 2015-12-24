@@ -7,37 +7,46 @@ public class CTetrad {
     private final EOpcode opcode;
     private final CTetrad operand1;
     private final CTetrad operand2;
-    private final String result;
+    private final Object result;
 
-    public CTetrad(EOpcode opcode, CTetrad operand1, CTetrad operand2) {
+    public CTetrad(EOpcode opcode, CTetrad operand1, CTetrad operand2, String result) {
 
         this.opcode = opcode;
         this.operand1 = operand1;
         this.operand2 = operand2;
-        result = String.valueOf(count);
-        count++;
+        this.result = result;
     }
 
-    public CTetrad(EOpcode opcode, CTetrad operand1, boolean isRes) {
+    public CTetrad(EOpcode opcode, CTetrad operand1, CTetrad operand2) {
+        /*
+        this.opcode = opcode;
+        this.operand1 = operand1;
+        this.operand2 = operand2;*/
+        //String strId = String.valueOf(count);
+        //count++;
+        this(opcode, operand1, operand2, String.valueOf(++count));
+    }
 
+    public CTetrad(EOpcode opcode, CTetrad operand1, String result) {
+/*
         this.opcode = opcode;
         this.operand1 = operand1;
         this.operand2 = null;
+*/
+        this(opcode, operand1, null, result);
+    }
 
-        if (isRes) {
-            result = String.valueOf(count);
-            count++;
-        }
-        else
-            result = "";
+    public CTetrad(EOpcode opcode, CTetrad operand1) {
+
+        this(opcode, operand1, null, "");
     }
 
     // for elem (NO for tetrad).
-    public CTetrad(String str) {
+    public CTetrad(Object obj) {
         opcode = null;
         operand1 = null;
         operand2 = null;
-        result = str;
+        result = obj;
     }
 
     @Override
