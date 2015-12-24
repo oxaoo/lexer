@@ -22,7 +22,10 @@ public class CTetrad {
         this.opcode = opcode;
         this.operand1 = operand1;
         this.operand2 = operand2;
-        this.result = result;
+        if (result.equals(""))
+            this.result = result;
+        else
+            this.result = "#" + result;
 
         tetradList = Collections.EMPTY_LIST;
     }
@@ -34,7 +37,7 @@ public class CTetrad {
         this.operand2 = operand2;*/
         //String strId = String.valueOf(count);
         //count++;
-        this(opcode, operand1, operand2, "####" + String.valueOf(++count));
+        this(opcode, operand1, operand2, String.valueOf(++count));
     }
 
     public CTetrad(EOpcode opcode, CTetrad operand1, String result) {
