@@ -37,7 +37,7 @@ public class Main {
         System.out.println("*** Start parser ***");
         BufferedReader br = null;
         try {
-            br = new BufferedReader(new FileReader("res/code5.t"));
+            br = new BufferedReader(new FileReader("res/code3.t"));
 
             String line;
             List<Terminal> tokens = new ArrayList<>();
@@ -95,7 +95,7 @@ public class Main {
 
     public static void startLexer(String[] args) {
         System.out.println("*** Start lexer ***");
-        String filename = "res/code5.java";
+        String filename = "res/code3.java";
         if (args.length > 0)
             filename = args[0];
 

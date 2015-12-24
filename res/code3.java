@@ -5,11 +5,10 @@ import ssdfsdf;
 public class TempClass {
 
     public int main() {
-        double variable = 10;
+        double variable = 0;
         do {
-            variable += 10;
-        } while (variable != 100);
-
+            variable = variable + 10 * 25;
+        } while(variable <= 1000);
         return 12;
     }
 }

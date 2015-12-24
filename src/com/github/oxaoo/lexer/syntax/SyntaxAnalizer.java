@@ -132,7 +132,7 @@ public class SyntaxAnalizer {
         }
 
         if (!currentGrammar.terminals.contains(t)) {
-            if (currentGrammar.S.equals(currentGrammar.mp.get(0))) {
+            if (currentGrammar.S.equals(currentGrammar.mp.get(0)) && this.indexOfConvolution() == null) {
                 return TransferType.ACCESS;
             } else {
                 return TransferType.CONVOLUTION;
