@@ -1,5 +1,10 @@
 package com.github.oxaoo.codegen;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+
 public class CTetrad {
 
     private static int count = 0;
@@ -8,6 +13,9 @@ public class CTetrad {
     private final CTetrad operand1;
     private final CTetrad operand2;
     private final Object result;
+    private final List<CTetrad> tetradList;
+
+    private static Set<String> labels = new TreeSet<>();
 
     public CTetrad(EOpcode opcode, CTetrad operand1, CTetrad operand2, String result) {
 
@@ -15,6 +23,8 @@ public class CTetrad {
         this.operand1 = operand1;
         this.operand2 = operand2;
         this.result = result;
+
+        tetradList = Collections.EMPTY_LIST;
     }
 
     public CTetrad(EOpcode opcode, CTetrad operand1, CTetrad operand2) {
@@ -24,7 +34,7 @@ public class CTetrad {
         this.operand2 = operand2;*/
         //String strId = String.valueOf(count);
         //count++;
-        this(opcode, operand1, operand2, String.valueOf(++count));
+        this(opcode, operand1, operand2, "####" + String.valueOf(++count));
     }
 
     public CTetrad(EOpcode opcode, CTetrad operand1, String result) {
@@ -47,6 +57,17 @@ public class CTetrad {
         operand1 = null;
         operand2 = null;
         result = obj;
+
+        tetradList = Collections.EMPTY_LIST;
+    }
+
+    public CTetrad(List<CTetrad> tetrads) {
+        tetradList = tetrads;
+
+        opcode = null;
+        operand1 = null;
+        operand2 = null;
+        result = null;
     }
 
     @Override
@@ -94,6 +115,19 @@ public class CTetrad {
                 ", operand2='" + strOp2 + '\'' +
                 ", result='" + result + '\'' +
                 '}';
+    }
+
+    public static String getNewLabel(String partLabel) {
+
+        int lastIndex = 0;
+        for(String label : labels) {
+            if (label.startsWith(partLabel))
+                lastIndex = Integer.valueOf(label.substring(partLabel.length()));
+        }
+
+        labels.add(partLabel + lastIndex);
+
+        return partLabel + lastIndex;
     }
 }
 

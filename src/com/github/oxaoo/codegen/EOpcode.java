@@ -1,6 +1,8 @@
 package com.github.oxaoo.codegen;
 
 public enum EOpcode {
+    DEFAULT("DEFAULT"),
+
     BRL("BRL"),
     BF("BF"),
     DEFL("DEFL"),
@@ -12,7 +14,13 @@ public enum EOpcode {
     SUB("SUB"),
     NOT("NOT"),
     AND("AND"),
-    OR("OR"),
+    OR("OR"), /*
+    GTS(">"), //GTS("GTS"),
+    LTS("<"), //LTS("LTS"),
+    NES("!="), //NES("NES"),
+    GETS(">="), //GETS("GETS"),
+    LETS("<="), //LETS("LETS"),
+    ES("=="), //ES("ES"),*/
     GTS("GTS"),
     LTS("LTS"),
     NES("NES"),
