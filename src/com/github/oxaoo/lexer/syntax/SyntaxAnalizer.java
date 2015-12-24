@@ -132,7 +132,7 @@ public class SyntaxAnalizer {
         }
 
         if (!currentGrammar.terminals.contains(t)) {
-            if (currentGrammar.S.equals(currentGrammar.mp.get(0))) {
+            if (currentGrammar.S.equals(currentGrammar.mp.get(0)) && this.indexOfConvolution() == null) {
                 return TransferType.ACCESS;
             } else {
                 return TransferType.CONVOLUTION;
@@ -169,6 +169,8 @@ public class SyntaxAnalizer {
                 currentGrammar.mp.add(0, currentGrammar.S);
 
                 CSyntaxTreeNode newNode = new CSyntaxTreeNode(currentGrammar.S);
+                newNode.indexOfRule = indexOfRule;
+                newNode.indexOfGrammar = currentGrammar.name;
                 newNode.setChildren(currentGrammar.nodes.subList(0, c.convolution.size()));
                 currentGrammar.nodes = currentGrammar.nodes.subList(c.convolution.size(), currentGrammar.nodes.size());
                 currentGrammar.nodes.add(0, newNode);
