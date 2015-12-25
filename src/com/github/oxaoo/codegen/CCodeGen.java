@@ -24,14 +24,16 @@ public class CCodeGen
 
     private void printTetrad(CSyntaxTreeNode root) {
         Enumeration nodes = root.children();
-        if (nodes.hasMoreElements())
+        if (nodes.hasMoreElements()) {
             while (nodes.hasMoreElements()) {
                 CSyntaxTreeNode child = (CSyntaxTreeNode) nodes.nextElement();
                 printTetrad(child);
-                //System.out.println("Tetrad of node: " + root.getTetrad().toString());
             }
+            if (root.getTetrad() != null && root.getTetrad().opcode != null)
+                System.out.println("Tetrad of node: " + root.getTetrad().toString());
+        }
         else {
-            System.out.println("Tetrad of node: " + root.getTetrad().toString());
+            //System.out.println("Tetrad of node: " + root.getTetrad().toString());
         }
     }
 
@@ -101,6 +103,7 @@ public class CCodeGen
         //0-1, 3-14.
         CTetrad tetrad = null;
         switch (numRul) {
+            /*
             case 0:
                 tetrad = makeTetradGr5R0(node);
                 node.setTetrad(tetrad);
@@ -161,15 +164,10 @@ public class CCodeGen
             case 14:
                 tetrad = makeTetradGr5R14(node);
                 node.setTetrad(tetrad);
-                break;
-        }
-    }
+                break;*/
 
-    private void makeTetradWithGr5(int numRul, CSyntaxTreeNode node) {
 
-        //0-21.
-        CTetrad tetrad = null;
-        switch (numRul) {
+
             case 0:
                 tetrad = makeTetradGr6R0(node);
                 node.setTetrad(tetrad);
@@ -228,12 +226,167 @@ public class CCodeGen
                 tetrad = makeTetradGr6R13(node);
                 node.setTetrad(tetrad);
                 break;
-            /*case 14:
-                tetrad = makeTetradGr6R13(node);
+            /*
+            case 14:
+                tetrad = makeTetradGr6R14(node);
                 node.setTetrad(tetrad);
                 break;*/
             case 15:
                 tetrad = makeTetradGr6R15(node);
+                node.setTetrad(tetrad);
+                break;
+        }
+    }
+
+    private void makeTetradWithGr5(int numRul, CSyntaxTreeNode node) {
+
+        //0-21.
+        CTetrad tetrad = null;
+        switch (numRul) {
+            /*
+            case 0:
+                tetrad = makeTetradGr6R0(node);
+                node.setTetrad(tetrad);
+                break;
+            case 1:
+                tetrad = makeTetradGr6R1(node);
+                node.setTetrad(tetrad);
+                break;
+            /*
+            case 2:
+                tetrad = makeTetradGr6R2(node);
+                node.setTetrad(tetrad);
+                break;*//*
+            case 3:
+                tetrad = makeTetradGr6R3(node);
+                node.setTetrad(tetrad);
+                break;
+            case 4:
+                tetrad = makeTetradGr6R4(node);
+                node.setTetrad(tetrad);
+                break;
+            case 5:
+                tetrad = makeTetradGr6R5(node);
+                node.setTetrad(tetrad);
+                break;
+            case 6:
+                tetrad = makeTetradGr6R6(node);
+                node.setTetrad(tetrad);
+                break;
+            case 7:
+                tetrad = makeTetradGr6R7(node);
+                node.setTetrad(tetrad);
+                break;
+            case 8:
+                tetrad = makeTetradGr6R8(node);
+                node.setTetrad(tetrad);
+                break;
+            case 9:
+                tetrad = makeTetradGr6R9(node);
+                node.setTetrad(tetrad);
+                break;
+            case 10:
+                tetrad = makeTetradGr6R10(node);
+                node.setTetrad(tetrad);
+                break;
+
+            case 11:
+                tetrad = makeTetradGr6R11(node);
+                node.setTetrad(tetrad);
+                break;
+            case 12:
+                tetrad = makeTetradGr6R12(node);
+                node.setTetrad(tetrad);
+                break;
+            case 13:
+                tetrad = makeTetradGr6R13(node);
+                node.setTetrad(tetrad);
+                break;
+            /*case 14:
+                tetrad = makeTetradGr6R13(node);
+                node.setTetrad(tetrad);
+                break;*//*
+            case 15:
+                tetrad = makeTetradGr6R15(node);
+                node.setTetrad(tetrad);
+                break;*/
+
+
+            case 0:
+                tetrad = makeTetradGr5R0(node);
+                node.setTetrad(tetrad);
+                break;
+            case 1:
+                tetrad = makeTetradGr5R1(node);
+                node.setTetrad(tetrad);
+                break;
+            case 2:
+                tetrad = makeTetradGr5R2(node);
+                node.setTetrad(tetrad);
+                break;
+            case 3:
+                tetrad = makeTetradGr5R3(node);
+                node.setTetrad(tetrad);
+                break;
+            case 4:
+                tetrad = makeTetradGr5R4(node);
+                node.setTetrad(tetrad);
+                break;
+            case 5:
+                tetrad = makeTetradGr5R5(node);
+                node.setTetrad(tetrad);
+                break;
+            case 6:
+                tetrad = makeTetradGr5R6(node);
+                node.setTetrad(tetrad);
+                break;
+            case 7:
+                tetrad = makeTetradGr5R7(node);
+                node.setTetrad(tetrad);
+                break;
+            case 8:
+                tetrad = makeTetradGr5R8(node);
+                node.setTetrad(tetrad);
+                break;
+            case 9:
+                tetrad = makeTetradGr5R9(node);
+                node.setTetrad(tetrad);
+                break;
+            case 10:
+                tetrad = makeTetradGr5R10(node);
+                node.setTetrad(tetrad);
+                break;
+
+            case 11:
+                tetrad = makeTetradGr5R11(node);
+                node.setTetrad(tetrad);
+                break;
+            case 15:
+                tetrad = makeTetradGr5R15(node);
+                node.setTetrad(tetrad);
+                break;
+            case 16:
+                tetrad = makeTetradGr5R16(node);
+                node.setTetrad(tetrad);
+                break;
+            case 17:
+                tetrad = makeTetradGr5R17(node);
+                node.setTetrad(tetrad);
+                break;
+            case 18:
+                tetrad = makeTetradGr5R18(node);
+                node.setTetrad(tetrad);
+                break;
+            case 19:
+                tetrad = makeTetradGr5R19(node);
+                node.setTetrad(tetrad);
+                break;
+            case 20:
+                tetrad = makeTetradGr5R20(node);
+                node.setTetrad(tetrad);
+                break;
+            case 21:
+                tetrad = makeTetradGr5R21(node);
                 node.setTetrad(tetrad);
                 break;
         }
@@ -252,6 +405,7 @@ public class CCodeGen
         }
 
         //CTetrad id = new CTetrad(subnodes.get(1).s.id);
+        System.out.println("MOV #3ID: " + subnodes.get(0).s.id);
         CTetrad tetrad = new CTetrad(EOpcode.MOV, subnodes.get(1).getTetrad(), subnodes.get(0).s.id);
 
         return tetrad;
@@ -369,7 +523,11 @@ public class CCodeGen
 
         //CTetrad id = new CTetrad(subnodes.get(1).s.id);
         //TODO: проверить на соотвтетсвие другие MOV'ы.
-        CTetrad tetrad = new CTetrad(EOpcode.MOV, new CTetrad(0), subnodes.get(1).s.id);
+        //System.out.println("MOV #4ID: " + subnodes.get(1).s.id);
+        //System.out.println("MOV #4ID.str: " + subnodes.get(1).toString());
+        //System.out.println("MOV #4ID.str2: " + subnodes.get(1).getTetrad().toString());
+        //CTetrad tetrad = new CTetrad(EOpcode.MOV, new CTetrad(0), subnodes.get(1).s.id);
+        CTetrad tetrad = new CTetrad(EOpcode.MOV, new CTetrad(0), subnodes.get(0).getTetrad().result.toString());
 
         return tetrad;
     }
@@ -383,6 +541,7 @@ public class CCodeGen
         }
 
         //CTetrad id = new CTetrad(subnodes.get(1).s.id);
+        System.out.println("MOV #5ID: " + subnodes.get(1).s.id);
         CTetrad tetrad = new CTetrad(EOpcode.MOV, subnodes.get(2).getTetrad(), subnodes.get(1).s.id);
 
         return tetrad;
@@ -876,7 +1035,9 @@ public class CCodeGen
 
         //0-11.
         // =>.
-        CTetrad tetr = new CTetrad(node.s.id);
+        CSyntaxTreeNode id = (CSyntaxTreeNode) node.children().nextElement();
+        System.out.println("**** id ***: " + id.s.id);
+        CTetrad tetr = new CTetrad(id.s.id);
         node.setTetrad(tetr);
     }
 
@@ -968,6 +1129,7 @@ public class CCodeGen
         }
 
         //(3)	$CLASSBODY ? MODIFIER TYPE ID SCOLON
+        System.out.println("MOV #1ID: " + subnodes.get(2).s.id);
         CTetrad tetrad = new CTetrad(EOpcode.MOV, new CTetrad(0), subnodes.get(2).s.id);
         return tetrad;
     }
@@ -981,6 +1143,7 @@ public class CCodeGen
         }
 
         //(2)	$CLASSBODY ? MODIFIER TYPE ID INIT  SCOLON
+        System.out.println("MOV #2ID: " + subnodes.get(2).s.id);
         CTetrad tetrad = new CTetrad(EOpcode.MOV, subnodes.get(3).getTetrad(), subnodes.get(2).s.id);
         return tetrad;
     }

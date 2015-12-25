@@ -9,11 +9,11 @@ public class CTetrad {
 
     private static int count = 0;
 
-    private final EOpcode opcode;
-    private final CTetrad operand1;
-    private final CTetrad operand2;
-    private final Object result;
-    private final List<CTetrad> tetradList;
+    public final EOpcode opcode;
+    public final CTetrad operand1;
+    public final CTetrad operand2;
+    public final Object result;
+    public final List<CTetrad> tetradList;
 
     private static Set<String> labels = new TreeSet<>();
 
