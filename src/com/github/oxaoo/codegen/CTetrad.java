@@ -67,6 +67,8 @@ public class CTetrad {
     public CTetrad(List<CTetrad> tetrads) {
         tetradList = tetrads;
 
+        //System.out.println("@@@ update tetradslist: " + tetradList.toString());
+
         opcode = null;
         operand1 = null;
         operand2 = null;
@@ -121,6 +123,7 @@ public class CTetrad {
                 ", operand1='" + strOp1 + '\'' +
                 ", operand2='" + strOp2 + '\'' +
                 ", result='" + strRes + '\'' +
+                ", TETRADS=" + tetradList.toString() +
                 '}';
     }
 

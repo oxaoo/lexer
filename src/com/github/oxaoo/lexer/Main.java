@@ -1,6 +1,8 @@
 package com.github.oxaoo.lexer;
 
 import com.github.oxaoo.codegen.CCodeGen;
+import com.github.oxaoo.codegen.CTetrad;
+import com.github.oxaoo.codegen.CTetradSimple;
 import com.github.oxaoo.lexer.syntax.Grammar;
 import com.github.oxaoo.lexer.syntax.SyntaxAnalizer;
 import com.github.oxaoo.lexer.syntax.Terminal;
@@ -25,19 +27,28 @@ public class Main {
         startLexer(args);
         CSyntaxTreeNode root = startParser();
         startCodeGen(root);
+
+        //tetradSimple();
+    }
+
+    private static void tetradSimple() {
+        CTetradSimple ts = new CTetradSimple();
+        List<CTetrad> tetrads = ts.getTetrads();
+        System.out.println("TETRADS SIMPLE: " + tetrads.toString());
     }
 
     private static void startCodeGen(CSyntaxTreeNode root) {
         System.out.println("*** Start codegen ***");
         CCodeGen cg = new CCodeGen();
         cg.convert(root);
+        cg.getTetrad();
     }
 
     private static CSyntaxTreeNode startParser() {
         System.out.println("*** Start parser ***");
         BufferedReader br = null;
         try {
-            br = new BufferedReader(new FileReader("res/code6.t"));
+            br = new BufferedReader(new FileReader("res/code3.t"));
 
             String line;
             List<Terminal> tokens = new ArrayList<>();
@@ -95,7 +106,7 @@ public class Main {
 
     public static void startLexer(String[] args) {
         System.out.println("*** Start lexer ***");
-        String filename = "res/code6.java";
+        String filename = "res/code3.java";
         if (args.length > 0)
             filename = args[0];
 

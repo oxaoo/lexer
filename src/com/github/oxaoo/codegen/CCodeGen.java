@@ -13,6 +13,10 @@ public class CCodeGen
     /*
     TODO: Начать обход с листов;
      */
+
+    private boolean inner = true;
+    private CTetrad headTetrad;
+
     public void convert(CSyntaxTreeNode root) {
         printThree(root, 0);
         traversal(root, "/");
@@ -22,19 +26,32 @@ public class CCodeGen
         grammar.loadGrammar();
     }
 
+    public CTetrad getTetrad() {
+        return headTetrad;
+    }
+
     private void printTetrad(CSyntaxTreeNode root) {
+
         Enumeration nodes = root.children();
         if (nodes.hasMoreElements()) {
             while (nodes.hasMoreElements()) {
                 CSyntaxTreeNode child = (CSyntaxTreeNode) nodes.nextElement();
                 printTetrad(child);
             }
-            if (root.getTetrad() != null && root.getTetrad().opcode != null)
-                System.out.println("Tetrad of node: " + root.getTetrad().toString());
+            //if (root.getTetrad() != null && (root.getTetrad().opcode != null || root.getTetrad().tetradList.size() > 0))
+            //if (root.getTetrad() != null && root.getTetrad().opcode != null)
+            if (root.getTetrad() != null && inner && root.s.id.equals("METHODBODY")) {
+                //System.out.println("Tetrad " + root.s.id + " of node: " + root.getTetrad().toString());
+                headTetrad = root.getTetrad();
+                inner = false;
+            }
         }
         else {
             //System.out.println("Tetrad of node: " + root.getTetrad().toString());
         }
+
+        //System.out.println("PRINT TETRAD: " + root.getTetrad().toString());
+        //System.out.println("PRINT TETRAD: " + ((CSyntaxTreeNode) root.children().nextElement()).getTetrad().toString());
     }
 
     private void printThree(CSyntaxTreeNode node, int depth) {
@@ -406,7 +423,7 @@ public class CCodeGen
 
         //CTetrad id = new CTetrad(subnodes.get(1).s.id);
         System.out.println("MOV #3ID: " + subnodes.get(0).s.id);
-        CTetrad tetrad = new CTetrad(EOpcode.MOV, subnodes.get(1).getTetrad(), subnodes.get(0).s.id);
+        CTetrad tetrad = new CTetrad(EOpcode.MOV, subnodes.get(0).getTetrad(), subnodes.get(1).s.id);
 
         return tetrad;
     }
@@ -433,6 +450,7 @@ public class CCodeGen
     }*/
 
     private CTetrad makeTetradGr6R13(CSyntaxTreeNode node) {
+        //System.out.println("****** CALL DO-WHILE *****");
         List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
 
         if (subnodes.size() != 8) {
@@ -443,8 +461,8 @@ public class CCodeGen
         CTetrad labelTetrad = new CTetrad("Lbegin");
         CTetrad labelTetrad2 = new CTetrad("Lend");
         CTetrad t1 = new CTetrad(EOpcode.DEFL, labelTetrad);
-        CTetrad t2 = subnodes.get(2).getTetrad();
-        CTetrad t3 = subnodes.get(6).getTetrad();
+        CTetrad t2 = subnodes.get(5).getTetrad();
+        CTetrad t3 = subnodes.get(1).getTetrad();
         CTetrad t4 = new CTetrad(EOpcode.BF, t3, labelTetrad2);
         CTetrad t5 = new CTetrad(EOpcode.BRL, labelTetrad);
         CTetrad t6 = new CTetrad(EOpcode.DEFL, labelTetrad2);
@@ -461,8 +479,8 @@ public class CCodeGen
             return null;
         }
 
-        CTetrad whi = subnodes.get(0).getTetrad();
-        CTetrad oper = subnodes.get(2).getTetrad();
+        CTetrad whi = subnodes.get(2).getTetrad();
+        CTetrad oper = subnodes.get(0).getTetrad();
 
         CTetrad tetrad = new CTetrad(Arrays.asList(whi, oper));
         return tetrad;
@@ -476,8 +494,8 @@ public class CCodeGen
             return null;
         }
 
-        CTetrad exp = subnodes.get(0).getTetrad();
-        CTetrad oper = subnodes.get(2).getTetrad();
+        CTetrad exp = subnodes.get(2).getTetrad();
+        CTetrad oper = subnodes.get(0).getTetrad();
 
         CTetrad tetrad = new CTetrad(Arrays.asList(exp, oper));
         return tetrad;
@@ -491,8 +509,8 @@ public class CCodeGen
             return null;
         }
 
-        CTetrad varderbody = subnodes.get(0).getTetrad();
-        CTetrad oper = subnodes.get(2).getTetrad();
+        CTetrad varderbody = subnodes.get(2).getTetrad();
+        CTetrad oper = subnodes.get(0).getTetrad();
 
         CTetrad tetrad = new CTetrad(Arrays.asList(varderbody, oper));
         return tetrad;
@@ -506,8 +524,8 @@ public class CCodeGen
             return null;
         }
 
-        CTetrad varderbody = subnodes.get(1).getTetrad();
-        CTetrad oper = subnodes.get(3).getTetrad();
+        CTetrad varderbody = subnodes.get(2).getTetrad();
+        CTetrad oper = subnodes.get(0).getTetrad();
 
         CTetrad tetrad = new CTetrad(Arrays.asList(varderbody, oper));
         return tetrad;
@@ -527,7 +545,7 @@ public class CCodeGen
         //System.out.println("MOV #4ID.str: " + subnodes.get(1).toString());
         //System.out.println("MOV #4ID.str2: " + subnodes.get(1).getTetrad().toString());
         //CTetrad tetrad = new CTetrad(EOpcode.MOV, new CTetrad(0), subnodes.get(1).s.id);
-        CTetrad tetrad = new CTetrad(EOpcode.MOV, new CTetrad(0), subnodes.get(0).getTetrad().result.toString());
+        CTetrad tetrad = new CTetrad(EOpcode.MOV, new CTetrad(0), subnodes.get(1).getTetrad().result.toString());
 
         return tetrad;
     }
@@ -542,7 +560,7 @@ public class CCodeGen
 
         //CTetrad id = new CTetrad(subnodes.get(1).s.id);
         System.out.println("MOV #5ID: " + subnodes.get(1).s.id);
-        CTetrad tetrad = new CTetrad(EOpcode.MOV, subnodes.get(2).getTetrad(), subnodes.get(1).s.id);
+        CTetrad tetrad = new CTetrad(EOpcode.MOV, subnodes.get(0).getTetrad(), subnodes.get(1).s.id);
 
         return tetrad;
     }
@@ -556,7 +574,7 @@ public class CCodeGen
         }
 
         //(6) OPERATOR -> WHILE scolon
-        return subnodes.get(0).getTetrad();
+        return subnodes.get(1).getTetrad();
     }
 
     private CTetrad makeTetradGr6R5(CSyntaxTreeNode node) {
@@ -568,7 +586,7 @@ public class CCodeGen
         }
 
         //(5) OPERATOR -> expression scolon
-        return subnodes.get(0).getTetrad();
+        return subnodes.get(1).getTetrad();
     }
 
     private CTetrad makeTetradGr6R4(CSyntaxTreeNode node) {
@@ -580,7 +598,7 @@ public class CCodeGen
         }
 
         //(4) OPERATOR -> VARDECBODY scolon
-        return subnodes.get(0).getTetrad();
+        return subnodes.get(1).getTetrad();
     }
 
     private CTetrad makeTetradGr6R3(CSyntaxTreeNode node) {
@@ -604,7 +622,7 @@ public class CCodeGen
         }
 
         //(1) METHODBODY -> OPERATOR return scolon
-        return subnodes.get(0).getTetrad();
+        return subnodes.get(2).getTetrad();
     }
 
     private CTetrad makeTetradGr6R0(CSyntaxTreeNode node) {
@@ -687,9 +705,9 @@ public class CCodeGen
             return null;
         }
 
-        CTetrad e1 = subnodes.get(0).getTetrad();
+        CTetrad e1 = subnodes.get(4).getTetrad();
         CTetrad e2 = subnodes.get(2).getTetrad();
-        CTetrad e3 = subnodes.get(4).getTetrad();
+        CTetrad e3 = subnodes.get(0).getTetrad();
 
         CTetrad labelTetrad = new CTetrad("Lelse");
         CTetrad labelTetrad2 = new CTetrad("Lend");
@@ -764,7 +782,7 @@ public class CCodeGen
 
         //(10) LOGICEXP ->  EQUEXP LOGIC EQUEXP
         if (opcode != EOpcode.DEFAULT) {
-            CTetrad tetrad = new CTetrad(opcode, subnodes.get(0).getTetrad(), subnodes.get(2).getTetrad());
+            CTetrad tetrad = new CTetrad(opcode, subnodes.get(2).getTetrad(), subnodes.get(0).getTetrad());
             return tetrad;
         } else return null;
     }
@@ -880,7 +898,7 @@ public class CCodeGen
 
         //(2) MULTEXP -> PRIMARY MULT PRIMARY
         if (opcode != EOpcode.DEFAULT) {
-            CTetrad tetrad = new CTetrad(opcode, subnodes.get(0).getTetrad(), subnodes.get(2).getTetrad());
+            CTetrad tetrad = new CTetrad(opcode, subnodes.get(2).getTetrad(), subnodes.get(0).getTetrad());
             return tetrad;
         } else return null;
     }
@@ -908,7 +926,7 @@ public class CCodeGen
 
         //(1) ADDEXPRES -> MULTEXP ADDIT MULTEXP
         if (opcode != EOpcode.DEFAULT) {
-            CTetrad tetrad = new CTetrad(opcode, subnodes.get(0).getTetrad(), subnodes.get(2).getTetrad());
+            CTetrad tetrad = new CTetrad(opcode, subnodes.get(2).getTetrad(), subnodes.get(0).getTetrad());
             return tetrad;
         } else return null;
     }
@@ -948,7 +966,7 @@ public class CCodeGen
 
         //(0)  EQUEXP -> ADDEXPRES COMPARE ADDEXPRES
         if (opcode != EOpcode.DEFAULT) {
-            CTetrad tetrad = new CTetrad(opcode, subnodes.get(0).getTetrad(), subnodes.get(2).getTetrad());
+            CTetrad tetrad = new CTetrad(opcode, subnodes.get(2).getTetrad(), subnodes.get(0).getTetrad());
             return tetrad;
         } else return null;
 
@@ -1027,7 +1045,7 @@ public class CCodeGen
         }
 
         //(0) INIT -> ASSIGN EXRESSION
-        CTetrad tetrad = new CTetrad(EOpcode.MOV, subnodes.get(1).getTetrad());
+        CTetrad tetrad = new CTetrad(EOpcode.MOV, subnodes.get(0).getTetrad());
         return tetrad;
     }
 
@@ -1116,7 +1134,7 @@ public class CCodeGen
         }
 
         //(5)	$CLASSBODY ? MODIFIER TYPE ID OP CP OB METHODBODY  CB
-        CTetrad tetrad = new CTetrad(EOpcode.MAIN, subnodes.get(6).getTetrad(), subnodes.get(2).s.id);
+        CTetrad tetrad = new CTetrad(EOpcode.MAIN, subnodes.get(1).getTetrad(), subnodes.get(5).s.id);
         return tetrad;
     }
 
@@ -1130,7 +1148,7 @@ public class CCodeGen
 
         //(3)	$CLASSBODY ? MODIFIER TYPE ID SCOLON
         System.out.println("MOV #1ID: " + subnodes.get(2).s.id);
-        CTetrad tetrad = new CTetrad(EOpcode.MOV, new CTetrad(0), subnodes.get(2).s.id);
+        CTetrad tetrad = new CTetrad(EOpcode.MOV, new CTetrad(0), subnodes.get(1).s.id);
         return tetrad;
     }
 
@@ -1144,7 +1162,7 @@ public class CCodeGen
 
         //(2)	$CLASSBODY ? MODIFIER TYPE ID INIT  SCOLON
         System.out.println("MOV #2ID: " + subnodes.get(2).s.id);
-        CTetrad tetrad = new CTetrad(EOpcode.MOV, subnodes.get(3).getTetrad(), subnodes.get(2).s.id);
+        CTetrad tetrad = new CTetrad(EOpcode.MOV, subnodes.get(1).getTetrad(), subnodes.get(2).s.id);
         return tetrad;
     }
 
