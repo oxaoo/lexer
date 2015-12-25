@@ -109,14 +109,18 @@ public class CTetrad {
     {
         String strOp1 = "null";
         String strOp2 = "null";
+        String strRes = "null";
+        String strOpc = "null";
         if (operand1 != null) strOp1 = operand1.toString();
         if (operand2 != null) strOp2 = operand2.toString();
+        if (result != null) strRes = result.toString();
+        if (opcode != null) strOpc = opcode.toString();
 
         return "CTetrad{" +
-                "opcode=" + opcode.toString() +
+                "opcode=" + strOpc +
                 ", operand1='" + strOp1 + '\'' +
                 ", operand2='" + strOp2 + '\'' +
-                ", result='" + result + '\'' +
+                ", result='" + strRes + '\'' +
                 '}';
     }
 

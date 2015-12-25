@@ -11,15 +11,28 @@ import java.util.List;
 public class CCodeGen
 {
     /*
-    TODO: Подтвердить PULLREQ;
     TODO: Начать обход с листов;
      */
     public void convert(CSyntaxTreeNode root) {
         printThree(root, 0);
         traversal(root, "/");
+        printTetrad(root);
 
         CGrammar grammar = new CGrammar();
         grammar.loadGrammar();
+    }
+
+    private void printTetrad(CSyntaxTreeNode root) {
+        Enumeration nodes = root.children();
+        if (nodes.hasMoreElements())
+            while (nodes.hasMoreElements()) {
+                CSyntaxTreeNode child = (CSyntaxTreeNode) nodes.nextElement();
+                printTetrad(child);
+                //System.out.println("Tetrad of node: " + root.getTetrad().toString());
+            }
+        else {
+            System.out.println("Tetrad of node: " + root.getTetrad().toString());
+        }
     }
 
     private void printThree(CSyntaxTreeNode node, int depth) {
@@ -37,14 +50,19 @@ public class CCodeGen
     private void traversal(CSyntaxTreeNode node, String path) {
 
         Enumeration nodes = node.children();
-        if (nodes.hasMoreElements())
+        if (nodes.hasMoreElements()) {
             while (nodes.hasMoreElements()) {
                 CSyntaxTreeNode child = (CSyntaxTreeNode) nodes.nextElement();
                 String fullpath = path + "/" + child.toString();
                 traversal(child, fullpath);
             }
-        else
-            System.out.println("Full path: " + path);
+            makeTetrad(node.indexOfGrammar, node.indexOfRule, node);
+        }
+        else {
+            //System.out.println("Full path: " + path);
+            makeTetrad(node.indexOfGrammar, node.indexOfRule, node);
+            //System.out.println("Tetrad of node: " + node.getTetrad().toString());
+        }
 
     }
 
@@ -72,6 +90,9 @@ public class CCodeGen
             case 6:
                 makeTetradWithGr6(numRul, node);
                 break;
+            default:
+                if (numGr == -1 && numRul == -1)
+                    node.setTetrad(new CTetrad(node.s.id));
         }
     }
 
@@ -855,6 +876,8 @@ public class CCodeGen
 
         //0-11.
         // =>.
+        CTetrad tetr = new CTetrad(node.s.id);
+        node.setTetrad(tetr);
     }
 
     private void makeTetradWithGr2(int numRul, CSyntaxTreeNode node) {
