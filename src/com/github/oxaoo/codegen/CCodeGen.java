@@ -3,6 +3,7 @@ package com.github.oxaoo.codegen;
 import com.github.oxaoo.parser.CSyntaxTree;
 import com.github.oxaoo.parser.CSyntaxTreeNode;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
@@ -10,16 +11,47 @@ import java.util.List;
 public class CCodeGen
 {
     /*
-    TODO: Дописать все правила подграмматик;
-    TODO: Подтвердить PULLREQ;
     TODO: Начать обход с листов;
      */
+
+    private boolean inner = true;
+    private CTetrad headTetrad;
+
     public void convert(CSyntaxTreeNode root) {
         printThree(root, 0);
         traversal(root, "/");
+        printTetrad(root);
 
         CGrammar grammar = new CGrammar();
         grammar.loadGrammar();
+    }
+
+    public CTetrad getTetrad() {
+        return headTetrad;
+    }
+
+    private void printTetrad(CSyntaxTreeNode root) {
+
+        Enumeration nodes = root.children();
+        if (nodes.hasMoreElements()) {
+            while (nodes.hasMoreElements()) {
+                CSyntaxTreeNode child = (CSyntaxTreeNode) nodes.nextElement();
+                printTetrad(child);
+            }
+            //if (root.getTetrad() != null && (root.getTetrad().opcode != null || root.getTetrad().tetradList.size() > 0))
+            //if (root.getTetrad() != null && root.getTetrad().opcode != null)
+            if (root.getTetrad() != null && inner && root.s.id.equals("METHODBODY")) {
+                //System.out.println("Tetrad " + root.s.id + " of node: " + root.getTetrad().toString());
+                headTetrad = root.getTetrad();
+                inner = false;
+            }
+        }
+        else {
+            //System.out.println("Tetrad of node: " + root.getTetrad().toString());
+        }
+
+        //System.out.println("PRINT TETRAD: " + root.getTetrad().toString());
+        //System.out.println("PRINT TETRAD: " + ((CSyntaxTreeNode) root.children().nextElement()).getTetrad().toString());
     }
 
     private void printThree(CSyntaxTreeNode node, int depth) {
@@ -37,14 +69,19 @@ public class CCodeGen
     private void traversal(CSyntaxTreeNode node, String path) {
 
         Enumeration nodes = node.children();
-        if (nodes.hasMoreElements())
+        if (nodes.hasMoreElements()) {
             while (nodes.hasMoreElements()) {
                 CSyntaxTreeNode child = (CSyntaxTreeNode) nodes.nextElement();
                 String fullpath = path + "/" + child.toString();
                 traversal(child, fullpath);
             }
-        else
-            System.out.println("Full path: " + path);
+            makeTetrad(node.indexOfGrammar, node.indexOfRule, node);
+        }
+        else {
+            //System.out.println("Full path: " + path);
+            makeTetrad(node.indexOfGrammar, node.indexOfRule, node);
+            //System.out.println("Tetrad of node: " + node.getTetrad().toString());
+        }
 
     }
 
@@ -72,17 +109,867 @@ public class CCodeGen
             case 6:
                 makeTetradWithGr6(numRul, node);
                 break;
+            default:
+                if (numGr == -1 && numRul == -1)
+                    node.setTetrad(new CTetrad(node.s.id));
         }
     }
 
     private void makeTetradWithGr6(int numRul, CSyntaxTreeNode node) {
 
         //0-1, 3-14.
+        CTetrad tetrad = null;
+        switch (numRul) {
+            /*
+            case 0:
+                tetrad = makeTetradGr5R0(node);
+                node.setTetrad(tetrad);
+                break;
+            case 1:
+                tetrad = makeTetradGr5R1(node);
+                node.setTetrad(tetrad);
+                break;
+            case 2:
+                tetrad = makeTetradGr5R2(node);
+                node.setTetrad(tetrad);
+                break;
+            case 3:
+                tetrad = makeTetradGr5R3(node);
+                node.setTetrad(tetrad);
+                break;
+            case 4:
+                tetrad = makeTetradGr5R4(node);
+                node.setTetrad(tetrad);
+                break;
+            case 5:
+                tetrad = makeTetradGr5R5(node);
+                node.setTetrad(tetrad);
+                break;
+            case 6:
+                tetrad = makeTetradGr5R6(node);
+                node.setTetrad(tetrad);
+                break;
+            case 7:
+                tetrad = makeTetradGr5R7(node);
+                node.setTetrad(tetrad);
+                break;
+            case 8:
+                tetrad = makeTetradGr5R8(node);
+                node.setTetrad(tetrad);
+                break;
+            case 9:
+                tetrad = makeTetradGr5R9(node);
+                node.setTetrad(tetrad);
+                break;
+            case 10:
+                tetrad = makeTetradGr5R10(node);
+                node.setTetrad(tetrad);
+                break;
+
+            case 11:
+                tetrad = makeTetradGr5R11(node);
+                node.setTetrad(tetrad);
+                break;
+            case 12:
+                tetrad = makeTetradGr5R12(node);
+                node.setTetrad(tetrad);
+                break;
+            case 13:
+                tetrad = makeTetradGr5R13(node);
+                node.setTetrad(tetrad);
+                break;
+            case 14:
+                tetrad = makeTetradGr5R14(node);
+                node.setTetrad(tetrad);
+                break;*/
+
+
+
+            case 0:
+                tetrad = makeTetradGr6R0(node);
+                node.setTetrad(tetrad);
+                break;
+            case 1:
+                tetrad = makeTetradGr6R1(node);
+                node.setTetrad(tetrad);
+                break;
+            /*
+            case 2:
+                tetrad = makeTetradGr6R2(node);
+                node.setTetrad(tetrad);
+                break;*/
+            case 3:
+                tetrad = makeTetradGr6R3(node);
+                node.setTetrad(tetrad);
+                break;
+            case 4:
+                tetrad = makeTetradGr6R4(node);
+                node.setTetrad(tetrad);
+                break;
+            case 5:
+                tetrad = makeTetradGr6R5(node);
+                node.setTetrad(tetrad);
+                break;
+            case 6:
+                tetrad = makeTetradGr6R6(node);
+                node.setTetrad(tetrad);
+                break;
+            case 7:
+                tetrad = makeTetradGr6R7(node);
+                node.setTetrad(tetrad);
+                break;
+            case 8:
+                tetrad = makeTetradGr6R8(node);
+                node.setTetrad(tetrad);
+                break;
+            case 9:
+                tetrad = makeTetradGr6R9(node);
+                node.setTetrad(tetrad);
+                break;
+            case 10:
+                tetrad = makeTetradGr6R10(node);
+                node.setTetrad(tetrad);
+                break;
+
+            case 11:
+                tetrad = makeTetradGr6R11(node);
+                node.setTetrad(tetrad);
+                break;
+            case 12:
+                tetrad = makeTetradGr6R12(node);
+                node.setTetrad(tetrad);
+                break;
+            case 13:
+                tetrad = makeTetradGr6R13(node);
+                node.setTetrad(tetrad);
+                break;
+            /*
+            case 14:
+                tetrad = makeTetradGr6R14(node);
+                node.setTetrad(tetrad);
+                break;*/
+            case 15:
+                tetrad = makeTetradGr6R15(node);
+                node.setTetrad(tetrad);
+                break;
+        }
     }
 
     private void makeTetradWithGr5(int numRul, CSyntaxTreeNode node) {
 
-        //0-14.
+        //0-21.
+        CTetrad tetrad = null;
+        switch (numRul) {
+            /*
+            case 0:
+                tetrad = makeTetradGr6R0(node);
+                node.setTetrad(tetrad);
+                break;
+            case 1:
+                tetrad = makeTetradGr6R1(node);
+                node.setTetrad(tetrad);
+                break;
+            /*
+            case 2:
+                tetrad = makeTetradGr6R2(node);
+                node.setTetrad(tetrad);
+                break;*//*
+            case 3:
+                tetrad = makeTetradGr6R3(node);
+                node.setTetrad(tetrad);
+                break;
+            case 4:
+                tetrad = makeTetradGr6R4(node);
+                node.setTetrad(tetrad);
+                break;
+            case 5:
+                tetrad = makeTetradGr6R5(node);
+                node.setTetrad(tetrad);
+                break;
+            case 6:
+                tetrad = makeTetradGr6R6(node);
+                node.setTetrad(tetrad);
+                break;
+            case 7:
+                tetrad = makeTetradGr6R7(node);
+                node.setTetrad(tetrad);
+                break;
+            case 8:
+                tetrad = makeTetradGr6R8(node);
+                node.setTetrad(tetrad);
+                break;
+            case 9:
+                tetrad = makeTetradGr6R9(node);
+                node.setTetrad(tetrad);
+                break;
+            case 10:
+                tetrad = makeTetradGr6R10(node);
+                node.setTetrad(tetrad);
+                break;
+
+            case 11:
+                tetrad = makeTetradGr6R11(node);
+                node.setTetrad(tetrad);
+                break;
+            case 12:
+                tetrad = makeTetradGr6R12(node);
+                node.setTetrad(tetrad);
+                break;
+            case 13:
+                tetrad = makeTetradGr6R13(node);
+                node.setTetrad(tetrad);
+                break;
+            /*case 14:
+                tetrad = makeTetradGr6R13(node);
+                node.setTetrad(tetrad);
+                break;*//*
+            case 15:
+                tetrad = makeTetradGr6R15(node);
+                node.setTetrad(tetrad);
+                break;*/
+
+
+            case 0:
+                tetrad = makeTetradGr5R0(node);
+                node.setTetrad(tetrad);
+                break;
+            case 1:
+                tetrad = makeTetradGr5R1(node);
+                node.setTetrad(tetrad);
+                break;
+            case 2:
+                tetrad = makeTetradGr5R2(node);
+                node.setTetrad(tetrad);
+                break;
+            case 3:
+                tetrad = makeTetradGr5R3(node);
+                node.setTetrad(tetrad);
+                break;
+            case 4:
+                tetrad = makeTetradGr5R4(node);
+                node.setTetrad(tetrad);
+                break;
+            case 5:
+                tetrad = makeTetradGr5R5(node);
+                node.setTetrad(tetrad);
+                break;
+            case 6:
+                tetrad = makeTetradGr5R6(node);
+                node.setTetrad(tetrad);
+                break;
+            case 7:
+                tetrad = makeTetradGr5R7(node);
+                node.setTetrad(tetrad);
+                break;
+            case 8:
+                tetrad = makeTetradGr5R8(node);
+                node.setTetrad(tetrad);
+                break;
+            case 9:
+                tetrad = makeTetradGr5R9(node);
+                node.setTetrad(tetrad);
+                break;
+            case 10:
+                tetrad = makeTetradGr5R10(node);
+                node.setTetrad(tetrad);
+                break;
+
+            case 11:
+                tetrad = makeTetradGr5R11(node);
+                node.setTetrad(tetrad);
+                break;
+            case 15:
+                tetrad = makeTetradGr5R15(node);
+                node.setTetrad(tetrad);
+                break;
+            case 16:
+                tetrad = makeTetradGr5R16(node);
+                node.setTetrad(tetrad);
+                break;
+            case 17:
+                tetrad = makeTetradGr5R17(node);
+                node.setTetrad(tetrad);
+                break;
+            case 18:
+                tetrad = makeTetradGr5R18(node);
+                node.setTetrad(tetrad);
+                break;
+            case 19:
+                tetrad = makeTetradGr5R19(node);
+                node.setTetrad(tetrad);
+                break;
+            case 20:
+                tetrad = makeTetradGr5R20(node);
+                node.setTetrad(tetrad);
+                break;
+            case 21:
+                tetrad = makeTetradGr5R21(node);
+                node.setTetrad(tetrad);
+                break;
+        }
+
+        if (tetrad != null) node.setTetrad(tetrad);
+        else
+            System.err.println("Tetrad for GR6 is null");
+    }
+
+    private CTetrad makeTetradGr6R15(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 2) {
+            System.err.println("Not appropriate number of arguments for the rule #6.15");
+            return null;
+        }
+
+        //CTetrad id = new CTetrad(subnodes.get(1).s.id);
+        System.out.println("MOV #3ID: " + subnodes.get(0).s.id);
+        CTetrad tetrad = new CTetrad(EOpcode.MOV, subnodes.get(0).getTetrad(), subnodes.get(1).s.id);
+
+        return tetrad;
+    }
+
+    /*
+    private CTetrad makeTetradGr6R14(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 7) {
+            System.err.println("Not appropriate number of arguments for the rule #6.14");
+            return null;
+        }
+
+        CTetrad labelTetrad = new CTetrad("Lbegin");
+        CTetrad labelTetrad2 = new CTetrad("Lend");
+        CTetrad t1 = new CTetrad(EOpcode.DEFL, labelTetrad);
+        CTetrad t3 = subnodes.get(5).getTetrad();
+        CTetrad t4 = new CTetrad(EOpcode.BF, t3, labelTetrad2);
+        CTetrad t5 = new CTetrad(EOpcode.BRL, labelTetrad);
+        CTetrad t6 = new CTetrad(EOpcode.DEFL, labelTetrad2);
+
+        CTetrad tetrad = new CTetrad(Arrays.asList(t1, t2, t3, t4, t5, t6));
+        return  tetrad;
+    }*/
+
+    private CTetrad makeTetradGr6R13(CSyntaxTreeNode node) {
+        //System.out.println("****** CALL DO-WHILE *****");
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 8) {
+            System.err.println("Not appropriate number of arguments for the rule #6.13");
+            return null;
+        }
+
+        CTetrad labelTetrad = new CTetrad("Lbegin");
+        CTetrad labelTetrad2 = new CTetrad("Lend");
+        CTetrad t1 = new CTetrad(EOpcode.DEFL, labelTetrad);
+        CTetrad t2 = subnodes.get(5).getTetrad();
+        CTetrad t3 = subnodes.get(1).getTetrad();
+        CTetrad t4 = new CTetrad(EOpcode.BF, t3, labelTetrad2);
+        CTetrad t5 = new CTetrad(EOpcode.BRL, labelTetrad);
+        CTetrad t6 = new CTetrad(EOpcode.DEFL, labelTetrad2);
+
+        CTetrad tetrad = new CTetrad(Arrays.asList(t1, t2, t3, t4, t5, t6));
+        return  tetrad;
+    }
+
+    private CTetrad makeTetradGr6R12(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 3) {
+            System.err.println("Not appropriate number of arguments for the rule #6.12");
+            return null;
+        }
+
+        CTetrad whi = subnodes.get(2).getTetrad();
+        CTetrad oper = subnodes.get(0).getTetrad();
+
+        CTetrad tetrad = new CTetrad(Arrays.asList(whi, oper));
+        return tetrad;
+    }
+
+    private CTetrad makeTetradGr6R11(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 3) {
+            System.err.println("Not appropriate number of arguments for the rule #6.11");
+            return null;
+        }
+
+        CTetrad exp = subnodes.get(2).getTetrad();
+        CTetrad oper = subnodes.get(0).getTetrad();
+
+        CTetrad tetrad = new CTetrad(Arrays.asList(exp, oper));
+        return tetrad;
+    }
+
+    private CTetrad makeTetradGr6R10(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 3) {
+            System.err.println("Not appropriate number of arguments for the rule #6.10");
+            return null;
+        }
+
+        CTetrad varderbody = subnodes.get(2).getTetrad();
+        CTetrad oper = subnodes.get(0).getTetrad();
+
+        CTetrad tetrad = new CTetrad(Arrays.asList(varderbody, oper));
+        return tetrad;
+    }
+
+    private CTetrad makeTetradGr6R9(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 4) {
+            System.err.println("Not appropriate number of arguments for the rule #6.9");
+            return null;
+        }
+
+        CTetrad varderbody = subnodes.get(2).getTetrad();
+        CTetrad oper = subnodes.get(0).getTetrad();
+
+        CTetrad tetrad = new CTetrad(Arrays.asList(varderbody, oper));
+        return tetrad;
+    }
+
+    private CTetrad makeTetradGr6R8(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 2) {
+            System.err.println("Not appropriate number of arguments for the rule #6.8");
+            return null;
+        }
+
+        //CTetrad id = new CTetrad(subnodes.get(1).s.id);
+        //TODO: проверить на соотвтетсвие другие MOV'ы.
+        //System.out.println("MOV #4ID: " + subnodes.get(1).s.id);
+        //System.out.println("MOV #4ID.str: " + subnodes.get(1).toString());
+        //System.out.println("MOV #4ID.str2: " + subnodes.get(1).getTetrad().toString());
+        //CTetrad tetrad = new CTetrad(EOpcode.MOV, new CTetrad(0), subnodes.get(1).s.id);
+        CTetrad tetrad = new CTetrad(EOpcode.MOV, new CTetrad(0), subnodes.get(1).getTetrad().result.toString());
+
+        return tetrad;
+    }
+
+    private CTetrad makeTetradGr6R7(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 3) {
+            System.err.println("Not appropriate number of arguments for the rule #6.7");
+            return null;
+        }
+
+        //CTetrad id = new CTetrad(subnodes.get(1).s.id);
+        System.out.println("MOV #5ID: " + subnodes.get(1).s.id);
+        CTetrad tetrad = new CTetrad(EOpcode.MOV, subnodes.get(0).getTetrad(), subnodes.get(1).s.id);
+
+        return tetrad;
+    }
+
+    private CTetrad makeTetradGr6R6(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 2) {
+            System.err.println("Not appropriate number of arguments for the rule #6.6");
+            return null;
+        }
+
+        //(6) OPERATOR -> WHILE scolon
+        return subnodes.get(1).getTetrad();
+    }
+
+    private CTetrad makeTetradGr6R5(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 2) {
+            System.err.println("Not appropriate number of arguments for the rule #6.5");
+            return null;
+        }
+
+        //(5) OPERATOR -> expression scolon
+        return subnodes.get(1).getTetrad();
+    }
+
+    private CTetrad makeTetradGr6R4(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 2) {
+            System.err.println("Not appropriate number of arguments for the rule #6.4");
+            return null;
+        }
+
+        //(4) OPERATOR -> VARDECBODY scolon
+        return subnodes.get(1).getTetrad();
+    }
+
+    private CTetrad makeTetradGr6R3(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 3) {
+            System.err.println("Not appropriate number of arguments for the rule #6.3");
+            return null;
+        }
+
+        //(3) OPERATOR -> midifer VARDECBODY scolon
+        return subnodes.get(1).getTetrad();
+    }
+
+    private CTetrad makeTetradGr6R1(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 3) {
+            System.err.println("Not appropriate number of arguments for the rule #6.1");
+            return null;
+        }
+
+        //(1) METHODBODY -> OPERATOR return scolon
+        return subnodes.get(2).getTetrad();
+    }
+
+    private CTetrad makeTetradGr6R0(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 1) {
+            System.err.println("Not appropriate number of arguments for the rule #6.0");
+            return null;
+        }
+
+        //(0) METHODBODY -> OPERATOR
+        return subnodes.get(0).getTetrad();
+    }
+
+    private CTetrad makeTetradGr5R21(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 1) {
+            System.err.println("Not appropriate number of arguments for the rule #5.21");
+            return null;
+        }
+
+        //(21) MULTEXP -> PRIMARY
+        return subnodes.get(0).getTetrad();
+    }
+
+    private CTetrad makeTetradGr5R20(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 1) {
+            System.err.println("Not appropriate number of arguments for the rule #5.20");
+            return null;
+        }
+
+        //(20) ADDEXPRES -> MULTEXP
+        return subnodes.get(0).getTetrad();
+    }
+
+    private CTetrad makeTetradGr5R19(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 1) {
+            System.err.println("Not appropriate number of arguments for the rule #5.19");
+            return null;
+        }
+
+        //(19)  EQUEXP -> ADDEXPRES
+        return subnodes.get(0).getTetrad();
+    }
+
+    private CTetrad makeTetradGr5R18(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 1) {
+            System.err.println("Not appropriate number of arguments for the rule #5.18");
+            return null;
+        }
+
+        //(18) LOGICEXP ->  EQUEXP
+        return subnodes.get(0).getTetrad();
+    }
+
+    private CTetrad makeTetradGr5R17(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 1) {
+            System.err.println("Not appropriate number of arguments for the rule #5.17");
+            return null;
+        }
+
+        //(17) TERNARYEXP -> LOGICEXP
+        return subnodes.get(0).getTetrad();
+    }
+
+    private CTetrad makeTetradGr5R16(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 5) {
+            System.err.println("Not appropriate number of arguments for the rule #5.16");
+            return null;
+        }
+
+        CTetrad e1 = subnodes.get(4).getTetrad();
+        CTetrad e2 = subnodes.get(2).getTetrad();
+        CTetrad e3 = subnodes.get(0).getTetrad();
+
+        CTetrad labelTetrad = new CTetrad("Lelse");
+        CTetrad labelTetrad2 = new CTetrad("Lend");
+        CTetrad t1 = new CTetrad(EOpcode.BF, labelTetrad, e1, null);
+        CTetrad t2 = new CTetrad(EOpcode.MOV, e2);
+        CTetrad t3 = new CTetrad(EOpcode.BRL, labelTetrad2);
+        CTetrad t4 = new CTetrad(EOpcode.DEFL, labelTetrad);
+        CTetrad t5 = new CTetrad(EOpcode.MOV, e3);
+        CTetrad t6 = new CTetrad(EOpcode.DEFL, labelTetrad2);
+
+        CTetrad tetrad = new CTetrad(Arrays.asList(t1, t2, t3, t4, t5, t6));
+
+        return tetrad;
+    }
+
+    private CTetrad makeTetradGr5R15(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 1) {
+            System.err.println("Not appropriate number of arguments for the rule #5.15");
+            return null;
+        }
+
+        //(15) EXPRESSION -> TERNARYEXP
+        return subnodes.get(0).getTetrad();
+    }
+
+    private CTetrad makeTetradGr5R14(CSyntaxTreeNode node) {
+        return null;
+    }
+
+    private CTetrad makeTetradGr5R13(CSyntaxTreeNode node) {
+        return null;
+    }
+
+    private CTetrad makeTetradGr5R12(CSyntaxTreeNode node) {
+        return null;
+    }
+
+    private CTetrad makeTetradGr5R11(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 1) {
+            System.err.println("Not appropriate number of arguments for the rule #5.11");
+            return null;
+        }
+
+        //(11) PRIMARY -> MATROPER
+        return subnodes.get(0).getTetrad();
+    }
+
+    private CTetrad makeTetradGr5R10(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 3) {
+            System.err.println("Not appropriate number of arguments for the rule #5.2");
+            return null;
+        }
+
+        String logic = subnodes.get(1).s.id.toLowerCase();
+
+        EOpcode opcode = EOpcode.DEFAULT;
+
+        switch (logic) {
+            case "logic0":
+                opcode = EOpcode.AND;
+                break;
+            case "logic1":
+                opcode = EOpcode.OR;
+                break;
+        }
+
+        //(10) LOGICEXP ->  EQUEXP LOGIC EQUEXP
+        if (opcode != EOpcode.DEFAULT) {
+            CTetrad tetrad = new CTetrad(opcode, subnodes.get(2).getTetrad(), subnodes.get(0).getTetrad());
+            return tetrad;
+        } else return null;
+    }
+
+    private CTetrad makeTetradGr5R9(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 1) {
+            System.err.println("Not appropriate number of arguments for the rule #5.9");
+            return null;
+        }
+
+        //(9) VAR -> ID
+        CTetrad tetrad = new CTetrad(subnodes.get(0).s.id);
+        return tetrad;
+    }
+
+    private CTetrad makeTetradGr5R8(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 1) {
+            System.err.println("Not appropriate number of arguments for the rule #5.8");
+            return null;
+        }
+
+        //(8) NUMBER -> BOOL
+        CTetrad tetrad = new CTetrad(subnodes.get(0).s.id);
+        return tetrad;
+    }
+
+    private CTetrad makeTetradGr5R7(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 1) {
+            System.err.println("Not appropriate number of arguments for the rule #5.7");
+            return null;
+        }
+
+        //(7) NUMBER -> REAL
+        CTetrad tetrad = new CTetrad(subnodes.get(0).s.id);
+        return tetrad;
+    }
+
+    private CTetrad makeTetradGr5R6(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 1) {
+            System.err.println("Not appropriate number of arguments for the rule #5.6");
+            return null;
+        }
+
+        //(5) PRIMARY -> VAR
+        CTetrad tetrad = new CTetrad(subnodes.get(0).s.id);
+        return tetrad;
+    }
+
+    private CTetrad makeTetradGr5R5(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 1) {
+            System.err.println("Not appropriate number of arguments for the rule #5.5");
+            return null;
+        }
+
+        //(5) PRIMARY -> VAR
+        return subnodes.get(0).getTetrad();
+    }
+
+    private CTetrad makeTetradGr5R4(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 1) {
+            System.err.println("Not appropriate number of arguments for the rule #5.4");
+            return null;
+        }
+
+        //(4) PRIMARY -> NUMBER
+        return subnodes.get(0).getTetrad();
+    }
+
+    private CTetrad makeTetradGr5R3(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 3) {
+            System.err.println("Not appropriate number of arguments for the rule #5.3");
+            return null;
+        }
+
+        //(3) PRIMARY -> OP EXPRESSION CP
+        return subnodes.get(1).getTetrad();
+    }
+
+    private CTetrad makeTetradGr5R2(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 3) {
+            System.err.println("Not appropriate number of arguments for the rule #5.2");
+            return null;
+        }
+
+        String mult = subnodes.get(1).s.id.toLowerCase();
+
+        EOpcode opcode = EOpcode.DEFAULT;
+
+        switch (mult) {
+            case "mult0":
+                opcode = EOpcode.MUL;
+                break;
+            case "mult1":
+                opcode = EOpcode.DIV;
+                break;
+        }
+
+        //(2) MULTEXP -> PRIMARY MULT PRIMARY
+        if (opcode != EOpcode.DEFAULT) {
+            CTetrad tetrad = new CTetrad(opcode, subnodes.get(2).getTetrad(), subnodes.get(0).getTetrad());
+            return tetrad;
+        } else return null;
+    }
+
+    private CTetrad makeTetradGr5R1(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 3) {
+            System.err.println("Not appropriate number of arguments for the rule #5.1");
+            return null;
+        }
+
+        String addit = subnodes.get(1).s.id.toLowerCase();
+
+        EOpcode opcode = EOpcode.DEFAULT;
+
+        switch (addit) {
+            case "addit0":
+                opcode = EOpcode.ADD;
+                break;
+            case "addit1":
+                opcode = EOpcode.SUB;
+                break;
+        }
+
+        //(1) ADDEXPRES -> MULTEXP ADDIT MULTEXP
+        if (opcode != EOpcode.DEFAULT) {
+            CTetrad tetrad = new CTetrad(opcode, subnodes.get(2).getTetrad(), subnodes.get(0).getTetrad());
+            return tetrad;
+        } else return null;
+    }
+
+    private CTetrad makeTetradGr5R0(CSyntaxTreeNode node) {
+        List<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 3) {
+            System.err.println("Not appropriate number of arguments for the rule #5.0");
+            return null;
+        }
+
+        String compare = subnodes.get(1).s.id.toLowerCase();
+
+        EOpcode opcode = EOpcode.DEFAULT;
+
+        switch (compare) {
+            case "compare0":
+                opcode = EOpcode.GTS;
+                break;
+            case "compare1":
+                opcode = EOpcode.LTS;
+                break;
+            case "compare2":
+                opcode = EOpcode.GETS;
+                break;
+            case "compare3":
+                opcode = EOpcode.LETS;
+                break;
+            case "compare4":
+                opcode = EOpcode.ES;
+                break;
+            case "compare5":
+                opcode = EOpcode.NES;
+                break;
+        }
+
+        //(0)  EQUEXP -> ADDEXPRES COMPARE ADDEXPRES
+        if (opcode != EOpcode.DEFAULT) {
+            CTetrad tetrad = new CTetrad(opcode, subnodes.get(2).getTetrad(), subnodes.get(0).getTetrad());
+            return tetrad;
+        } else return null;
+
     }
 
     private void makeTetradWithGr4(int numRul, CSyntaxTreeNode node) {
@@ -158,7 +1045,7 @@ public class CCodeGen
         }
 
         //(0) INIT -> ASSIGN EXRESSION
-        CTetrad tetrad = new CTetrad(EOpcode.MOV, subnodes.get(1).getTetrad());
+        CTetrad tetrad = new CTetrad(EOpcode.MOV, subnodes.get(0).getTetrad());
         return tetrad;
     }
 
@@ -166,6 +1053,10 @@ public class CCodeGen
 
         //0-11.
         // =>.
+        CSyntaxTreeNode id = (CSyntaxTreeNode) node.children().nextElement();
+        System.out.println("**** id ***: " + id.s.id);
+        CTetrad tetr = new CTetrad(id.s.id);
+        node.setTetrad(tetr);
     }
 
     private void makeTetradWithGr2(int numRul, CSyntaxTreeNode node) {
@@ -243,7 +1134,7 @@ public class CCodeGen
         }
 
         //(5)	$CLASSBODY ? MODIFIER TYPE ID OP CP OB METHODBODY  CB
-        CTetrad tetrad = new CTetrad(EOpcode.MAIN, subnodes.get(6).getTetrad(), subnodes.get(2).s.id);
+        CTetrad tetrad = new CTetrad(EOpcode.MAIN, subnodes.get(1).getTetrad(), subnodes.get(5).s.id);
         return tetrad;
     }
 
@@ -256,7 +1147,8 @@ public class CCodeGen
         }
 
         //(3)	$CLASSBODY ? MODIFIER TYPE ID SCOLON
-        CTetrad tetrad = new CTetrad(EOpcode.MOV, new CTetrad(0), subnodes.get(2).s.id);
+        System.out.println("MOV #1ID: " + subnodes.get(2).s.id);
+        CTetrad tetrad = new CTetrad(EOpcode.MOV, new CTetrad(0), subnodes.get(1).s.id);
         return tetrad;
     }
 
@@ -269,7 +1161,8 @@ public class CCodeGen
         }
 
         //(2)	$CLASSBODY ? MODIFIER TYPE ID INIT  SCOLON
-        CTetrad tetrad = new CTetrad(EOpcode.MOV, subnodes.get(3).getTetrad(), subnodes.get(2).s.id);
+        System.out.println("MOV #2ID: " + subnodes.get(2).s.id);
+        CTetrad tetrad = new CTetrad(EOpcode.MOV, subnodes.get(1).getTetrad(), subnodes.get(2).s.id);
         return tetrad;
     }
 

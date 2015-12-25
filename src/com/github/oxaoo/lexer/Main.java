@@ -1,6 +1,8 @@
 package com.github.oxaoo.lexer;
 
 import com.github.oxaoo.codegen.CCodeGen;
+import com.github.oxaoo.codegen.CTetrad;
+import com.github.oxaoo.codegen.CTetradSimple;
 import com.github.oxaoo.lexer.syntax.Grammar;
 import com.github.oxaoo.lexer.syntax.SyntaxAnalizer;
 import com.github.oxaoo.lexer.syntax.Terminal;
@@ -25,12 +27,21 @@ public class Main {
         startLexer(args);
         CSyntaxTreeNode root = startParser();
         startCodeGen(root);
+
+        //tetradSimple();
+    }
+
+    private static void tetradSimple() {
+        CTetradSimple ts = new CTetradSimple();
+        List<CTetrad> tetrads = ts.getTetrads();
+        System.out.println("TETRADS SIMPLE: " + tetrads.toString());
     }
 
     private static void startCodeGen(CSyntaxTreeNode root) {
         System.out.println("*** Start codegen ***");
         CCodeGen cg = new CCodeGen();
         cg.convert(root);
+        cg.getTetrad();
     }
 
     private static CSyntaxTreeNode startParser() {

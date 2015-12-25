@@ -1,20 +1,33 @@
 package com.github.oxaoo.codegen;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+
 public class CTetrad {
 
     private static int count = 0;
 
-    private final EOpcode opcode;
-    private final CTetrad operand1;
-    private final CTetrad operand2;
-    private final Object result;
+    public final EOpcode opcode;
+    public final CTetrad operand1;
+    public final CTetrad operand2;
+    public final Object result;
+    public final List<CTetrad> tetradList;
+
+    private static Set<String> labels = new TreeSet<>();
 
     public CTetrad(EOpcode opcode, CTetrad operand1, CTetrad operand2, String result) {
 
         this.opcode = opcode;
         this.operand1 = operand1;
         this.operand2 = operand2;
-        this.result = result;
+        if (result.equals(""))
+            this.result = result;
+        else
+            this.result = "#" + result;
+
+        tetradList = Collections.EMPTY_LIST;
     }
 
     public CTetrad(EOpcode opcode, CTetrad operand1, CTetrad operand2) {
@@ -47,6 +60,19 @@ public class CTetrad {
         operand1 = null;
         operand2 = null;
         result = obj;
+
+        tetradList = Collections.EMPTY_LIST;
+    }
+
+    public CTetrad(List<CTetrad> tetrads) {
+        tetradList = tetrads;
+
+        //System.out.println("@@@ update tetradslist: " + tetradList.toString());
+
+        opcode = null;
+        operand1 = null;
+        operand2 = null;
+        result = null;
     }
 
     @Override
@@ -85,15 +111,33 @@ public class CTetrad {
     {
         String strOp1 = "null";
         String strOp2 = "null";
+        String strRes = "null";
+        String strOpc = "null";
         if (operand1 != null) strOp1 = operand1.toString();
         if (operand2 != null) strOp2 = operand2.toString();
+        if (result != null) strRes = result.toString();
+        if (opcode != null) strOpc = opcode.toString();
 
         return "CTetrad{" +
-                "opcode=" + opcode.toString() +
+                "opcode=" + strOpc +
                 ", operand1='" + strOp1 + '\'' +
                 ", operand2='" + strOp2 + '\'' +
-                ", result='" + result + '\'' +
+                ", result='" + strRes + '\'' +
+                ", TETRADS=" + tetradList.toString() +
                 '}';
+    }
+
+    public static String getNewLabel(String partLabel) {
+
+        int lastIndex = 0;
+        for(String label : labels) {
+            if (label.startsWith(partLabel))
+                lastIndex = Integer.valueOf(label.substring(partLabel.length()));
+        }
+
+        labels.add(partLabel + lastIndex);
+
+        return partLabel + lastIndex;
     }
 }
 
