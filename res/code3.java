@@ -8,7 +8,7 @@ public class TempClass {
         double variable = 0;
         do {
             variable = variable + 10 * 25;
-        } while(variable <= 1000);
+        } while(1000 >= variable);
         return 12;
     }
 }

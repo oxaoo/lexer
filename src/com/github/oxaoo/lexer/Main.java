@@ -18,13 +18,11 @@ import com.github.oxaoo.parser.CSyntaxTree;
 import com.github.oxaoo.parser.CSyntaxTreeNode;
 
 import javax.swing.*;
-import java.util.ArrayList;
-
 
 public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
-        startLexer(args);
+        //startLexer(args);
         CSyntaxTreeNode root = startParser();
         startCodeGen(root);
 
