@@ -1,4 +1,4 @@
-cb, comma, cp, enm, id, INIT, METHODBODY, modifier, ob, op, scolon, TYPE
+cb, comma, cp, enm, id, INIT, METHODBODY, modifier, ob, op, scolon, TYPE, print
 id, 4
 modifier, 3
 ob, 6

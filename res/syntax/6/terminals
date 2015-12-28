@@ -1,4 +1,4 @@
-cb, cp, do, EXPRESSION, id, INIT, modifier, ob, op, return, scolon, TYPE, while
+cb, cp, do, EXPRESSION, id, INIT, modifier, ob, op, return, scolon, TYPE, while, print
 op, 5
 return, 5
 type, 3

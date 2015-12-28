@@ -14,3 +14,6 @@ OPERATOR -> WHILE scolon OPERATOR
 WHILE -> do ob METHODBODY cb while op EXPRESSION cp
 WHILE -> do ob cb while op EXPRESSION cp
 VARDECBODY -> id INIT
+OPERATOR -> PRINTF scolon
+OPERATOR -> PRINTF scolon OPERATOR
+PRINTF -> print op id cp

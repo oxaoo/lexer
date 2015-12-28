@@ -112,3 +112,15 @@ scolon [modifier, TYPE, id, op, CLASSBODY, cp, ob, METHODBODY, cb, CLASSBODY] | 
                         comma [TYPE, id, CLASSBODY]                          | 21, CLASSBODY
 -----------------------------------------------------------------------------+---------------
                           op [TYPE, id, CLASSBODY]                           | 21, CLASSBODY
+-----------------------------------------------------------------------------+---------------
+                   cb [print, op, CLASSBODY, cp, scolon]                     | 22, CLASSBODY
+-----------------------------------------------------------------------------+---------------
+                 scolon [print, op, CLASSBODY, cp, scolon]                   | 22, CLASSBODY
+-----------------------------------------------------------------------------+---------------
+                    # [print, op, CLASSBODY, cp, scolon]                     | 22, CLASSBODY
+-----------------------------------------------------------------------------+---------------
+              cb [print, op, CLASSBODY, cp, scolon, CLASSBODY]               | 23, CLASSBODY
+-----------------------------------------------------------------------------+---------------
+            scolon [print, op, CLASSBODY, cp, scolon, CLASSBODY]             | 23, CLASSBODY
+-----------------------------------------------------------------------------+---------------
+              # [print, op, CLASSBODY, cp, scolon, CLASSBODY]                | 23, CLASSBODY
