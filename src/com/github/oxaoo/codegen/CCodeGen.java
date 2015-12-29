@@ -50,41 +50,7 @@ public class CCodeGen {
             }
         }
 
-        /*
-        Enumeration subnodes = node.children();
-        if (subnodes.hasMoreElements()) {
-            while (subnodes.hasMoreElements()) {
-                CSyntaxTreeNode subnode = (CSyntaxTreeNode) subnodes.nextElement();
-                boolean b = genTetrad(subnode);
-                //if (!b) System.err.println("*** RETURN FALSE FROM GENTETRAD ***");
-            }
-            //makeTetrad(node.indexOfGrammar, node.indexOfRule, node);
-        }*/
-
         boolean m = makeTetrad(node);
-
-        //System.out.println("Node: " + node.s.id + ", size(" + subnodes.size() + "), Tetrad: " + node.getTetrad().toString());
-        //if (!m) System.err.println("*** RETURN FALSE FROM MAKETETRAD ***");
-
-        /*
-        if (node.s.id.equals("TRANSLATED")) {
-            System.out.println("Subtetrad of TRANSLATED: ");
-            for(CSyntaxTreeNode n: subnodes)
-                System.out.println("\tSubnode: " + n.s.id + ", tetrad: " + n.getTetrad().toString());
-        }
-
-        if (node.s.id.equals("TRANSLATEDDEC")) {
-            System.out.println("Subtetrad of TRANSLATEDDEC: ");
-            for(CSyntaxTreeNode n: subnodes)
-                System.out.println("\tSubnode: " + n.s.id + ", tetrad: " + n.getTetrad().toString());
-        }
-
-        if (node.s.id.equals("CLASSBODY")) {
-            System.out.println("Subtetrad of CLASSBODY: ");
-            for(CSyntaxTreeNode n: subnodes)
-                System.out.println("\tSubnode: " + n.s.id + ", tetrad: " + n.getTetrad().toString());
-        }*/
-
         return m;
     }
 
@@ -149,11 +115,59 @@ public class CCodeGen {
                 return makeTetradG6R14(node);
             case 15:
                 return makeTetradG6R15(node);
+            case 16:
+                return makeTetradG6R16(node);
+            case 17:
+                return makeTetradG6R17(node);
+            case 18:
+                return makeTetradG6R18(node);
 
             default:
                 System.err.println("Unexpected index of rule (" + node.indexOfRule + ") for grammar #" + node.indexOfGrammar);
                 return false;
         }
+    }
+
+    private boolean makeTetradG6R18(CSyntaxTreeNode node) {
+
+        //18 PRINTF -> print op id cp
+        ArrayList<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 4) return false;
+
+        String print = subnodes.get(3).s.id;
+        String id = subnodes.get(1).s.id;
+        CTetradObject op1 = new CTetrad(print);
+        CTetradObject op2 = new CTetrad("#" + id);
+        CTetradObject ruleTetrad = new CTetrad(EOpcode.CALL, op1, op2);
+        node.setTetrad(ruleTetrad);
+        return true;
+    }
+
+    private boolean makeTetradG6R17(CSyntaxTreeNode node) {
+
+        //17 OPERATOR -> PRINTF scolon OPERATOR
+        ArrayList<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 3) return false;
+
+        CTetradObject tetrad1 = subnodes.get(2).getTetrad();
+        CTetradObject tetrad2 = subnodes.get(0).getTetrad();
+        CTetradObject ruleTetrad = new CTetrad(Arrays.asList(tetrad1, tetrad2));
+        node.setTetrad(ruleTetrad);
+        return true;
+    }
+
+    private boolean makeTetradG6R16(CSyntaxTreeNode node) {
+
+        //16 OPERATOR -> PRINTF scolon
+        ArrayList<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 2) return false;
+
+        CTetradObject ruleTetrad = subnodes.get(1).getTetrad();
+        node.setTetrad(ruleTetrad);
+        return true;
     }
 
     private boolean makeTetradG6R15(CSyntaxTreeNode node) {
@@ -946,11 +960,94 @@ public class CCodeGen {
                 return makeTetradG2R10(node);
             case 11:
                 return makeTetradG2R11(node);
+            case 16:
+                return makeTetradG2R16(node);
+            case 17:
+                return makeTetradG2R17(node);
+            case 18:
+                return makeTetradG2R18(node);
+            case 22:
+                return makeTetradG2R22(node);
+            case 23:
+                return makeTetradG2R23(node);
 
             default:
                 System.err.println("Unexpected index of rule (" + node.indexOfRule + ") for grammar #" + node.indexOfGrammar);
                 return false;
         }
+    }
+
+    private boolean makeTetradG2R18(CSyntaxTreeNode node) {
+
+        //(18)	$ENUMELEMS ➝COMMA $ENUMBODY
+        ArrayList<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 2) return false;
+
+        CTetradObject ruleTetrad = subnodes.get(0).getTetrad();
+        node.setTetrad(ruleTetrad);
+        return true;
+    }
+
+    private boolean makeTetradG2R17(CSyntaxTreeNode node) {
+
+        //(17)	$ENUMBODY ➝ID
+        ArrayList<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 1) return false;
+
+        String id = subnodes.get(0).s.id;
+        CTetradObject ruleTetrad = new CTetrad(id);
+        node.setTetrad(ruleTetrad);
+        return true;
+    }
+
+    private boolean makeTetradG2R16(CSyntaxTreeNode node) {
+
+        //(16)	$ENUMBODY ➝ID  $ENUMELEMS
+        ArrayList<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 2) return false;
+
+        String id = subnodes.get(1).s.id;
+        CTetradObject tetrad1 = new CTetrad("#" + id);
+        CTetradObject tetrad2 = subnodes.get(0).getTetrad();
+        CTetradObject ruleTetrad = new CTetrad(Arrays.asList(tetrad1, tetrad2));
+        node.setTetrad(ruleTetrad);
+        return true;
+    }
+
+    private boolean makeTetradG2R23(CSyntaxTreeNode node) {
+
+        //23 CLASSBODY -> print op ENUMBODY cp scolon CLASSBODY
+        ArrayList<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 6) return false;
+
+        String print = subnodes.get(5).s.id;
+        CTetradObject op1 = new CTetrad(print);
+        CTetradObject op2 = subnodes.get(3).getTetrad();
+        CTetradObject tetrad1 = new CTetrad(EOpcode.CALL, op1, op2);
+        CTetradObject tetrad2 = subnodes.get(0).getTetrad();
+        CTetradObject ruleTetrad = new CTetrad(Arrays.asList(tetrad1, tetrad2));
+
+        node.setTetrad(ruleTetrad);
+        return true;
+    }
+
+    private boolean makeTetradG2R22(CSyntaxTreeNode node) {
+
+        //22 CLASSBODY -> print op ENUMBODY cp scolon
+        ArrayList<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        if (subnodes.size() != 5) return false;
+
+        String print = subnodes.get(4).s.id;
+        CTetradObject op1 = new CTetrad(print);
+        CTetradObject op2 = subnodes.get(2).getTetrad();
+        CTetradObject ruleTetrad = new CTetrad(EOpcode.CALL, op1, op2);
+        node.setTetrad(ruleTetrad);
+        return true;
     }
 
     private boolean makeTetradG2R5(CSyntaxTreeNode node) {
