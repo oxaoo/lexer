@@ -35,7 +35,8 @@ public enum EOpcode {
     MULA("MULA"),
     DIVA("DIVA"),
     SUBA("SUBA"),
-    MAIN("MAIN");
+    MAIN("MAIN"),
+    CALL("CALL");
 
     private final String name;
     EOpcode(String s) {

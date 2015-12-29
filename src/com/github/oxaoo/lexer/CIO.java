@@ -1,9 +1,6 @@
 package com.github.oxaoo.lexer;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -144,6 +141,45 @@ public class CIO
         return table;
     }
 
+    public static Map<String, String> read(String path)
+    {
+        Map<String, String> table = new HashMap<String, String>();
+        BufferedReader br = null;
+        String line;
+
+        try
+        {
+            br = new BufferedReader(new FileReader(path));
+
+            while ((line = br.readLine()) != null)
+            {
+                String[] par = line.split(";");
+
+                table.put(par[0], par[1]);
+            }
+        }
+        catch (FileNotFoundException e)
+        {
+            System.err.println("Exception while open the file: [" + e.toString() + "]");
+        }
+        catch (IOException e)
+        {
+            System.err.println("Exception while reading file: [" + e.toString() + "]");
+        }
+        finally
+        {
+            if (br != null) try
+            {
+                br.close();
+            }
+            catch (IOException e)
+            {
+                System.err.println("Exception while closing the file: [" + e.toString() + "]");
+            }
+        }
+
+        return table;
+    }
 
     public static Set<String> readGrammar(String path)
     {
@@ -184,6 +220,18 @@ public class CIO
         }
 
         return elems;
+    }
+
+    public static void write(String path, String str) {
+
+        System.out.println("Path to write: " + path);
+        try {
+            PrintWriter pw = new PrintWriter(path + "_tetrad.json", "UTF-8");
+            pw.print(str);
+            pw.close();
+        } catch (FileNotFoundException | UnsupportedEncodingException e) {
+            System.err.println("Exceiption while write tetrad to file: [" + e.toString() + "]");
+        }
     }
 }
 

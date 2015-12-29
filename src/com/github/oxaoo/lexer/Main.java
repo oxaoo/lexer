@@ -19,12 +19,15 @@ import com.github.oxaoo.parser.CSyntaxTreeNode;
 
 import javax.swing.*;
 
+
 public class Main {
+
+    public static final String mResCode = "res/code3";
 
     public static void main(String[] args) throws FileNotFoundException {
         //startLexer(args);
         CSyntaxTreeNode root = startParser();
-        startCodeGen(root);
+        CTetrad tetrad = startCodeGen(root);
 
         //tetradSimple();
     }
@@ -35,18 +38,20 @@ public class Main {
         System.out.println("TETRADS SIMPLE: " + tetrads.toString());
     }
 
-    private static void startCodeGen(CSyntaxTreeNode root) {
+    private static CTetrad startCodeGen(CSyntaxTreeNode root) {
         System.out.println("*** Start codegen ***");
         CCodeGen cg = new CCodeGen();
-        cg.convert(root);
-        cg.getTetrad();
+        CTetrad tetrad = cg.convert(root);
+
+        return tetrad;
+        //cg.getTetrad();
     }
 
     private static CSyntaxTreeNode startParser() {
         System.out.println("*** Start parser ***");
         BufferedReader br = null;
         try {
-            br = new BufferedReader(new FileReader("res/code3.t"));
+            br = new BufferedReader(new FileReader(mResCode + ".t"));
 
             String line;
             List<Terminal> tokens = new ArrayList<>();
@@ -75,7 +80,7 @@ public class Main {
 
     private static void exampleSyntaxTree() {
 
-        CSyntaxTreeNode node1 = new CSyntaxTreeNode("Node 1");
+        final CSyntaxTreeNode node1 = new CSyntaxTreeNode("Node 1");
         CSyntaxTreeNode node2 = new CSyntaxTreeNode("Node 1-1", node1);
         CSyntaxTreeNode node3 = new CSyntaxTreeNode("Node 1-2", node1);
         CSyntaxTreeNode node4 = new CSyntaxTreeNode("Node 1-3", node1);
@@ -104,15 +109,15 @@ public class Main {
 
     public static void startLexer(String[] args) {
         System.out.println("*** Start lexer ***");
-        String filename = "res/code3.java";
+        /*String filename = "res/code3.java";
         if (args.length > 0)
-            filename = args[0];
+            filename = args[0];*/
 
-        char[] code = CIO.readFile(filename);
+        char[] code = CIO.readFile(mResCode + ".java");
 
         CLexer lexer = new CLexer(code);
         lexer.toScan();
         lexer.toEstimate();
-        lexer.result(filename.split("\\.")[0]);
+        lexer.result((mResCode + ".java").split("\\.")[0]);
     }
 }
