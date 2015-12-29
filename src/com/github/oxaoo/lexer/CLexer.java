@@ -466,7 +466,7 @@ public class CLexer
 
             //feature for print.
             for (CId id : m_tabId) {
-                if (id.getToken().equals(token)) {
+                if (id.getToken().equals(token) && id.getValue().equals("print")) {
                     _token = id.getValue().toUpperCase();
                 }
             }
