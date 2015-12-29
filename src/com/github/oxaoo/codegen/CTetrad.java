@@ -1,130 +1,152 @@
 package com.github.oxaoo.codegen;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import org.json.JSONObject;
 
-public class CTetrad {
+import java.util.*;
+
+public class CTetrad extends CTetradObject {
 
     private static int count = 0;
+    private static final List<CTetrad> tetrads = new ArrayList<>();
 
     public final EOpcode opcode;
-    public final CTetrad operand1;
-    public final CTetrad operand2;
+    public final CTetradObject operand1;
+    public final CTetradObject operand2;
     public final Object result;
-    public final List<CTetrad> tetradList;
+    //public final List<CTetrad> tetradList;
 
     private static Set<String> labels = new TreeSet<>();
 
-    public CTetrad(EOpcode opcode, CTetrad operand1, CTetrad operand2, String result) {
+    /*
+        for full-tetrad.
+     */
+    public CTetrad(EOpcode opcode, CTetradObject operand1, CTetradObject operand2, Object result) {
 
         this.opcode = opcode;
         this.operand1 = operand1;
         this.operand2 = operand2;
-        if (result.equals(""))
-            this.result = result;
-        else
-            this.result = "#" + result;
-
-        tetradList = Collections.EMPTY_LIST;
+        this.result = result;
+        //tetradList = Collections.EMPTY_LIST;
+        tetrads.add(this);
     }
 
-    public CTetrad(EOpcode opcode, CTetrad operand1, CTetrad operand2) {
-        /*
+    /*
+        for type or value.
+    */
+    public CTetrad(String result) {
+
+        opcode = EOpcode.DEFAULT;
+        operand1 = new CTetradObject();
+        operand2 = new CTetradObject();
+
+        Object res;
+        try{
+            res = Integer.parseInt(result);
+        } catch (NumberFormatException e) {
+            //System.err.println("Parsing exception: " + e.toString());
+
+            try {
+                res = Double.parseDouble(result);
+            } catch (NumberFormatException e2) {
+                //System.err.println("Parsing exception: " + e.toString());
+
+                res = result;
+            }
+        }
+
+        this.result = res;
+        tetrads.add(this);
+
+        //this.result = result;
+        //tetradList = Collections.EMPTY_LIST;
+    }
+
+    /*
+        for mov operate code with set variable.
+     */
+    public CTetrad(EOpcode opcode, CTetradObject operand1, String var) {
+
         this.opcode = opcode;
         this.operand1 = operand1;
-        this.operand2 = operand2;*/
-        //String strId = String.valueOf(count);
-        //count++;
-        this(opcode, operand1, operand2, String.valueOf(++count));
+        this.operand2 = new CTetradObject();
+        result = "#" + var;
+        //tetradList = Collections.EMPTY_LIST;
+        tetrads.add(this);
     }
 
-    public CTetrad(EOpcode opcode, CTetrad operand1, String result) {
-/*
+    /*
+        for mov operate code (temp variable).
+     */
+    public CTetrad(EOpcode opcode, CTetradObject operand1) {
+
         this.opcode = opcode;
         this.operand1 = operand1;
-        this.operand2 = null;
-*/
-        this(opcode, operand1, null, result);
+        this.operand2 = new CTetradObject();
+        result = "_" + ++count;
+        //tetradList = Collections.EMPTY_LIST;
+        tetrads.add(this);
     }
 
-    public CTetrad(EOpcode opcode, CTetrad operand1) {
+    public CTetrad(EOpcode opcode, CTetradObject operand1, CTetradObject operand2) {
 
-        this(opcode, operand1, null, "");
+        this.opcode = opcode;
+        this.operand1 = operand1;
+        this.operand2 = operand2;
+        result = "_" + ++count;
+        tetrads.add(this);
     }
 
-    // for elem (NO for tetrad).
-    public CTetrad(Object obj) {
-        opcode = null;
-        operand1 = null;
-        operand2 = null;
-        result = obj;
+    /*
+        for default init.
+     */
+    public CTetrad() {
 
-        tetradList = Collections.EMPTY_LIST;
+        opcode = EOpcode.DEFAULT;
+        operand1 = new CTetradObject();
+        operand2 = new CTetradObject();
+        this.result = 0;
+        //tetradList = Collections.EMPTY_LIST;
+        tetrads.add(this);
     }
 
-    public CTetrad(List<CTetrad> tetrads) {
-        tetradList = tetrads;
+    /*
+        for list of tetrad.
+     */
+    public CTetrad(List<CTetradObject> tetradlist) {
 
-        //System.out.println("@@@ update tetradslist: " + tetradList.toString());
-
-        opcode = null;
-        operand1 = null;
-        operand2 = null;
-        result = null;
+        opcode = EOpcode.DEFAULT;
+        operand1 = new CTetradObject();
+        operand2 = new CTetradObject();
+        result = tetradlist;
+        //this.result = 0;
+        //tetradList = Collections.EMPTY_LIST;
+        tetrads.add(this);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
+    /*
+        for matrix IxJ.
+     */
+    public CTetrad(double[][] matrix) {
 
-        CTetrad cTetrad = (CTetrad) o;
-
-        if (opcode != cTetrad.opcode)
-            return false;
-
-        if (operand1 == null || operand2 == null)
-            return result.equals(cTetrad.result);
-
-        return operand1.equals(cTetrad.operand1)
-                && operand2.equals(cTetrad.operand2)
-                && result.equals(cTetrad.result);
-
+        opcode = EOpcode.DEFAULT;
+        operand1 = new CTetradObject();
+        operand2 = new CTetradObject();
+        this.result = matrix;
+        tetrads.add(this);
     }
 
-    @Override
-    public int hashCode()
-    {
-        int result1 = opcode.hashCode();
-        //result1 = 31 * result1 + operand1.hashCode();
-        //result1 = 31 * result1 + operand2.hashCode();
-        result1 = 31 * result1 + result.hashCode();
-        return result1;
-    }
+    public static CTetradObject getTetrad(String id) {
 
-    @Override
-    public String toString()
-    {
-        String strOp1 = "null";
-        String strOp2 = "null";
-        String strRes = "null";
-        String strOpc = "null";
-        if (operand1 != null) strOp1 = operand1.toString();
-        if (operand2 != null) strOp2 = operand2.toString();
-        if (result != null) strRes = result.toString();
-        if (opcode != null) strOpc = opcode.toString();
+        for (CTetrad tetrad : tetrads) {
+            Object res = tetrad.result;
+            if (res instanceof String) {
+                String strRes = (String) res;
+                if (strRes.equals(id))
+                    return tetrad;
+            }
+        }
 
-        return "CTetrad{" +
-                "opcode=" + strOpc +
-                ", operand1='" + strOp1 + '\'' +
-                ", operand2='" + strOp2 + '\'' +
-                ", result='" + strRes + '\'' +
-                ", TETRADS=" + tetradList.toString() +
-                '}';
+        return null;
     }
 
     public static String getNewLabel(String partLabel) {
@@ -139,6 +161,91 @@ public class CTetrad {
 
         return partLabel + lastIndex;
     }
+
+    @Override
+    public String toJson() {
+        JSONObject jo = new JSONObject();
+        jo.put("tetrad", this);
+        return jo.toString();
+    }
+
+
+    @Override
+    public String toString() {
+        return "CTetrad{" +
+                "opcode=" + opcode.toString() +
+                ", operand1=" + operand1.toString() +
+                ", operand2=" + operand2.toString() +
+                ", result=" + result +
+                //", tetradList=" + tetradList.toString() +
+                '}';
+    }
+
+    //@Override
+    public static String toStringFormat(CTetradObject to, int depth) {
+
+        CTetrad t;
+
+        try {
+            t = (CTetrad) to;
+        } catch (ClassCastException e) {
+            return "{}";
+        }
+        /*
+        if ( to != null && to instanceof CTetradObject)
+            return "{}";*/
+
+        //t = (CTetrad) to;
+
+        String tab = "";
+        for (int i = 0; i < depth; i++) tab += '\t';
+
+        //String str = tab + "CTetrad\n" + tab + "{\n";
+        String str = "CTetrad\n" + tab + "{\n";
+        str += tab + "\topcode=" + t.opcode.toString() + ",\n";
+        str += tab + "\toperand1=" + toStringFormat(t.operand1, depth + 1) + ",\n";
+        str += tab + "\toperand2=" + toStringFormat(t.operand2, depth + 1) + ",\n";
+
+        if (t.result instanceof List) {
+
+            str += tab + "\tresult=\n" + tab + "\t[";
+            List<CTetradObject> listResult = (List<CTetradObject>) t.result;
+            for (CTetradObject toCur : listResult)
+                str += "\n" + tab + "\t\t" + toStringFormat(toCur, depth + 2) + ",";
+            str += "\n" + tab + "\t]";
+        } else
+            str += tab + "\tresult=" + t.result.toString() + "\n";
+
+        if (depth == 0)
+            str += "\n}";
+        else
+            str += tab + "}";
+
+        return str;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CTetrad cTetrad = (CTetrad) o;
+
+        if (opcode != cTetrad.opcode) return false;
+        if (!operand1.equals(cTetrad.operand1)) return false;
+        if (!operand2.equals(cTetrad.operand2)) return false;
+        return result.equals(cTetrad.result);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result1 = opcode.hashCode();
+        result1 = 31 * result1 + operand1.hashCode();
+        result1 = 31 * result1 + operand2.hashCode();
+        result1 = 31 * result1 + result.hashCode();
+        return result1;
+    }
+
 }
-
-

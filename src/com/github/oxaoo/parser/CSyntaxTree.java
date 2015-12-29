@@ -1,6 +1,8 @@
 package com.github.oxaoo.parser;
 
 import javax.swing.*;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import java.awt.*;
 import java.net.URL;
@@ -33,6 +35,8 @@ public class CSyntaxTree extends JFrame
         selectedNodeLabel.setFont(new Font("Consolas", Font.PLAIN, 18));
 
         this.add(selectedNodeLabel, BorderLayout.SOUTH);
+
+
         syntaxTree.getSelectionModel().addTreeSelectionListener(e ->
         {
             CSyntaxTreeNode selectedNode = (CSyntaxTreeNode) syntaxTree.getLastSelectedPathComponent();

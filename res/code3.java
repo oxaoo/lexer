@@ -9,6 +9,6 @@ public class TempClass {
         do {
             variable = variable + 10 * 25;
         } while(variable <= 1000);
-        return 12;
+        return 0;
     }
 }
