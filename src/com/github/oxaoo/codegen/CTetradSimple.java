@@ -9,7 +9,7 @@ import java.util.List;
 public class CTetradSimple {
     List<CTetrad> tetrads = new ArrayList<>(8);
 
-    public CTetradSimple() {
+    public CTetradSimple() {/*
         CTetrad lab = new CTetrad("Lbegin");
         CTetrad lab2 = new CTetrad("Lend");
 
@@ -21,7 +21,7 @@ public class CTetradSimple {
         tetrads.add(new CTetrad(EOpcode.NES, tetrads.get(0), new CTetrad(100)));
         tetrads.add(new CTetrad(EOpcode.BF, lab2));
         tetrads.add(new CTetrad(EOpcode.BRL, lab));
-        tetrads.add(new CTetrad(EOpcode.DEFL, lab2));
+        tetrads.add(new CTetrad(EOpcode.DEFL, lab2));*/
     }
 
     public List<CTetrad> getTetrads() {

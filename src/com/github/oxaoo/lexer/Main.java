@@ -22,10 +22,10 @@ import javax.swing.*;
 
 public class Main {
 
-    public static final String mResCode = "res/code3";
+    public static final String mResCode = "res/code8";
 
     public static void main(String[] args) throws FileNotFoundException {
-        //startLexer(args);
+        startLexer(args);
         CSyntaxTreeNode root = startParser();
         CTetrad tetrad = startCodeGen(root);
 

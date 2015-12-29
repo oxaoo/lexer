@@ -53,47 +53,56 @@ CTetrad
 						},
 						CTetrad
 						{
-							opcode=MOV,
-							operand1=CTetrad
-							{
-								opcode=MOV,
-								operand1=CTetrad
+							opcode=DEFAULT,
+							operand1={},
+							operand2={},
+							result=
+							[
+								CTetrad
 								{
-									opcode=ADD,
+									opcode=MOV,
 									operand1=CTetrad
 									{
-										opcode=DEFAULT,
-										operand1={},
-										operand2={},
-										result=#id4
-									},
-									operand2=CTetrad
-									{
-										opcode=MUL,
+										opcode=MOV,
 										operand1=CTetrad
 										{
-											opcode=DEFAULT,
-											operand1={},
-											operand2={},
-											result=10
+											opcode=ADD,
+											operand1=CTetrad
+											{
+												opcode=DEFAULT,
+												operand1={},
+												operand2={},
+												result=#id4
+											},
+											operand2=CTetrad
+											{
+												opcode=MUL,
+												operand1=CTetrad
+												{
+													opcode=DEFAULT,
+													operand1={},
+													operand2={},
+													result=10
+												},
+												operand2=CTetrad
+												{
+													opcode=DEFAULT,
+													operand1={},
+													operand2={},
+													result=25
+												},
+												result=_2
+											},
+											result=_3
 										},
-										operand2=CTetrad
-										{
-											opcode=DEFAULT,
-											operand1={},
-											operand2={},
-											result=25
-										},
-										result=_2
+										operand2={},
+										result=_4
 									},
-									result=_3
+									operand2={},
+									result=#id4
 								},
-								operand2={},
-								result=_4
-							},
-							operand2={},
-							result=#id4
-						},
+								{},
+							]						},
 						CTetrad
 						{
 							opcode=BF,
@@ -105,14 +114,14 @@ CTetrad
 									opcode=DEFAULT,
 									operand1={},
 									operand2={},
-									result=#id4
+									result=1000
 								},
 								operand2=CTetrad
 								{
 									opcode=DEFAULT,
 									operand1={},
 									operand2={},
-									result=1000
+									result=#id4
 								},
 								result=_1
 							},
@@ -151,10 +160,8 @@ CTetrad
 							operand2={},
 							result=_8
 						},
-					]
-				},
-			]
-		},
+					]				},
+			]		},
 		CTetrad
 		{
 			opcode=DEFAULT,

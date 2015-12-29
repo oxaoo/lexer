@@ -113,6 +113,8 @@ public class CCodeGen {
                 return makeTetradG6R17(node);
             case 18:
                 return makeTetradG6R18(node);
+            case -1:
+                return false;
 
             default:
                 System.err.println("Unexpected index of rule (" + node.indexOfRule + ") for grammar #" + node.indexOfGrammar);
@@ -392,6 +394,8 @@ public class CCodeGen {
             case 20:
             case 21:
                 return makeTetradG5R17_21(node);
+            case -1:
+                return false;
 
             default:
                 System.err.println("Unexpected index of rule (" + node.indexOfRule + ") for grammar #" + node.indexOfGrammar);
@@ -720,6 +724,8 @@ public class CCodeGen {
                 return makeTetradG4R8(node);
             case 11:
                 return makeTetradG4R11(node);
+            case -1:
+                return false;
 
             default:
                 System.err.println("Unexpected index of rule (" + node.indexOfRule + ") for grammar #" + node.indexOfGrammar);
@@ -897,6 +903,8 @@ public class CCodeGen {
             case 10:
             case 11:
                 return makeTetradG3R2_11(node);
+            case -1:
+                return false;
 
             default:
                 System.err.println("Unexpected index of rule (" + node.indexOfRule + ") for grammar #" + node.indexOfGrammar);
@@ -962,6 +970,8 @@ public class CCodeGen {
                 return makeTetradG2R22(node);
             case 23:
                 return makeTetradG2R23(node);
+            case -1:
+                return false;
 
             default:
                 System.err.println("Unexpected index of rule (" + node.indexOfRule + ") for grammar #" + node.indexOfGrammar);
@@ -1164,6 +1174,8 @@ public class CCodeGen {
                 return makeTetradG1R0(node);
             case 2:
                 return makeTetradG1R2(node);
+            case -1:
+                return false;
 
 
             default:
@@ -1200,6 +1212,8 @@ public class CCodeGen {
 
             case 0:
                 return makeTetradG0R0(node);
+            case -1:
+                return false;
 
             default:
                 System.err.println("Unexpected index of rule (" + node.indexOfRule + ") for grammar #" + node.indexOfGrammar);
