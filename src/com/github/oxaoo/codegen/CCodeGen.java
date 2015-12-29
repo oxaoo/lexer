@@ -124,6 +124,7 @@ public class CCodeGen {
 
     private boolean makeTetradG6R18(CSyntaxTreeNode node) {
 
+        System.err.println("CCodeGen.makeTetradG6R18");
         //18 PRINTF -> print op id cp
         ArrayList<CSyntaxTreeNode> subnodes = Collections.list(node.children());
 
@@ -140,8 +141,12 @@ public class CCodeGen {
 
     private boolean makeTetradG6R17(CSyntaxTreeNode node) {
 
+        System.err.println("CCodeGen.makeTetradG6R17");
         //17 OPERATOR -> PRINTF scolon OPERATOR
         ArrayList<CSyntaxTreeNode> subnodes = Collections.list(node.children());
+
+        System.err.println("Size: " + subnodes.size());
+        System.err.println("Subnodes: " + subnodes.toString());
 
         if (subnodes.size() != 3) return false;
 
@@ -154,6 +159,7 @@ public class CCodeGen {
 
     private boolean makeTetradG6R16(CSyntaxTreeNode node) {
 
+        System.err.println("CCodeGen.makeTetradG6R16");
         //16 OPERATOR -> PRINTF scolon
         ArrayList<CSyntaxTreeNode> subnodes = Collections.list(node.children());
 

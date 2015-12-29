@@ -79,8 +79,8 @@ scolon [do, ob, METHODBODY, cb, while, op, EXPRESSION, cp] | 13, METHODBODY
 -----------------------------------------------------------+----------------
         # [do, ob, cb, while, op, EXPRESSION, cp]          | 14, METHODBODY
 -----------------------------------------------------------+----------------
-                  ob [print, op, id, cp]                   | 17, METHODBODY
+                  ob [print, op, id, cp]                   | 18, METHODBODY
 -----------------------------------------------------------+----------------
-                scolon [print, op, id, cp]                 | 17, METHODBODY
+                scolon [print, op, id, cp]                 | 18, METHODBODY
 -----------------------------------------------------------+----------------
-                  # [print, op, id, cp]                    | 17, METHODBODY
+                  # [print, op, id, cp]                    | 18, METHODBODY

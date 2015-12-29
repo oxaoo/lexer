@@ -9,7 +9,7 @@ public class CTetradObject {
         return "{}";
     }
 
-    public static String toStringFormat(int depth) {
+    public static String toStringFormat(CTetradObject to, int depth) {
         return "";
     }
 }

@@ -224,7 +224,7 @@ public class CIO
 
     public static void write(String path, String str) {
 
-        System.out.println("Path to write: " + path);
+        //System.out.println("Path to write: " + path);
         try {
             PrintWriter pw = new PrintWriter(path + "_tetrad.json", "UTF-8");
             pw.print(str);

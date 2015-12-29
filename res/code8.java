@@ -5,9 +5,9 @@ public class TempClass {
     public int main() {
 
         int y;
-        int x = 3 + y;
+        //int x = 3 + y;
 
-        print(x);
+        print(y);
 
         return 0;
     }
