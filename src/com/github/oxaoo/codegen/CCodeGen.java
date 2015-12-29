@@ -12,21 +12,13 @@ public class CCodeGen {
     private CTetrad headTetrad;
 
     public CTetrad convert(CSyntaxTreeNode root) {
-        //printThree(root, 0);
-        //traversal(root, "/");
-        //printTetrad(root);
-
-        //CGrammar grammar = new CGrammar();
-        //grammar.loadGrammar();
 
         //System.out.println("Root ID: " + root.s.id);
         genTetrad(root);
         System.out.println("Generated tetrad: " + root.getTetrad().toString());
-        //System.out.println("Generated tetrad (json): " + root.getTetrad().toJson());
 
         String str = CTetrad.toStringFormat(root.getTetrad(), 0);
         System.out.println("String format: " + str);
-
         CIO.write(Main.mResCode, str);
 
         return (CTetrad) root.getTetrad();

@@ -1,7 +1,5 @@
 package com.github.oxaoo.codegen;
 
-import org.json.JSONObject;
-
 import java.util.*;
 
 public class CTetrad extends CTetradObject {
@@ -160,13 +158,6 @@ public class CTetrad extends CTetradObject {
         labels.add(partLabel + lastIndex);
 
         return partLabel + lastIndex;
-    }
-
-    @Override
-    public String toJson() {
-        JSONObject jo = new JSONObject();
-        jo.put("tetrad", this);
-        return jo.toString();
     }
 
 
