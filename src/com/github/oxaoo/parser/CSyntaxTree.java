@@ -28,7 +28,7 @@ public class CSyntaxTree extends JFrame
 
         syntaxTree.setCellRenderer(renderer);
         syntaxTree.setShowsRootHandles(true);
-        syntaxTree.setRootVisible(false);
+        syntaxTree.setRootVisible(true);
         this.add(new JScrollPane(syntaxTree));
 
         selectedNodeLabel = new JLabel();
