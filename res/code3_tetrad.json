@@ -26,7 +26,7 @@ CTetrad
 							result=0
 						},
 						operand2={},
-						result=_9
+						result=_10
 					},
 					operand2={},
 					result=#id4
@@ -49,7 +49,7 @@ CTetrad
 								result=@Lbegin0
 							},
 							operand2={},
-							result=_5
+							result=_6
 						},
 						CTetrad
 						{
@@ -58,6 +58,25 @@ CTetrad
 							operand2={},
 							result=
 							[
+								CTetrad
+								{
+									opcode=CALL,
+									operand1=CTetrad
+									{
+										opcode=DEFAULT,
+										operand1={},
+										operand2={},
+										result=print
+									},
+									operand2=CTetrad
+									{
+										opcode=DEFAULT,
+										operand1={},
+										operand2={},
+										result=#id4
+									},
+									result=_5
+								},
 								CTetrad
 								{
 									opcode=MOV,
@@ -101,14 +120,20 @@ CTetrad
 									operand2={},
 									result=#id4
 								},
-								{},
 							]						},
 						CTetrad
 						{
 							opcode=BF,
 							operand1=CTetrad
 							{
-								opcode=LETS,
+								opcode=DEFAULT,
+								operand1={},
+								operand2={},
+								result=@Lend0
+							},
+							operand2=CTetrad
+							{
+								opcode=GETS,
 								operand1=CTetrad
 								{
 									opcode=DEFAULT,
@@ -125,14 +150,7 @@ CTetrad
 								},
 								result=_1
 							},
-							operand2=CTetrad
-							{
-								opcode=DEFAULT,
-								operand1={},
-								operand2={},
-								result=@Lend0
-							},
-							result=_6
+							result=_7
 						},
 						CTetrad
 						{
@@ -145,7 +163,7 @@ CTetrad
 								result=@Lbegin0
 							},
 							operand2={},
-							result=_7
+							result=_8
 						},
 						CTetrad
 						{
@@ -158,7 +176,7 @@ CTetrad
 								result=@Lend0
 							},
 							operand2={},
-							result=_8
+							result=_9
 						},
 					]				},
 			]		},

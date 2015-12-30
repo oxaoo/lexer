@@ -200,7 +200,8 @@ public class CCodeGen {
 
         String lEnd = CTetrad.getNewLabel("@Lend");
         CTetradObject opLEnd = new CTetrad(lEnd);
-        CTetradObject tetrad1 = new CTetrad(EOpcode.BF, le, opLEnd);
+        //CTetradObject tetrad1 = new CTetrad(EOpcode.BF, le, opLEnd);
+        CTetradObject tetrad1 = new CTetrad(EOpcode.BF, opLEnd, le);
 
         CTetradObject tetrad2 = new CTetrad(EOpcode.BRL, opLBegin);
 
@@ -228,7 +229,8 @@ public class CCodeGen {
 
         String lEnd = CTetrad.getNewLabel("@Lend");
         CTetradObject opLEnd = new CTetrad(lEnd);
-        CTetradObject tetrad1 = new CTetrad(EOpcode.BF, le, opLEnd);
+        //CTetradObject tetrad1 = new CTetrad(EOpcode.BF, le, opLEnd);
+        CTetradObject tetrad1 = new CTetrad(EOpcode.BF, opLEnd, le);
 
         CTetradObject tetrad2 = new CTetrad(EOpcode.BRL, opLBegin);
 
@@ -809,8 +811,11 @@ public class CCodeGen {
 
         if (subnodes.size() != 8) return false;
 
-        int i = Integer.parseInt(subnodes.get(4).s.id);
-        int j = Integer.parseInt(subnodes.get(1).s.id);
+        //System.out.println("I: " + getConFromTab(subnodes.get(4).s.id));
+        String strI = getConFromTab(subnodes.get(4).s.id.toUpperCase());
+        String strJ = getConFromTab(subnodes.get(1).s.id.toUpperCase());
+        int i = Integer.parseInt(strI);
+        int j = Integer.parseInt(strJ);
 
         double matrix[][] = new double[i][j];
         CTetradObject ruleTetrad = new CTetrad(matrix);
