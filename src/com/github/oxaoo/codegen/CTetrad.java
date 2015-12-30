@@ -155,6 +155,8 @@ public class CTetrad extends CTetradObject {
                 lastIndex = Integer.valueOf(label.substring(partLabel.length()));
         }
 
+        lastIndex++;
+
         labels.add(partLabel + lastIndex);
 
         return partLabel + lastIndex;
@@ -204,7 +206,18 @@ public class CTetrad extends CTetradObject {
             for (CTetradObject toCur : listResult)
                 str += "\n" + tab + "\t\t" + toStringFormat(toCur, depth + 2) + ",";
             str += "\n" + tab + "\t]";
-        } else
+        } else if (t.result instanceof double[][]) {
+            double[][] matrix = (double[][]) t.result;
+            String strMatrix = "";
+            for (int i = 0; i < matrix.length; i++) {
+                strMatrix += "[ ";
+                for (int j = 0; j < matrix[i].length; j++)
+                    strMatrix += matrix[i][j] + " ";
+                strMatrix += "], ";
+            }
+            str += tab + "\tresult=" + strMatrix + "\n";
+        }
+        else
             str += tab + "\tresult=" + t.result.toString() + "\n";
 
         if (depth == 0)

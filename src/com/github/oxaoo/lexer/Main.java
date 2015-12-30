@@ -22,7 +22,7 @@ import javax.swing.*;
 
 public class Main {
 
-    public static final String mResCode = "res/code3";
+    public static final String mResCode = "res/code2";
 
     public static void main(String[] args) throws FileNotFoundException {
         startLexer(args);
